@@ -1,2 +1,7 @@
 # dependencies
 /node_modules
+
+/.expo-shared
+/.expo
+
+.DS_Store
