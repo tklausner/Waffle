@@ -1,8 +1,14 @@
 import React from 'react';
+import {View} from 'react-native';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
+import { Container } from 'native-base';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+
+import FPHeader from './src/components/firstpage/fpHeader';
+import FPFooter from './src/components/firstpage/fpFooter';
+import FPBody from './src/components/firstpage/fpBody';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -28,7 +34,9 @@ export default class App extends React.Component {
 
     return (
       <Container>
-        <Text>Open up App.js to start working on your app!</Text>
+        <FPHeader/>
+        <FPBody/>
+        <FPFooter/>
       </Container>
     );
   }
