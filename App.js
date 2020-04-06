@@ -1,28 +1,25 @@
-import React from 'react';
-import {View} from 'react-native';
-import { AppLoading } from 'expo';
-import { Container } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { View } from "react-native";
+import { AppLoading } from "expo";
+import { Container } from "native-base";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
 
-import FPHeader from './src/components/firstpage/fpHeader';
-import FPFooter from './src/components/firstpage/fpFooter';
-import FPBody from './src/components/firstpage/fpBody';
-
+import HomeScreen from "./src/screens/HomeScreen";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
+      isReady: false
     };
   }
 
   async componentDidMount() {
     await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      ...Ionicons.font
     });
     this.setState({ isReady: true });
   }
@@ -34,9 +31,7 @@ export default class App extends React.Component {
 
     return (
       <Container>
-        <FPHeader/>
-        <FPBody/>
-        <FPFooter/>
+        <HomeScreen />
       </Container>
     );
   }
