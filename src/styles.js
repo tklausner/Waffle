@@ -45,7 +45,13 @@ export default {
     justifyContent: "space-around",
     paddingTop: "1%"
   },
+  footer: {},
   footerButtons: {
     fontSize: 30
+  },
+  loadingScreen: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   }
 };

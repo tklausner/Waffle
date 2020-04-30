@@ -1,13 +1,11 @@
 import React from "react";
-import "react-native-gesture-handler";
 import { View } from "react-native";
 import { AppLoading } from "expo";
 import { Container } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
 
-import HomeScreen from "./src/screens/HomeScreen";
+import RouteStack from "./src/routes/RouteStack";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -31,12 +29,6 @@ export default class App extends React.Component {
       return <AppLoading />;
     }
 
-    return (
-      <NavigationContainer>
-        <Container>
-          <HomeScreen />
-        </Container>
-      </NavigationContainer>
-    );
+    return <RouteStack />;
   }
 }
