@@ -9,7 +9,14 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import styles from "../styles";
 
 import HomeScreen from "../screens/HomeScreen";
-import { HeaderW } from "../components/HeaderW";
+import ExploreScreen from "../screens/ExploreScreen";
+import SellScreen from "../screens/SellScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import MessagingScreen from "../screens/MessagingScreen";
+
+import { DefaultHeader } from "../components/DefaultHeader";
+import { HomeHeader } from "../components/HomeHeader";
+import { ProfileHeader } from "../components/ProfileHeader";
 
 const HomeStack = createStackNavigator();
 
@@ -20,9 +27,10 @@ function HomeStackScreen() {
         name="Home"
         component={HomeScreen}
         options={{
-          header: () => <HeaderW />
+          header: () => <HomeHeader navigation />
         }}
       />
+      <HomeStack.Screen name="Messages" component={MessagingScreen} />
     </HomeStack.Navigator>
   );
 }
@@ -32,7 +40,13 @@ const ExploreStack = createStackNavigator();
 function ExploreStackScreen() {
   return (
     <ExploreStack.Navigator>
-      <ExploreStack.Screen name="Explore" component={HomeScreen} />
+      <ExploreStack.Screen
+        name="Explore"
+        component={ExploreScreen}
+        options={{
+          header: () => <DefaultHeader />
+        }}
+      />
     </ExploreStack.Navigator>
   );
 }
@@ -42,7 +56,13 @@ const SellStack = createStackNavigator();
 function SellStackScreen() {
   return (
     <SellStack.Navigator>
-      <SellStack.Screen name="Sell" component={HomeScreen} />
+      <SellStack.Screen
+        name="Sell"
+        component={SellScreen}
+        options={{
+          header: () => <DefaultHeader />
+        }}
+      />
     </SellStack.Navigator>
   );
 }
@@ -52,7 +72,13 @@ const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={HomeScreen} />
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          header: () => <ProfileHeader />
+        }}
+      />
     </ProfileStack.Navigator>
   );
 }

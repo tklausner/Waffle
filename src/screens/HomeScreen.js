@@ -3,9 +3,6 @@ import { Container, Content } from "native-base";
 
 import { PostW } from "../components/PostW";
 export default class HomeScreen extends Component {
-  state = {
-    cards: []
-  };
   render() {
     return (
       <Container>

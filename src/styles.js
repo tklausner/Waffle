@@ -5,6 +5,9 @@ export default {
   wYellow: {
     color: "#EACD2E"
   },
+  wGray: {
+    color: "#999999"
+  },
   header: {
     textAlign: "center",
     fontSize: 30
@@ -17,7 +20,7 @@ export default {
   },
   postTop: {
     fontSize: 40,
-    color: "gray"
+    color: "#999999"
   },
   postBar: {
     fontSize: 20,

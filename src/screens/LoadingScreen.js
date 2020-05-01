@@ -3,9 +3,9 @@ import { ActivityIndicator } from "react-native";
 import { Container } from "native-base";
 import styles from "../styles";
 
-const DetailsScreen = () => (
+const LoadingScreen = () => (
   <Container style={styles.loadingScreen}>
     <ActivityIndicator />
   </Container>
 );
-export default DetailsScreen;
+export default LoadingScreen;
