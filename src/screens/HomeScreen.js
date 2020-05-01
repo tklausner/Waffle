@@ -8,7 +8,7 @@ export default class HomeScreen extends Component {
       <Container>
         <Content>
           <PostW username="tklauklau" />
-          <PostW username="ktlautlau" />
+          <PostW username="mimi>gaby" />
         </Content>
       </Container>
     );
