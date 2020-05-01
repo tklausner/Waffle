@@ -7,7 +7,7 @@ export default class HomeScreen extends Component {
     return (
       <Container>
         <Content>
-          <PostW username="tklauklau" />
+          <PostW username="klauklau" />
           <PostW username="mimi>gaby" />
         </Content>
       </Container>
