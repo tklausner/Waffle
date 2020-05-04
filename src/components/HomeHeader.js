@@ -8,10 +8,13 @@ import {
   Button,
   Title
 } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+
 import styles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
-export function HomeHeader({ navigation }) {
+export function HomeHeader() {
+  const navigation = useNavigation();
   return (
     <Header>
       <Left></Left>

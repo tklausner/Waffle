@@ -16,20 +16,27 @@ import MessagingScreen from "../screens/MessagingScreen";
 
 import { DefaultHeader } from "../components/DefaultHeader";
 import { HomeHeader } from "../components/HomeHeader";
+import { MessagesHeader } from "../components/MessagesHeader";
 import { ProfileHeader } from "../components/ProfileHeader";
 
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator headerMode="screen">
-      <HomeStack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          header: () => <HomeHeader navigation />
-        }}
-      />
+    <HomeStack.Navigator
+      headerMode="screen"
+      screenOptions={({ route }) => ({
+        header: () => {
+          if (route.name === "Home") {
+            return <HomeHeader />;
+          } else if (route.name === "Messages") {
+            return <MessagesHeader />;
+          }
+          return <DefaultHeader />;
+        }
+      })}
+    >
+      <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Messages" component={MessagingScreen} />
     </HomeStack.Navigator>
   );
