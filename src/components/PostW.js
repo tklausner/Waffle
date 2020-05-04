@@ -17,7 +17,6 @@ import {
 } from "native-base";
 import styles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
-var image = require("../../assets/images/Image.png");
 
 export class PostW extends Component {
   render() {
@@ -27,7 +26,7 @@ export class PostW extends Component {
           <Card>
             <CardItem>
               <Left>
-                <Thumbnail source={image} />
+                <Thumbnail source={this.props.profile} />
                 <Body>
                   <Text>{this.props.username}</Text>
                 </Body>
@@ -41,9 +40,9 @@ export class PostW extends Component {
             <CardItem>
               <Body>
                 <Image
-                  source={require("../../assets/images/Image.png")}
+                  source={this.props.image}
                   style={{
-                    height: 296,
+                    height: 345,
                     width: "110%",
                     flex: 1,
                     marginLeft: "-5%"
@@ -85,10 +84,7 @@ export class PostW extends Component {
               </Right>
             </CardItem>
             <CardItem>
-              <Text>
-                Item description Item description Item description Item
-                description Item description Item description Item description
-              </Text>
+              <Text>{this.props.description}</Text>
             </CardItem>
             <CardItem button style={styles.waffleButton}>
               <Text style={styles.waffleButton}>WaffleButton</Text>

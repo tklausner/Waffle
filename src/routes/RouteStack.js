@@ -21,19 +21,30 @@ import { ProfileHeader } from "../components/ProfileHeader";
 
 const HomeStack = createStackNavigator();
 
+// helper function for  getting associated header
+function GetHeader(route) {
+  switch (route) {
+    case "Home":
+      return <HomeHeader />;
+      break;
+    case "Messages":
+      return <MessagesHeader />;
+      break;
+    case "Profile":
+      return <ProfileHeader />;
+      break;
+    default:
+      return <DefaultHeader />;
+      break;
+  }
+}
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
       headerMode="screen"
       screenOptions={({ route }) => ({
-        header: () => {
-          if (route.name === "Home") {
-            return <HomeHeader />;
-          } else if (route.name === "Messages") {
-            return <MessagesHeader />;
-          }
-          return <DefaultHeader />;
-        }
+        header: () => GetHeader(route.name)
       })}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -78,14 +89,12 @@ const ProfileStack = createStackNavigator();
 
 function ProfileStackScreen() {
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          header: () => <ProfileHeader />
-        }}
-      />
+    <ProfileStack.Navigator
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name)
+      })}
+    >
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
     </ProfileStack.Navigator>
   );
 }
