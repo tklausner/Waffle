@@ -42,7 +42,7 @@ function GetHeader(route) {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
-      headerMode="screen"
+      headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name)
       })}
