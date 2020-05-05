@@ -50,7 +50,7 @@ function GetHeader(route) {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
-      headerMode="screen"
+      headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name)
       })}
@@ -66,6 +66,7 @@ const ExploreStack = createStackNavigator();
 function ExploreStackScreen() {
   return (
     <ExploreStack.Navigator
+      headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name)
       })}

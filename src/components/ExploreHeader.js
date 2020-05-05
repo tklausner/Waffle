@@ -4,6 +4,7 @@ import {
   Header,
   Item,
   Icon,
+  Input,
   Left,
   Body,
   Right,
@@ -18,15 +19,16 @@ import { MaterialIcons } from "@expo/vector-icons";
 export function ExploreHeader() {
   const navigation = useNavigation();
   return (
-    <Container>
         <Header searchBar rounded>
-          <Button transparent onPress={() => navigation.navigate("Search")}
-          style={{ borderRadius: 50, marginLeft: 10, marginRight: 10, marginBottom: 5, height:35 }}>
+          <Item regular style={{ borderRadius: 50, marginLeft: 10, marginBottom: 5, height:35 }}>
             <Icon name="ios-search" />
+            <Input placeholder="Search" />
             <Icon name="ios-people" />
+          </Item>
+          <Button transparent style={{marginBottom: 5}}>
+            <Text>Cancel</Text>
           </Button>
         </Header>
-      </Container>
   );
 }
 module.export = ExploreHeader;
