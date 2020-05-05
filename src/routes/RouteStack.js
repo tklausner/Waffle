@@ -18,6 +18,8 @@ import { DefaultHeader } from "../components/DefaultHeader";
 import { HomeHeader } from "../components/HomeHeader";
 import { MessagesHeader } from "../components/MessagesHeader";
 import { ProfileHeader } from "../components/ProfileHeader";
+import { ExploreHeader } from "../components/ExploreHeader";
+import { SearchHeader } from "../components/SearchHeader";
 
 const HomeStack = createStackNavigator();
 
@@ -32,6 +34,12 @@ function GetHeader(route) {
       break;
     case "Profile":
       return <ProfileHeader />;
+      break;
+    case "Explore":
+      return <ExploreHeader />;
+      break;
+    case "Search":
+      return <SearchHeader />;
       break;
     default:
       return <DefaultHeader />;
@@ -57,14 +65,14 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   return (
-    <ExploreStack.Navigator>
-      <ExploreStack.Screen
-        name="Explore"
-        component={ExploreScreen}
-        options={{
-          header: () => <DefaultHeader />
-        }}
-      />
+    <ExploreStack.Navigator
+      headerMode="float"
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name)
+      })}
+    >
+      <ExploreStack.Screen name="Explore" component={ExploreScreen} />
+      <ExploreStack.Screen name="Search" component={ExploreScreen} />
     </ExploreStack.Navigator>
   );
 }
