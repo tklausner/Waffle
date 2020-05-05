@@ -8,7 +8,7 @@ export default class HomeScreen extends Component {
       <Container>
         <Content>
           <PostW
-            username="tklauklau"
+            username="tklau"
             profile={require("../../assets/images/teddy.png")}
             image={require("../../assets/images/bing.png")}
             description="Chernobyl x Colbalt"
