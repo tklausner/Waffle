@@ -7,8 +7,24 @@ export default class HomeScreen extends Component {
     return (
       <Container>
         <Content>
-          <PostW username="klauklau" />
-          <PostW username="mimi>gaby" />
+          <PostW
+            username="tklau"
+            profile={require("../../assets/images/teddy.png")}
+            image={require("../../assets/images/bing.png")}
+            description="Chernobyl x Colbalt"
+          />
+          <PostW
+            username="mimi>gaby"
+            profile={require("../../assets/images/ethan.jpeg")}
+            image={require("../../assets/images/ethan.jpeg")}
+            description="Too cool for miami chicks"
+          />
+          <PostW
+            username="RoorRus"
+            profile={require("../../assets/images/teddy.png")}
+            image={require("../../assets/images/roor.jpeg")}
+            description="GOD shining his light"
+          />
         </Content>
       </Container>
     );
