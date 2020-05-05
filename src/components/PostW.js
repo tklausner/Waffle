@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import {
   Container,
   Header,
@@ -13,16 +13,16 @@ import {
   Right,
   Body,
   List,
-  ListItem
+  ListItem,
 } from "native-base";
-import styles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import globalStyles from "../styles";
 
 export class PostW extends Component {
   render() {
     return (
       <Container>
-        <Content style={styles.post}>
+        <Content style={styles.content}>
           <Card>
             <CardItem>
               <Left>
@@ -33,52 +33,43 @@ export class PostW extends Component {
               </Left>
               <Right>
                 <Button transparent>
-                  <MaterialIcons name="more-horiz" style={styles.postTop} />
+                  <MaterialIcons
+                    name="more-horiz"
+                    style={[{ fontSize: 40 }, globalStyles.wGray]}
+                  />
                 </Button>
               </Right>
             </CardItem>
             <CardItem>
               <Body>
-                <Image
-                  source={this.props.image}
-                  style={{
-                    height: 345,
-                    width: "110%",
-                    flex: 1,
-                    marginLeft: "-5%"
-                  }}
-                />
+                <Image source={this.props.image} style={styles.image} />
               </Body>
             </CardItem>
             <CardItem>
-              <Left style={styles.postBar}>
+              <Left style={styles.bar}>
                 <Button transparent>
-                  <MaterialIcons
-                    name="favorite-border"
-                    style={styles.postBar}
-                  />
+                  <MaterialIcons name="favorite-border" style={styles.bar} />
                 </Button>
                 <Button transparent>
-                  <MaterialIcons
-                    name="bookmark-border"
-                    style={styles.postBar}
-                  />
+                  <MaterialIcons name="bookmark-border" style={styles.bar} />
                 </Button>
                 <Button transparent>
-                  <MaterialIcons name="send" style={styles.postBar} />
+                  <MaterialIcons name="send" style={styles.bar} />
                 </Button>
               </Left>
               <Body></Body>
-              <Right style={[styles.postBar, styles.postBarRight]}>
-                <Text style={styles.postBar}>
-                  <MaterialIcons name="pie-chart" style={styles.postBar} />
+              <Right
+                style={[
+                  { flexDirection: "row", justifyContent: "space-around" },
+                  styles.bar,
+                ]}
+              >
+                <Text style={styles.bar}>
+                  <MaterialIcons name="pie-chart" style={styles.bar} />
                   10
                 </Text>
-                <Text style={styles.postBar}>
-                  <MaterialIcons
-                    name="monetization-on"
-                    style={styles.postBar}
-                  />
+                <Text style={styles.bar}>
+                  <MaterialIcons name="monetization-on" style={styles.bar} />
                   30
                 </Text>
               </Right>
@@ -91,22 +82,22 @@ export class PostW extends Component {
             </CardItem>
             <CardItem>
               <List>
-                <ListItem style={styles.postComments}>
-                  <Text style={[styles.postComments, { color: "gray" }]}>
+                <ListItem style={styles.comments}>
+                  <Text style={[styles.comments, { color: "gray" }]}>
                     User1
                   </Text>
-                  <Text style={[styles.postComments]}>Comment Comment</Text>
+                  <Text style={[styles.comments]}>Comment Comment</Text>
                 </ListItem>
-                <ListItem style={styles.postComments}>
-                  <Text style={[styles.postComments, { color: "gray" }]}>
+                <ListItem style={styles.comments}>
+                  <Text style={[styles.comments, { color: "gray" }]}>
                     User2
                   </Text>
-                  <Text style={[styles.postComments]}>Comment Comment</Text>
+                  <Text style={[styles.comments]}>Comment Comment</Text>
                 </ListItem>
               </List>
             </CardItem>
-            <CardItem button style={styles.postViewMore}>
-              <Text style={styles.postViewMore}>View more comments</Text>
+            <CardItem button style={styles.viewMore}>
+              <Text style={styles.viewMore}>View more comments</Text>
             </CardItem>
           </Card>
         </Content>
@@ -115,3 +106,43 @@ export class PostW extends Component {
   }
 }
 module.export = PostW;
+
+const styles = StyleSheet.create({
+  content: {
+    padding: "0%",
+    marginTop: "0%",
+    marginBottom: "-10%",
+    flex: 0,
+  },
+  bar: {
+    fontSize: 20,
+    marginTop: "-2%",
+  },
+  barRight: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  comments: {
+    marginLeft: "0%",
+    paddingBottom: "1%",
+    paddingTop: "1%",
+    paddingRight: "5%",
+    fontSize: 15,
+  },
+  viewMore: {
+    fontSize: 15,
+    color: "lightgray",
+    justifyContent: "space-around",
+    paddingTop: "1%",
+  },
+  waffleButton: {
+    color: "red",
+    justifyContent: "space-around",
+  },
+  image: {
+    height: 345,
+    width: "110%",
+    flex: 1,
+    marginLeft: "-5%",
+  },
+});
