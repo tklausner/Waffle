@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Content, Body, Text, Button} from "native-base";
 import { Image, TouchableOpacity, StyleSheet, Dimensions} from "react-native"
-import { Col, Row, Grid } from 'react-native-easy-grid'; testing
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 const windowWidth = Dimensions.get('window').width;
 const bigWidth = windowWidth*2/3;
