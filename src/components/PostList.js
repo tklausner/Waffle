@@ -1,18 +1,17 @@
 import React from "react";
-import Post from "./Post";
-import { Content } from "native-base";
-import { FlatList, ListItem } from "react-native";
+import { Post } from "./Post";
+import { Content, Container, Text } from "native-base";
+import { FlatList, StyleSheet } from "react-native";
 
-const renderItem = ({ item: post }) => <Post post={post} key={post.id} />;
+const renderItem = ({ item }) => <Post post={item} key={item.id} />;
 
 export function PostList({ posts }) {
-  console.log("POSTLIST");
   return (
     <FlatList
-      style={{ flex: 1, borderColor: "red", borderWidth: 2 }}
       data={posts}
-      renderItem={this.renderItem}
-      keyExtractor={(post) => post.id}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      ListEmptyComponent={() => <Text>Ethan's a Bitch</Text>}
     />
   );
 }

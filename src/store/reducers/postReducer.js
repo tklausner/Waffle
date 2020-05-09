@@ -1,11 +1,4 @@
-import {
-  ADD_TODO,
-  TOGGLE_TODO,
-  SET_VISIBILITY_FILTER,
-  VisibilityFilters,
-  LOAD_POSTS,
-} from "../actions";
-const { SHOW_ALL } = VisibilityFilters;
+import { LOAD_POSTS } from "../actions";
 
 const initialState = {
   posts: [
@@ -30,41 +23,20 @@ const initialState = {
       image: require("../../../assets/images/roor.jpeg"),
       description: "GOD shining his light",
     },
+    {
+      id: "4",
+      username: "RoorRus",
+      profile: require("../../../assets/images/teddy.png"),
+      image: require("../../../assets/images/roor.jpeg"),
+      description: "GOD shining his light",
+    },
   ],
 };
 
 export function postReducer(state = initialState, action) {
-  return state;
-}
-
-export function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
-    case SET_VISIBILITY_FILTER:
-      return action.filter;
-    default:
+    case LOAD_POSTS:
       return state;
-  }
-}
-
-export function todos(state = [], action) {
-  switch (action.type) {
-    case ADD_TODO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false,
-        },
-      ];
-    case TOGGLE_TODO:
-      return state.map((todo, index) => {
-        if (index === action.index) {
-          return Object.assign({}, todo, {
-            completed: !todo.completed,
-          });
-        }
-        return todo;
-      });
     default:
       return state;
   }

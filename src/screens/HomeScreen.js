@@ -5,14 +5,8 @@ import { connect } from "react-redux";
 
 import { PostList } from "../components/PostList";
 class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    console.log("PROPS");
-
     const { posts } = this.props;
-    console.log(posts);
     return (
       <Container>
         <PostList posts={posts} />

@@ -19,86 +19,82 @@ import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../styles";
 
 export function Post({ post }) {
-  console.log("POST");
-  console.log(post);
   return (
-    <Container>
-      <Content style={styles.content}>
-        <Card>
-          <CardItem>
-            <Left>
-              <Thumbnail source={post.profile} />
-              <Body>
-                <Text>{post.username}</Text>
-              </Body>
-            </Left>
-            <Right>
-              <Button transparent>
-                <MaterialIcons
-                  name="more-horiz"
-                  style={[{ fontSize: 40 }, globalStyles.wGray]}
-                />
-              </Button>
-            </Right>
-          </CardItem>
-          <CardItem>
+    <Content style={styles.content}>
+      <Card>
+        <CardItem>
+          <Left>
+            <Thumbnail source={post.profile} />
             <Body>
-              <Image source={post.image} style={styles.image} />
+              <Text>{post.username}</Text>
             </Body>
-          </CardItem>
-          <CardItem>
-            <Left style={styles.bar}>
-              <Button transparent>
-                <MaterialIcons name="favorite-border" style={styles.bar} />
-              </Button>
-              <Button transparent>
-                <MaterialIcons name="bookmark-border" style={styles.bar} />
-              </Button>
-              <Button transparent>
-                <MaterialIcons name="send" style={styles.bar} />
-              </Button>
-            </Left>
-            <Body></Body>
-            <Right
-              style={[
-                { flexDirection: "row", justifyContent: "space-around" },
-                styles.bar,
-              ]}
-            >
-              <Text style={styles.bar}>
-                <MaterialIcons name="pie-chart" style={styles.bar} />
-                10
-              </Text>
-              <Text style={styles.bar}>
-                <MaterialIcons name="monetization-on" style={styles.bar} />
-                30
-              </Text>
-            </Right>
-          </CardItem>
-          <CardItem>
-            <Text>{post.description}</Text>
-          </CardItem>
-          <CardItem button style={styles.waffleButton}>
-            <Text style={styles.waffleButton}>WaffleButton</Text>
-          </CardItem>
-          <CardItem>
-            <List>
-              <ListItem style={styles.comments}>
-                <Text style={[styles.comments, { color: "gray" }]}>User1</Text>
-                <Text style={[styles.comments]}>Comment Comment</Text>
-              </ListItem>
-              <ListItem style={styles.comments}>
-                <Text style={[styles.comments, { color: "gray" }]}>User2</Text>
-                <Text style={[styles.comments]}>Comment Comment</Text>
-              </ListItem>
-            </List>
-          </CardItem>
-          <CardItem button style={styles.viewMore}>
-            <Text style={styles.viewMore}>View more comments</Text>
-          </CardItem>
-        </Card>
-      </Content>
-    </Container>
+          </Left>
+          <Right>
+            <Button transparent>
+              <MaterialIcons
+                name="more-horiz"
+                style={[{ fontSize: 40 }, globalStyles.wGray]}
+              />
+            </Button>
+          </Right>
+        </CardItem>
+        <CardItem>
+          <Body>
+            <Image source={post.image} style={styles.image} />
+          </Body>
+        </CardItem>
+        <CardItem>
+          <Left style={styles.bar}>
+            <Button transparent>
+              <MaterialIcons name="favorite-border" style={styles.bar} />
+            </Button>
+            <Button transparent>
+              <MaterialIcons name="bookmark-border" style={styles.bar} />
+            </Button>
+            <Button transparent>
+              <MaterialIcons name="send" style={styles.bar} />
+            </Button>
+          </Left>
+          <Body></Body>
+          <Right
+            style={[
+              { flexDirection: "row", justifyContent: "space-around" },
+              styles.bar,
+            ]}
+          >
+            <Text style={styles.bar}>
+              <MaterialIcons name="pie-chart" style={styles.bar} />
+              10
+            </Text>
+            <Text style={styles.bar}>
+              <MaterialIcons name="monetization-on" style={styles.bar} />
+              30
+            </Text>
+          </Right>
+        </CardItem>
+        <CardItem>
+          <Text>{post.description}</Text>
+        </CardItem>
+        <CardItem button style={styles.waffleButton}>
+          <Text style={styles.waffleButton}>WaffleButton</Text>
+        </CardItem>
+        <CardItem>
+          <List>
+            <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
+              <Text style={[styles.comments, { color: "gray" }]}>User1</Text>
+              <Text style={[styles.comments]}>Comment Comment</Text>
+            </ListItem>
+            <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
+              <Text style={[styles.comments, { color: "gray" }]}>User2</Text>
+              <Text style={[styles.comments]}>Comment Comment</Text>
+            </ListItem>
+          </List>
+        </CardItem>
+        <CardItem button style={styles.viewMore}>
+          <Text style={styles.viewMore}>View more comments</Text>
+        </CardItem>
+      </Card>
+    </Content>
   );
 }
 
@@ -106,10 +102,10 @@ module.export = Post;
 
 const styles = StyleSheet.create({
   content: {
-    padding: "0%",
-    marginTop: "0%",
-    marginBottom: "-10%",
+    marginTop: "-2%",
+    marginBottom: "0%",
     flex: 0,
+    borderTopWidth: 0,
   },
   bar: {
     fontSize: 20,

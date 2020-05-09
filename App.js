@@ -10,8 +10,9 @@ import RouteStack from "./src/routes/RouteStack";
 import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
 
+// store containing redux state
 const store = createStore(rootReducer);
-console.log(store.getState());
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
