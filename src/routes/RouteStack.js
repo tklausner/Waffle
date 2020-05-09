@@ -109,8 +109,7 @@ function ProfileStackScreen() {
 }
 
 const BottomTab = createBottomTabNavigator();
-export default function RouteStack({ store }) {
-  console.log("ROUTE");
+export default function RouteStack() {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
@@ -154,4 +153,4 @@ export default function RouteStack({ store }) {
     </NavigationContainer>
   );
 }
-module.export = connect(null)(RouteStack);
+module.export = RouteStack;

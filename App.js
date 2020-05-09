@@ -11,6 +11,7 @@ import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
 
 const store = createStore(rootReducer);
+console.log(store.getState());
 export default class App extends React.Component {
   constructor(props) {
     super(props);

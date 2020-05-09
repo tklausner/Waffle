@@ -11,9 +11,13 @@ export const VisibilityFilters = {
 };
 
 // waffle
-export const ADD_POST = "ADD_POST";
+export const LOAD_POSTS = "LOAD_POSTS";
 
 // action creators
+
+export function loadPosts(posts) {
+  return { type: LOAD_POSTS, posts };
+}
 
 export function addTodo(text) {
   return { type: ADD_TODO, text };

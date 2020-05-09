@@ -19,6 +19,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../styles";
 
 export function Post({ post }) {
+  console.log("POST");
+  console.log(post);
   return (
     <Container>
       <Content style={styles.content}>

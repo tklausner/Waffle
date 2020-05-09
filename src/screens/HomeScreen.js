@@ -4,7 +4,7 @@ import { Container, Content } from "native-base";
 import { connect } from "react-redux";
 
 import { PostList } from "../components/PostList";
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -12,9 +12,7 @@ export default class HomeScreen extends Component {
     console.log("PROPS");
 
     const { posts } = this.props;
-    console.log(this.store);
-    console.log("POSTS");
-    console.log(this);
+    console.log(posts);
     return (
       <Container>
         <PostList posts={posts} />
@@ -23,10 +21,10 @@ export default class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state) => {
   return {
-    posts: store.post.posts,
+    posts: state.post.posts,
   };
 };
 
-module.export = connect(mapStateToProps)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);
