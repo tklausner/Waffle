@@ -3,8 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
-  createAppContainer
+  createAppContainer,
 } from "@react-navigation/native";
+import { connect } from "react-redux";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import styles from "../styles";
 
@@ -52,7 +53,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator
       headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name)
+        header: () => GetHeader(route.name),
       })}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -68,7 +69,7 @@ function ExploreStackScreen() {
     <ExploreStack.Navigator
       headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name)
+        header: () => GetHeader(route.name),
       })}
     >
       <ExploreStack.Screen name="Explore" component={ExploreScreen} />
@@ -86,7 +87,7 @@ function SellStackScreen() {
         name="Sell"
         component={SellScreen}
         options={{
-          header: () => <DefaultHeader />
+          header: () => <DefaultHeader />,
         }}
       />
     </SellStack.Navigator>
@@ -99,7 +100,7 @@ function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name)
+        header: () => GetHeader(route.name),
       })}
     >
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
@@ -108,7 +109,6 @@ function ProfileStackScreen() {
 }
 
 const BottomTab = createBottomTabNavigator();
-
 export default function RouteStack() {
   return (
     <NavigationContainer>
@@ -137,12 +137,12 @@ export default function RouteStack() {
                 size={30}
               />
             );
-          }
+          },
         })}
         tabBarOptions={{
           activeTintColor: "black",
           inActiveTintColor: "gray",
-          showLabel: false
+          showLabel: false,
         }}
       >
         <BottomTab.Screen name="Home" component={HomeStackScreen} />
