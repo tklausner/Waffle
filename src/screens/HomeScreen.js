@@ -1,33 +1,24 @@
 import React, { Component } from "react";
+import { FlatList } from "react-native";
 import { Container, Content } from "native-base";
+import { connect } from "react-redux";
 
-import { PostW } from "../components/PostW";
-export default class HomeScreen extends Component {
+import { PostList } from "../components/PostList";
+class HomeScreen extends Component {
   render() {
+    const { posts } = this.props;
     return (
       <Container>
-        <Content>
-          <PostW
-            username="tklauklau"
-            profile={require("../../assets/images/teddy.png")}
-            image={require("../../assets/images/bing.png")}
-            description="Chernobyl x Colbalt"
-          />
-          <PostW
-            username="mimi>gaby"
-            profile={require("../../assets/images/ethan.jpeg")}
-            image={require("../../assets/images/ethan.jpeg")}
-            description="Too cool for miami chicks"
-          />
-          <PostW
-            username="RoorRus"
-            profile={require("../../assets/images/teddy.png")}
-            image={require("../../assets/images/roor.jpeg")}
-            description="GOD shining his light"
-          />
-        </Content>
+        <PostList posts={posts} />
       </Container>
     );
   }
 }
-module.export = HomeScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    posts: state.post.posts,
+  };
+};
+
+export default connect(mapStateToProps)(HomeScreen);

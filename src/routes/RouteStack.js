@@ -3,8 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
-  createAppContainer
+  createAppContainer,
 } from "@react-navigation/native";
+import { connect } from "react-redux";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import styles from "../styles";
 
@@ -18,6 +19,8 @@ import { DefaultHeader } from "../components/DefaultHeader";
 import { HomeHeader } from "../components/HomeHeader";
 import { MessagesHeader } from "../components/MessagesHeader";
 import { ProfileHeader } from "../components/ProfileHeader";
+import { ExploreHeader } from "../components/ExploreHeader";
+import { SearchHeader } from "../components/SearchHeader";
 
 const HomeStack = createStackNavigator();
 
@@ -33,6 +36,12 @@ function GetHeader(route) {
     case "Profile":
       return <ProfileHeader />;
       break;
+    case "Explore":
+      return <ExploreHeader />;
+      break;
+    case "Search":
+      return <SearchHeader />;
+      break;
     default:
       return <DefaultHeader />;
       break;
@@ -42,9 +51,9 @@ function GetHeader(route) {
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
-      headerMode="screen"
+      headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name)
+        header: () => GetHeader(route.name),
       })}
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -57,14 +66,14 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   return (
-    <ExploreStack.Navigator>
-      <ExploreStack.Screen
-        name="Explore"
-        component={ExploreScreen}
-        options={{
-          header: () => <DefaultHeader />
-        }}
-      />
+    <ExploreStack.Navigator
+      headerMode="float"
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name),
+      })}
+    >
+      <ExploreStack.Screen name="Explore" component={ExploreScreen} />
+      <ExploreStack.Screen name="Search" component={ExploreScreen} />
     </ExploreStack.Navigator>
   );
 }
@@ -78,7 +87,7 @@ function SellStackScreen() {
         name="Sell"
         component={SellScreen}
         options={{
-          header: () => <DefaultHeader />
+          header: () => <DefaultHeader />,
         }}
       />
     </SellStack.Navigator>
@@ -91,7 +100,7 @@ function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name)
+        header: () => GetHeader(route.name),
       })}
     >
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
@@ -100,7 +109,6 @@ function ProfileStackScreen() {
 }
 
 const BottomTab = createBottomTabNavigator();
-
 export default function RouteStack() {
   return (
     <NavigationContainer>
@@ -129,12 +137,12 @@ export default function RouteStack() {
                 size={30}
               />
             );
-          }
+          },
         })}
         tabBarOptions={{
           activeTintColor: "black",
           inActiveTintColor: "gray",
-          showLabel: false
+          showLabel: false,
         }}
       >
         <BottomTab.Screen name="Home" component={HomeStackScreen} />

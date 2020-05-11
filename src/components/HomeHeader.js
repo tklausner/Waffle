@@ -6,11 +6,12 @@ import {
   Body,
   Right,
   Button,
-  Title
+  Title,
 } from "native-base";
+import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import styles from "../styles";
+import globalStyles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export function HomeHeader() {
@@ -19,14 +20,24 @@ export function HomeHeader() {
     <Header>
       <Left></Left>
       <Body>
-        <Title style={[styles.header, styles.wBlue]}>Waffle</Title>
+        <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
       </Body>
       <Right>
         <Button transparent onPress={() => navigation.navigate("Messages")}>
-          <MaterialIcons name="mail" style={[styles.header, styles.wYellow]} />
+          <MaterialIcons
+            name="mail"
+            style={[styles.header, globalStyles.wYellow]}
+          />
         </Button>
       </Right>
     </Header>
   );
 }
 module.export = HomeHeader;
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: "center",
+    fontSize: 30,
+  },
+});
