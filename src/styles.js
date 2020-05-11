@@ -56,5 +56,19 @@ export default {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  }
+  },
+  profName:{
+    fontSize: 25,
+    paddingLeft: "5%"
+  },
+  profUsername:{
+    fontSize: 15,
+    paddingLeft: "5%",
+    color: "#999999"
+  },
+  profTop:{
+    paddingTop: "5%",
+    paddingLeft: "10%"
+  },
+
 };
