@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button,
     Icon, Left, Body, Right, List, ListItem, Image } from "native-base";
-import styles from "../styles";
+import {StyleSheet} from "react-native"
 
 export default class ProfileScreen extends Component {
   render() {
@@ -55,3 +55,19 @@ export default class ProfileScreen extends Component {
   }
 }
 module.export = ProfileScreen;
+
+const styles= StyleSheet.create({
+    profName:{
+      fontSize: 25,
+      paddingLeft: "5%"
+    },
+    profUsername:{
+      fontSize: 15,
+      paddingLeft: "5%",
+      color: "#999999"
+    },
+    profTop:{
+      paddingTop: "5%",
+      paddingLeft: "10%"
+    }
+})
