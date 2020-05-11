@@ -6,6 +6,6 @@ export default {
     color: "#EACD2E",
   },
   wGray: {
-    color: "#999999",
+    color: "#999999"
   },
 };
