@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Container, Content, Button, Text } from "native-base";
 
-import styles from "../styles";
+import globalStyles from "../styles";
 
-export default class MessagingScreen extends Component {
-  render() {
-    return <Container></Container>;
-  }
+function MessagingScreen({ route }) {
+  const { id, content } = route.params;
+  return (
+    <Container>
+      <Text>{content}</Text>
+    </Container>
+  );
 }
-module.export = MessagingScreen;
+export default MessagingScreen;

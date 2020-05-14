@@ -1,32 +1,40 @@
 // action types
 
-// examples
-export const ADD_TODO = "ADD";
-export const TOGGLE_TODO = "TOGGLE_TODO";
-export const SET_VISIBILITY_FILTER = "SET_VISIBILITY_FILTER";
-export const VisibilityFilters = {
-  SHOW_ALL: "SHOW_ALL",
-  SHOW_COMPLETED: "SHOW_COMPLETED",
-  SHOW_ACTIVE: "SHOW_ACTIVE",
-};
+// POSTS
+export const FETCH_POSTS_PENDING = "FETCH_POSTS_PENDING";
+export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
+export const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE";
 
-// waffle
-export const LOAD_POSTS = "LOAD_POSTS";
+// MESSAGES
+export const FETCH_MESSAGES_PENDING = "FETCH_MESSAGES_PENDING";
+export const FETCH_MESSAGES_SUCCESS = "FETCH_MESSAGES_SUCCESS";
+export const FETCH_MESSAGES_FAILURE = "FETCH_MESSAGES_FAILURE";
 
 // action creators
 
-export function loadPosts(posts) {
-  return { type: LOAD_POSTS, posts };
+// POSTS
+export function fetchPostsPending() {
+  return { type: FETCH_POSTS_PENDING };
 }
 
-export function addTodo(text) {
-  return { type: ADD_TODO, text };
+export function fetchPostsSuccess(posts) {
+  return { type: FETCH_POSTS_SUCCESS, payload: posts };
 }
 
-export function toggleTodo(index) {
-  return { type: TOGGLE_TODO, index };
+export function fetchPostsFailure(error) {
+  return { type: FETCH_POSTS_FAILURE, error: error };
 }
 
-export function setVisibilityFilter(filter) {
-  return { type: SET_VISIBILITY_FILTER, filter };
+// MESSAGES
+
+export function fetchMessagesPending() {
+  return { type: FETCH_MESSAGES_PENDING };
+}
+
+export function fetchMessagesSuccess(messages) {
+  return { type: FETCH_MESSAGES_SUCCESS, payload: messages };
+}
+
+export function fetchMessagesFailure(error) {
+  return { type: FETCH_MESSAGES_FAILURE, error: error };
 }

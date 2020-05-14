@@ -5,14 +5,13 @@ import {
   NavigationContainer,
   createAppContainer,
 } from "@react-navigation/native";
-import { connect } from "react-redux";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import styles from "../styles";
 
 import HomeScreen from "../screens/HomeScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import SellScreen from "../screens/SellScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import MessagingPreviewScreen from "../screens/MessagingPreviewScreen";
 import MessagingScreen from "../screens/MessagingScreen";
 
 import { DefaultHeader } from "../components/DefaultHeader";
@@ -31,6 +30,7 @@ function GetHeader(route) {
       return <HomeHeader />;
       break;
     case "Messages":
+    case "Message":
       return <MessagesHeader />;
       break;
     case "Profile":
@@ -55,9 +55,11 @@ function HomeStackScreen() {
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
       })}
+      initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Messages" component={MessagingScreen} />
+      <HomeStack.Screen name="Messages" component={MessagingPreviewScreen} />
+      <HomeStack.Screen name="Message" component={MessagingScreen} />
     </HomeStack.Navigator>
   );
 }
