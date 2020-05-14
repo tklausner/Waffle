@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createStore } from "redux";
 
 import RouteStack from "./src/routes/RouteStack";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
 import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
 
@@ -36,7 +37,7 @@ export default class App extends React.Component {
     }
     return (
       <Provider store={store}>
-        <RouteStack />
+        <WelcomeScreen />
       </Provider>
     );
   }
