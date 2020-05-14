@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createStore } from "redux";
 
 import RouteStack from "./src/routes/RouteStack";
+import LoginScreen from "./src/screens/LoginScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";

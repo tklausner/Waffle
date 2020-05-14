@@ -5,27 +5,27 @@ import {StyleSheet, Image} from "react-native"
 export default class WelcomeScreen extends Component {
   render() {
     return (
-    <Container>
-    <Header style = {{backgroundColor: "transparent", borderBottomWidth: 0}}></Header>
-    <View style = {styles.container}>
-      <Image style = {styles.logo} source={require("../../assets/images/OnlineLogo.png")}/>
-      <Text style = {styles.welcomeText}>
-        Welcome to Waffle
-      </Text>
-      <Text style = {styles.smallText}>
-        Join over 200 million people who use Waffle to buy goods.
-      </Text>
-      <Button style = {styles.registerButton}>
-        <Text style = {styles.buttonText}>
-          Register
+    <Container style = {{backgroundColor: "white"}}>
+      <Header style = {{backgroundColor: "transparent", borderBottomWidth: 0}}></Header>
+      <View style = {styles.container}>
+        <Image style = {styles.logo} source={require("../../assets/images/OnlineLogo.png")}/>
+        <Text style = {styles.welcomeText}>
+          Welcome to Waffle
         </Text>
-      </Button>
-      <Button style = {styles.loginButton}>
-        <Text style = {styles.buttonText}>
-          Login
+        <Text style = {styles.smallText}>
+          Join over 200 million people who use Waffle to buy goods.
         </Text>
-      </Button>
-    </View>
+        <Button style = {styles.registerButton}>
+          <Text style = {styles.buttonText}>
+            Register
+          </Text>
+        </Button>
+        <Button style = {styles.loginButton}>
+          <Text style = {styles.buttonText}>
+            Login
+          </Text>
+        </Button>
+      </View>
     </Container>
     );
   }
@@ -86,6 +86,6 @@ const styles= StyleSheet.create({
       flex:1,
       width: "60%",
       resizeMode: "contain",
-      marginBottom: -50
+      marginBottom: 20
     }
 })
