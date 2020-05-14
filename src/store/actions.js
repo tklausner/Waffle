@@ -11,12 +11,22 @@ export const VisibilityFilters = {
 };
 
 // waffle
-export const LOAD_POSTS = "LOAD_POSTS";
+export const FETCH_POSTS_PENDING = "FETCH_POSTS_PENDING";
+export const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
+export const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE";
 
 // action creators
 
-export function loadPosts(posts) {
-  return { type: LOAD_POSTS, posts };
+export function fetchPostsPending() {
+  return { type: FETCH_POSTS_PENDING };
+}
+
+export function fetchPostsSuccess(posts) {
+  return { type: FETCH_POSTS_SUCCESS, payload: posts };
+}
+
+export function fetchPostsFailure(error) {
+  return { type: FETCH_POSTS_FAILURE, error: error };
 }
 
 export function addTodo(text) {

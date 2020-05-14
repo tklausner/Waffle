@@ -1,4 +1,8 @@
-import { LOAD_POSTS } from "../actions";
+import {
+  FETCH_POSTS_PENDING,
+  FETCH_POSTS_SUCCESS,
+  FETCH_POSTS_FAILURE,
+} from "../actions";
 
 const initialState = {
   posts: [
@@ -31,13 +35,23 @@ const initialState = {
       description: "GOD shining his light",
     },
   ],
+  pending: false,
+  error: null,
 };
 
 export function postReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_POSTS:
-      return state;
+    case FETCH_POSTS_PENDING:
+      return { ...state, pending: true };
+    case FETCH_POSTS_SUCCESS:
+      return { ...state, pending: false, posts: action.payload };
+    case FETCH_POSTS_FAILURE:
+      return { ...state, pending: false, error: action.error };
     default:
       return state;
   }
 }
+
+export const getPosts = (state) => state.posts;
+export const getPostsPending = (state) => state.pending;
+export const getPostsError = (state) => state.error;

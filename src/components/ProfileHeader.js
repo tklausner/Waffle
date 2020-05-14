@@ -6,9 +6,10 @@ import {
   Body,
   Right,
   Title,
-  Button
+  Button,
 } from "native-base";
-import styles from "../styles";
+import { StyleSheet } from "react-native";
+import globalStyles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export function ProfileHeader() {
@@ -18,19 +19,29 @@ export function ProfileHeader() {
         <Button transparent>
           <MaterialIcons
             name="notifications-none"
-            style={[styles.header, styles.wYellow]}
+            style={[styles.header, globalStyles.wYellow]}
           />
         </Button>
       </Left>
       <Body>
-        <Title style={[styles.header, styles.wBlue]}>Waffle</Title>
+        <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
       </Body>
       <Right>
         <Button transparent>
-          <MaterialIcons name="menu" style={[styles.header, styles.wGray]} />
+          <MaterialIcons
+            name="menu"
+            style={[styles.header, globalStyles.wGray]}
+          />
         </Button>
       </Right>
     </Header>
   );
 }
 module.export = ProfileHeader;
+
+const styles = StyleSheet.create({
+  header: {
+    textAlign: "center",
+    fontSize: 30,
+  },
+});

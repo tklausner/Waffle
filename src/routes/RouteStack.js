@@ -5,9 +5,7 @@ import {
   NavigationContainer,
   createAppContainer,
 } from "@react-navigation/native";
-import { connect } from "react-redux";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import styles from "../styles";
 
 import HomeScreen from "../screens/HomeScreen";
 import ExploreScreen from "../screens/ExploreScreen";
