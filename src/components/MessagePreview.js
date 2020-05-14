@@ -1,11 +1,20 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, CardItem, Thumbnail, Text, Left, Body } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import globalStyles from "../styles";
 
-export function Message({ message }) {
+export function MessagePreview({ message }) {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Message", {
+          id: message.id,
+          content: message.content,
+        })
+      }
+    >
       <Card style={styles.content}>
         <CardItem>
           <Left style={styles.profile}>
@@ -21,7 +30,7 @@ export function Message({ message }) {
   );
 }
 
-module.export = Message;
+module.export = MessagePreview;
 
 const styles = StyleSheet.create({
   body: {
