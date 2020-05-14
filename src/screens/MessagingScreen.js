@@ -1,11 +1,26 @@
 import React, { Component } from "react";
 import { Container, Content, Button, Text } from "native-base";
+import { connect } from "react-redux";
 
-import styles from "../styles";
+import { MessageList } from "../components/MessageList";
 
-export default class MessagingScreen extends Component {
+import globalStyles from "../styles";
+
+class MessagingScreen extends Component {
   render() {
-    return <Container></Container>;
+    const { messages } = this.props;
+    return (
+      <Container>
+        <MessageList messages={messages} />
+      </Container>
+    );
   }
 }
-module.export = MessagingScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    messages: state.message.messages,
+  };
+};
+
+export default connect(mapStateToProps)(MessagingScreen);
