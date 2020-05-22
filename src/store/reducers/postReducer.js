@@ -12,6 +12,8 @@ const initialState = {
       profile: require("../../../assets/images/teddy.png"),
       image: require("../../../assets/images/bing.png"),
       description: "Chernobyl x Colbalt",
+      value: 1500,
+      waffles_remaining: 10,
     },
     {
       id: "2",
@@ -19,6 +21,8 @@ const initialState = {
       profile: require("../../../assets/images/ethan.jpeg"),
       image: require("../../../assets/images/ethan.jpeg"),
       description: "Too cool for miami chicks",
+      value: 10,
+      waffles_remaining: 3,
     },
     {
       id: "3",
@@ -26,6 +30,8 @@ const initialState = {
       profile: require("../../../assets/images/teddy.png"),
       image: require("../../../assets/images/roor.jpeg"),
       description: "GOD shining his light",
+      value: 6000,
+      waffles_remaining: 5,
     },
     {
       id: "4",
@@ -33,6 +39,8 @@ const initialState = {
       profile: require("../../../assets/images/teddy.png"),
       image: require("../../../assets/images/roor.jpeg"),
       description: "GOD shining his light",
+      value: 200,
+      waffles_remaining: 9,
     },
   ],
   pending: false,

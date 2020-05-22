@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import {
   Content,
   Card,
@@ -13,10 +13,12 @@ import {
   List,
   ListItem,
 } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../styles";
 
 export function Post({ post }) {
+  const navigation = useNavigation();
   return (
     <Content style={styles.content}>
       <Card>
@@ -62,18 +64,26 @@ export function Post({ post }) {
           >
             <Text style={styles.bar}>
               <MaterialIcons name="pie-chart" style={styles.bar} />
-              10
+              {post.waffles_remaining}
             </Text>
             <Text style={styles.bar}>
               <MaterialIcons name="monetization-on" style={styles.bar} />
-              30
+              {post.value}
             </Text>
           </Right>
         </CardItem>
         <CardItem>
           <Text>{post.description}</Text>
         </CardItem>
-        <CardItem button style={styles.waffleButton}>
+        <CardItem
+          button
+          style={styles.waffleButton}
+          onPress={() =>
+            navigation.navigate("Waffle", {
+              post: post,
+            })
+          }
+        >
           <Text style={styles.waffleButton}>WaffleButton</Text>
         </CardItem>
         <CardItem>

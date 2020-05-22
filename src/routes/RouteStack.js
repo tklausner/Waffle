@@ -13,6 +13,7 @@ import SellScreen from "../screens/SellScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import MessagingPreviewScreen from "../screens/MessagingPreviewScreen";
 import MessagingScreen from "../screens/MessagingScreen";
+import WaffleScreen from "../screens/WaffleScreen";
 
 import { DefaultHeader } from "../components/DefaultHeader";
 import { HomeHeader } from "../components/HomeHeader";
@@ -21,16 +22,14 @@ import { ProfileHeader } from "../components/ProfileHeader";
 import { ExploreHeader } from "../components/ExploreHeader";
 import { SearchHeader } from "../components/SearchHeader";
 
-const HomeStack = createStackNavigator();
-
 // helper function for  getting associated header
 function GetHeader(route) {
   switch (route) {
     case "Home":
       return <HomeHeader />;
       break;
-    case "Messages":
-    case "Message":
+    case "Waffle":
+    case "Messaging":
       return <MessagesHeader />;
       break;
     case "Profile":
@@ -48,6 +47,19 @@ function GetHeader(route) {
   }
 }
 
+const MessageStack = createStackNavigator();
+
+function MessageStackScreen() {
+  return (
+    <MessageStack.Navigator headerMode="none">
+      <MessageStack.Screen name="Messages" component={MessagingPreviewScreen} />
+      <MessageStack.Screen name="Message" component={MessagingScreen} />
+    </MessageStack.Navigator>
+  );
+}
+
+const HomeStack = createStackNavigator();
+
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator
@@ -58,8 +70,8 @@ function HomeStackScreen() {
       initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Messages" component={MessagingPreviewScreen} />
-      <HomeStack.Screen name="Message" component={MessagingScreen} />
+      <HomeStack.Screen name="Waffle" component={WaffleScreen} />
+      <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
     </HomeStack.Navigator>
   );
 }
