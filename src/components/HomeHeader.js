@@ -23,7 +23,7 @@ export function HomeHeader() {
         <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
       </Body>
       <Right>
-        <Button transparent onPress={() => navigation.navigate("Messages")}>
+        <Button transparent onPress={() => navigation.navigate("Messaging")}>
           <MaterialIcons
             name="mail"
             style={[styles.header, globalStyles.wYellow]}
