@@ -5,10 +5,12 @@ import { Container } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { createStore } from "redux";
+import * as firebase from "firebase";
 
-import RouteStack from "./src/routes/RouteStack";
+import AuthNavigator from "./src/routes/AuthNavigator";
 import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
+import ApiKeys from "./src/constants/ApiKeys";
 
 // store containing redux state
 const store = createStore(rootReducer);
@@ -19,6 +21,9 @@ export default class App extends React.Component {
     this.state = {
       isReady: false,
     };
+
+    //Inititalize Firebase
+    if (!firebase.apps.length) {firebase.initializeApp(ApiKeys.FirebaseConfig); }
   }
 
   async componentDidMount() {
@@ -36,7 +41,7 @@ export default class App extends React.Component {
     }
     return (
       <Provider store={store}>
-        <RouteStack />
+        <AuthNavigator />
       </Provider>
     );
   }

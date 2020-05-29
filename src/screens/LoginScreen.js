@@ -1,16 +1,36 @@
 import React, { Component } from "react";
 import { Text, Button, View, Header, Container, Footer, Left, Form, Item, Input, Label} from "native-base";
-import {StyleSheet, TextInput} from "react-native"
+import {StyleSheet, TextInput, Alert} from "react-native"
 import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../styles";
+import * as firebase from "firebase";
+import { useNavigation } from "@react-navigation/native";
 
 export default class LoginScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    }
+  }
+
+  signIn = () => {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => {
+
+      }, (error) => {
+        Alert.alert(error.message);
+      });
+  }
+
   render() {
     return (
     <Container style = {{backgroundColor: "white"}}>
     <Header style = {{backgroundColor: "transparent", borderBottomWidth: 0}}>
       <Left>
-        <Button transparent style = {styles.backButton}>
+        <Button transparent style = {styles.backButton} onPress={() => this.props.navigation.goBack()}>
           <MaterialIcons
             name="keyboard-arrow-left"
             style={[{ fontSize: 40}, stylesPage.wGray]}
@@ -29,14 +49,20 @@ export default class LoginScreen extends Component {
       <Text style = {styles.accountInfoText}>
         ACCOUNT INFORMATION
       </Text>
-      <TextInput style = {styles.form} placeholder = "Username or E-Mail" keyboardAppearance={"dark"} keyboardType={'email-address'} placeholderTextColor = {"white"}/>
-      <TextInput style = {styles.form} placeholder = "Password" secureTextEntry={true} keyboardAppearance={"dark"} placeholderTextColor = {"white"}/>
+      <TextInput style = {styles.form} placeholder = "Username or E-Mail" autoCorrect={false}
+       keyboardAppearance={"dark"} keyboardType={'email-address'} placeholderTextColor = {"white"}
+       value = {this.state.email} onChangeText={(text) => {this.setState({email: text}) }}
+       />
+      <TextInput style = {styles.form} placeholder = "Password"
+      secureTextEntry={true} keyboardAppearance={"dark"} placeholderTextColor = {"white"}
+      value = {this.state.password} onChangeText={(text) => {this.setState({password: text}) }}
+      />
       <Button transparent style = {styles.forgotPasswordButton}>
         <Text style = {styles.forgotPasswordText}>
           Forgot your password?
         </Text>
       </Button>
-      <Button style = {styles.loginButton}>
+      <Button style = {styles.loginButton} onPress = {this.signIn}>
         <Text style = {styles.buttonText}>
           Login
         </Text>
