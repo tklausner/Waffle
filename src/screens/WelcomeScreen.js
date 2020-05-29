@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, Button, View, Header, Container, Footer} from "native-base";
 import {StyleSheet, Image} from "react-native"
+import { useNavigation } from "@react-navigation/native";
 
 export default class WelcomeScreen extends Component {
   render() {
@@ -15,12 +16,12 @@ export default class WelcomeScreen extends Component {
         <Text style = {styles.smallText}>
           Join over 200 million people who use Waffle to buy goods.
         </Text>
-        <Button style = {styles.registerButton}>
+        <Button style = {styles.registerButton} onPress={() => this.props.navigation.navigate("SignUpScreen")}>
           <Text style = {styles.buttonText}>
             Register
           </Text>
         </Button>
-        <Button style = {styles.loginButton}>
+        <Button style = {styles.loginButton} onPress={() => this.props.navigation.navigate("LoginScreen")}>
           <Text style = {styles.buttonText}>
             Login
           </Text>

@@ -3,21 +3,23 @@ import { Text, Button, View, Header, Container, Footer, Left, Form, Item, Input,
 import {StyleSheet, TextInput, Alert} from "react-native"
 import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../styles";
-import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
+import * as firebase from "firebase";
 
-export default class LoginScreen extends Component {
+
+export default class SignUpScreen extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      username: "",
       email: "",
       password: "",
     }
   }
 
-  signIn = () => {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+  signUp = () => {
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
 
       }, (error) => {
@@ -41,20 +43,24 @@ export default class LoginScreen extends Component {
     </Header>
     <View style = {styles.container}>
       <Text style = {styles.welcomeText}>
-        Welcome back!
+        Register!
       </Text>
-      <Text style = {styles.smallText}>
-        Login with your email to start Waffling
+      <Text style = {styles.accountInfoText}>
+        PICK A USERNAME
       </Text>
+      <TextInput style = {styles.form} placeholder = "Username" autoCorrect={false}
+      keyboardAppearance={"dark"} keyboardType={'email-address'} placeholderTextColor = {"white"}
+      value = {this.state.username} onChangeText={(text) => {this.setState({username: text}) }}
+      />
       <Text style = {styles.accountInfoText}>
         ACCOUNT INFORMATION
       </Text>
-      <TextInput style = {styles.form} placeholder = "Username or E-Mail" autoCorrect={false}
-       keyboardAppearance={"dark"} keyboardType={'email-address'} placeholderTextColor = {"white"}
-       value = {this.state.email} onChangeText={(text) => {this.setState({email: text}) }}
-       />
-      <TextInput style = {styles.form} placeholder = "Password"
-      secureTextEntry={true} keyboardAppearance={"dark"} placeholderTextColor = {"white"}
+      <TextInput style = {styles.form} placeholder = "E-Mail" autoCorrect={false}
+      keyboardAppearance={"dark"} keyboardType={'email-address'} placeholderTextColor = {"white"}
+      value = {this.state.email} onChangeText={(text) => {this.setState({email: text}) }}
+      />
+      <TextInput style = {styles.form} placeholder = "Password" secureTextEntry={true}
+      keyboardAppearance={"dark"} placeholderTextColor = {"white"}
       value = {this.state.password} onChangeText={(text) => {this.setState({password: text}) }}
       />
       <Button transparent style = {styles.forgotPasswordButton}>
@@ -62,9 +68,9 @@ export default class LoginScreen extends Component {
           Forgot your password?
         </Text>
       </Button>
-      <Button style = {styles.loginButton} onPress = {this.signIn}>
+      <Button style = {styles.loginButton} onPress = {this.signUp}>
         <Text style = {styles.buttonText}>
-          Login
+          Create an account
         </Text>
       </Button>
     </View>
@@ -72,7 +78,7 @@ export default class LoginScreen extends Component {
     );
   }
 }
-module.export = LoginScreen;
+module.export = SignUpScreen;
 
 const styles= StyleSheet.create({
     loginButton:{
@@ -90,13 +96,6 @@ const styles= StyleSheet.create({
       textAlign: "center",
       fontWeight: "bold",
       fontSize: 14
-    },
-    smallText:{
-      color: "#00B8FA",
-      textAlign: "center",
-      fontSize: 14,
-      marginBottom: 35,
-      width: "80%"
     },
     welcomeText:{
       color: "#00B8FA",
@@ -143,6 +142,7 @@ const styles= StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 14,
       marginBottom: 8,
-      color: "#00B8FA"
+      color: "#00B8FA",
+      marginTop: 16
     }
 })
