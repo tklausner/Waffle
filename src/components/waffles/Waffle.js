@@ -40,7 +40,7 @@ export function Waffle({ post }) {
         </CardItem>
         <CardItem>
           <Image
-            source={require("../../assets/images/WaffleIcon.png")}
+            source={require("../../../assets/images/WaffleIcon.png")}
             style={styles.image}
           />
         </CardItem>

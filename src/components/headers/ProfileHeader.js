@@ -9,7 +9,7 @@ import {
   Button,
 } from "native-base";
 import { StyleSheet } from "react-native";
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as firebase from "firebase";
 import { AuthContext } from "../../routes/AuthNavigator";

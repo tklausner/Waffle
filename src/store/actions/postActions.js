@@ -19,6 +19,7 @@ export function fetchPostsSuccess(posts) {
 }
 
 export function fetchPostsFailure(error) {
+  console.log("Fetch Failed, ERROR: ", error);
   return { type: FETCH_POSTS_FAILURE, error: error };
 }
 
