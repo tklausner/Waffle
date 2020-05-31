@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Container, Content, Button } from "native-base";
 
-import { newPost } from "../api/post";
+import { newPost } from "../../api/post";
 
 import { connect } from "react-redux";
 
 class SellScreen extends Component {
   state = {
     username: "NEW!",
-    profile: require("../../assets/images/ethan.jpeg"),
+    profile: require("../../../assets/images/ethan.jpeg"),
     description: "NEW!",
     value: 32,
     waffles_remaining: 32,

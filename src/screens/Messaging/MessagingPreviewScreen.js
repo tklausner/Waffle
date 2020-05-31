@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Container, Content, Button, Text } from "native-base";
 import { connect } from "react-redux";
 
-import { MessageList } from "../components/MessageList";
+import { MessageList } from "../../components/messaging/MessageList";
 
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 class MessagingPreviewScreen extends Component {
   render() {

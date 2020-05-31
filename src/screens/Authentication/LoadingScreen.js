@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { Container } from "native-base";
-import styles from "../styles";
+import styles from "../../styles";
 
 const LoadingScreen = () => (
   <Container style={styles.loadingScreen}>

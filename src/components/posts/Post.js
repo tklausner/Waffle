@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 export function Post({ post }) {
   console.log(post);

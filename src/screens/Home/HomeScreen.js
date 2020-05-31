@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Container, Content } from "native-base";
 import { connect } from "react-redux";
 
-import { PostList } from "../components/PostList";
+import { PostList } from "../../components/posts/PostList";
 
-import { readPosts } from "../api/post";
+import { readPosts } from "../../api/post";
 class HomeScreen extends Component {
   componentDidMount() {
     this.props.readPosts();

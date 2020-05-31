@@ -7,20 +7,20 @@ import {
 } from "@react-navigation/native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
-import HomeScreen from "../screens/HomeScreen";
-import ExploreScreen from "../screens/ExploreScreen";
-import SellScreen from "../screens/SellScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import MessagingPreviewScreen from "../screens/MessagingPreviewScreen";
-import MessagingScreen from "../screens/MessagingScreen";
-import WaffleScreen from "../screens/WaffleScreen";
+import HomeScreen from "../screens/Home/HomeScreen";
+import ExploreScreen from "../screens/Explore/ExploreScreen";
+import SellScreen from "../screens/Sell/SellScreen";
+import ProfileScreen from "../screens/Profile/ProfileScreen";
+import MessagingPreviewScreen from "../screens/Messaging/MessagingPreviewScreen";
+import MessagingScreen from "../screens/Messaging/MessagingScreen";
+import WaffleScreen from "../screens/Waffle/WaffleScreen";
 
-import { DefaultHeader } from "../components/DefaultHeader";
-import { HomeHeader } from "../components/HomeHeader";
-import { MessagesHeader } from "../components/MessagesHeader";
-import { ProfileHeader } from "../components/ProfileHeader";
-import { ExploreHeader } from "../components/ExploreHeader";
-import { SearchHeader } from "../components/SearchHeader";
+import { DefaultHeader } from "../components/headers/DefaultHeader";
+import { HomeHeader } from "../components/headers/HomeHeader";
+import { MessagesHeader } from "../components/headers/MessagesHeader";
+import { ProfileHeader } from "../components/headers/ProfileHeader";
+import { ExploreHeader } from "../components/headers/ExploreHeader";
+import { SearchHeader } from "../components/headers/SearchHeader";
 
 // helper function for  getting associated header
 function GetHeader(route) {

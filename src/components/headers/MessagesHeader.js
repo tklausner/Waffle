@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 export function MessagesHeader() {
   const navigation = useNavigation();

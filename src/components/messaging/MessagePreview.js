@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, CardItem, Thumbnail, Text, Left, Body } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 export function MessagePreview({ message }) {
   const navigation = useNavigation();

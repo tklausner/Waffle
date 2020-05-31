@@ -12,15 +12,14 @@ import { StyleSheet } from "react-native";
 import globalStyles from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import { AuthContext } from '../routes/AuthNavigator';
+import { AuthContext } from "../../routes/AuthNavigator";
 
 export function ProfileHeader() {
-
   async function logOut() {
     try {
-      await firebase.auth().signOut()
+      await firebase.auth().signOut();
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
@@ -38,7 +37,7 @@ export function ProfileHeader() {
         <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
       </Body>
       <Right>
-        <Button transparent onPress = {logOut}>
+        <Button transparent onPress={logOut}>
           <MaterialIcons
             name="menu"
             style={[styles.header, globalStyles.wGray]}

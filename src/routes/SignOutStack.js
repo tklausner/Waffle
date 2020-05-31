@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import LoginScreen from '../screens/LoginScreen'
-import WelcomeScreen from '../screens/WelcomeScreen'
-import SignUpScreen from '../screens/SignUpScreen'
+import LoginScreen from "../screens/Authentication/LoginScreen";
+import WelcomeScreen from "../screens/Authentication/WelcomeScreen";
+import SignUpScreen from "../screens/Authentication/SignUpScreen";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 export default function SignOutStack() {
   return (
@@ -17,5 +17,5 @@ export default function SignOutStack() {
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }

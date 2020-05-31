@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Container, Content, Button, Text } from "native-base";
-import { Waffle } from "../components/Waffle";
+import { Waffle } from "../../components/waffles/Waffle";
 
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 function WaffleScreen({ route }) {
   const { post } = route.params;

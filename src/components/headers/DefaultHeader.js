@@ -1,7 +1,7 @@
 import React from "react";
 import { Header, Body, Title } from "native-base";
 import { StyleSheet } from "react-native";
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 
 export function DefaultHeader() {
   return (

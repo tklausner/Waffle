@@ -11,7 +11,7 @@ import {
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import globalStyles from "../styles";
+import globalStyles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export function HomeHeader() {
