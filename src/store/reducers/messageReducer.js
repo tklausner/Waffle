@@ -2,7 +2,7 @@ import {
   FETCH_MESSAGES_PENDING,
   FETCH_MESSAGES_SUCCESS,
   FETCH_MESSAGES_FAILURE,
-} from "../actions";
+} from "../actions/messageActions";
 
 const initialState = {
   messages: [

@@ -18,6 +18,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../styles";
 
 export function Post({ post }) {
+  console.log(post);
   const navigation = useNavigation();
   return (
     <Content style={styles.content}>

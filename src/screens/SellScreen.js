@@ -1,9 +1,30 @@
 import React, { Component } from "react";
-import { Container, Content } from "native-base";
+import { Container, Content, Button } from "native-base";
 
-export default class SellScreen extends Component {
+import { newPost } from "../api/post";
+
+import { connect } from "react-redux";
+
+class SellScreen extends Component {
+  state = {
+    username: "NEW!",
+    profile: require("../../assets/images/ethan.jpeg"),
+    description: "NEW!",
+    value: 32,
+    waffles_remaining: 32,
+  };
+
   render() {
-    return <Container></Container>;
+    return (
+      <Container>
+        <Button onPress={() => this.props.newPost(this.state)}></Button>
+      </Container>
+    );
   }
 }
-module.export = SellScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newPost: (post) => dispatch(newPost(post)),
+  };
+};
+export default connect(null, mapDispatchToProps)(SellScreen);

@@ -3,7 +3,12 @@ import { Container, Content } from "native-base";
 import { connect } from "react-redux";
 
 import { PostList } from "../components/PostList";
+
+import { readPosts } from "../api/post";
 class HomeScreen extends Component {
+  componentDidMount() {
+    this.props.readPosts();
+  }
   render() {
     const { posts } = this.props;
     return (
@@ -20,4 +25,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    readPosts: () => dispatch(readPosts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
