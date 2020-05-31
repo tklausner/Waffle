@@ -4,7 +4,7 @@ import { AppLoading } from "expo";
 import { Container } from "native-base";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import * as firebase from "firebase";
 
 import AuthNavigator from "./src/routes/AuthNavigator";
@@ -12,8 +12,10 @@ import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
 import ApiKeys from "./src/constants/ApiKeys";
 
+import thunk from "redux-thunk";
+
 // store containing redux state
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,7 +25,9 @@ export default class App extends React.Component {
     };
 
     //Inititalize Firebase
-    if (!firebase.apps.length) {firebase.initializeApp(ApiKeys.FirebaseConfig); }
+    if (!firebase.apps.length) {
+      firebase.initializeApp(ApiKeys.FirebaseConfig);
+    }
   }
 
   async componentDidMount() {

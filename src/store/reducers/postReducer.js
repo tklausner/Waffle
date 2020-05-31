@@ -2,47 +2,13 @@ import {
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_FAILURE,
-} from "../actions";
+  CREATE_POST_PENDING,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_FAILURE,
+} from "../actions/postActions";
 
 const initialState = {
-  posts: [
-    {
-      id: "1",
-      username: "tklauklau",
-      profile: require("../../../assets/images/teddy.png"),
-      image: require("../../../assets/images/bing.png"),
-      description: "Chernobyl x Colbalt",
-      value: 1500,
-      waffles_remaining: 10,
-    },
-    {
-      id: "2",
-      username: "mimi>gaby",
-      profile: require("../../../assets/images/ethan.jpeg"),
-      image: require("../../../assets/images/ethan.jpeg"),
-      description: "Too cool for miami chicks",
-      value: 10,
-      waffles_remaining: 3,
-    },
-    {
-      id: "3",
-      username: "RoorRus",
-      profile: require("../../../assets/images/teddy.png"),
-      image: require("../../../assets/images/roor.jpeg"),
-      description: "GOD shining his light",
-      value: 6000,
-      waffles_remaining: 5,
-    },
-    {
-      id: "4",
-      username: "RoorRus",
-      profile: require("../../../assets/images/teddy.png"),
-      image: require("../../../assets/images/roor.jpeg"),
-      description: "GOD shining his light",
-      value: 200,
-      waffles_remaining: 9,
-    },
-  ],
+  posts: [],
   pending: false,
   error: null,
 };
@@ -54,6 +20,12 @@ export function postReducer(state = initialState, action) {
     case FETCH_POSTS_SUCCESS:
       return { ...state, pending: false, posts: action.payload };
     case FETCH_POSTS_FAILURE:
+      return { ...state, pending: false, error: action.error };
+    case CREATE_POST_PENDING:
+      return { ...state, pending: true };
+    case CREATE_POST_SUCCESS:
+      return { ...state, pending: false, post: action.payload };
+    case CREATE_POST_FAILURE:
       return { ...state, pending: false, error: action.error };
     default:
       return state;

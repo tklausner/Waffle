@@ -7,5 +7,6 @@ export default {
     storageBucket: "waffle-64462.appspot.com",
     messagingSenderId: "18761239177",
     appId: "1:18761239177:web:3b20b6faac79f706ef1458",
-    measurementId: "G-8KT7PTZQ52"}
-}
+    measurementId: "G-8KT7PTZQ52",
+  },
+};
