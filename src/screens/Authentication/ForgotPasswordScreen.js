@@ -22,21 +22,17 @@ export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
+      email: ""
     };
   }
 
-  signIn = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(
-        () => {},
-        (error) => {
-          Alert.alert(error.message);
-        }
-      );
+  forgotPassword = () => {
+    firebase.auth().sendPasswordResetEmail(this.state.email).then(function() {
+      // Email sent.
+    }).catch(function(error) {
+      // An error happened.
+    });
+    this.props.navigation.goBack()
   };
 
 
@@ -68,14 +64,13 @@ export default class LoginScreen extends Component {
           </Left>
         </Header>
         <View style={styles.container}>
-          <Text style={styles.welcomeText}>Welcome back!</Text>
+          <Text style={styles.welcomeText}>Forgot your password?</Text>
           <Text style={styles.smallText}>
-            Login with your email to start Waffling
+            Enter your e-mail below so we can send you a link to reset your password
           </Text>
-          <Text style={styles.accountInfoText}>ACCOUNT INFORMATION</Text>
           <TextInput
             style={styles.form}
-            placeholder="Username or E-Mail"
+            placeholder="E-Mail"
             autoCorrect={false}
             keyboardAppearance={"dark"}
             keyboardType={"email-address"}
@@ -85,22 +80,8 @@ export default class LoginScreen extends Component {
               this.setState({ email: text });
             }}
           />
-          <TextInput
-            style={styles.form}
-            placeholder="Password"
-            secureTextEntry={true}
-            keyboardAppearance={"dark"}
-            placeholderTextColor={"white"}
-            value={this.state.password}
-            onChangeText={(text) => {
-              this.setState({ password: text });
-            }}
-          />
-          <Button transparent style={styles.forgotPasswordButton} onPress={() => this.props.navigation.navigate("ForgotPasswordScreen")}>
-            <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
-          </Button>
-          <Button style={styles.loginButton} onPress={this.signIn}>
-            <Text style={styles.buttonText}>Login</Text>
+          <Button style={styles.loginButton} onPress={this.forgotPassword}>
+            <Text style={styles.buttonText}>Reset password</Text>
           </Button>
         </View>
       </Container>
@@ -157,27 +138,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     justifyContent: "center",
-    marginBottom: 10,
+    marginBottom: 20,
     backgroundColor: "#999999",
     color: "white",
     fontSize: 16,
     paddingLeft: 10,
-  },
-  forgotPasswordButton: {
-    height: 35,
-    alignSelf: "flex-start",
-    marginLeft: 2.5,
-    marginTop: -10,
-  },
-  forgotPasswordText: {
-    fontSize: 12,
-  },
-  accountInfoText: {
-    alignSelf: "flex-start",
-    marginLeft: "5%",
-    fontWeight: "bold",
-    fontSize: 14,
-    marginBottom: 8,
-    color: "#00B8FA",
   },
 });
