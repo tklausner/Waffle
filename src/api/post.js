@@ -9,7 +9,7 @@ import {
 } from "../store/actions/postActions";
 
 // root url
-const root = "http://localhost:3000/";
+const root = "https://waffleapp-server.herokuapp.com/";
 
 // POST DATA (post)
 export const newPost = (post) => {
