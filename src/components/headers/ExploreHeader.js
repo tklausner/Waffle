@@ -12,9 +12,10 @@ import {
   Text,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-
+import { Image } from "react-native";
 import styles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 export function ExploreHeader() {
   const navigation = useNavigation();
@@ -31,11 +32,16 @@ export function ExploreHeader() {
       >
         <Icon name="ios-search" />
         <Input placeholder="Search" />
-        <Icon name="ios-people" />
       </Item>
-      <Button transparent style={{ marginBottom: 5 }}>
-        <Text>Cancel</Text>
-      </Button>
+      <Image
+        source={WaffleIcon}
+        style={{
+          height: "80%",
+          width: "10%",
+          flex: 0,
+          marginLeft: "2%",
+        }}
+      />
     </Header>
   );
 }
