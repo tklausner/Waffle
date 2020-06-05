@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import {
   Content,
   Card,
@@ -16,6 +16,15 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
+
+const _renderItem = ({ item }) => {
+  return (
+    <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
+      <Text style={[styles.comments, { color: "gray" }]}>{item.username}</Text>
+      <Text style={[styles.comments]}>{item.content}</Text>
+    </ListItem>
+  );
+};
 
 export function Post({ post }) {
   console.log(post);
@@ -88,16 +97,12 @@ export function Post({ post }) {
           <Text style={styles.waffleButton}>WaffleButton</Text>
         </CardItem>
         <CardItem>
-          <List>
-            <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
-              <Text style={[styles.comments, { color: "gray" }]}>User1</Text>
-              <Text style={[styles.comments]}>Comment Comment</Text>
-            </ListItem>
-            <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
-              <Text style={[styles.comments, { color: "gray" }]}>User2</Text>
-              <Text style={[styles.comments]}>Comment Comment</Text>
-            </ListItem>
-          </List>
+          <FlatList
+            data={post.comments}
+            renderItem={_renderItem}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={() => null}
+          />
         </CardItem>
         <CardItem button style={styles.viewMore}>
           <Text style={styles.viewMore}>View more comments</Text>
@@ -106,7 +111,6 @@ export function Post({ post }) {
     </Content>
   );
 }
-
 module.export = Post;
 
 const styles = StyleSheet.create({

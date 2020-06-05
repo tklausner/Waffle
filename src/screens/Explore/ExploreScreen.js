@@ -1,163 +1,33 @@
 import React, { Component } from "react";
 import { Container, Content, Body, Text, Button } from "native-base";
 import { Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { connect } from "react-redux";
 
-const windowWidth = Dimensions.get("window").width;
-const bigWidth = (windowWidth * 2) / 3;
-const littleWidth = windowWidth / 3;
+import ExploreList from "../../components/explore/ExploreList";
 
-const defaultImage = require("../../../assets/images/bing.png");
-
-export default class ExploreScreen extends Component {
+import { readPostsByCategory } from "../../api/post";
+class ExploreScreen extends Component {
+  state = {
+    category_list: [
+      { id: "1", category: "tech" },
+      { id: "2", category: "animals" },
+      { id: "3", category: "tech" },
+      { id: "4", category: "animals" },
+      { id: "5", category: "trash" },
+    ],
+  };
   render() {
-    return (
-      <Container style={styles.container}>
-        <Content>
-          <Grid>
-            <Row>
-              <Col style={{ width: "33.3333%" }}>
-                <Row style={styles.item}>
-                  <TouchableOpacity>
-                    <Image style={styles.littleImage} source={defaultImage} />
-                  </TouchableOpacity>
-                </Row>
-                <Row style={styles.item}>
-                  <TouchableOpacity>
-                    <Image style={styles.littleImage} source={defaultImage} />
-                  </TouchableOpacity>
-                </Row>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.bigImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.bigImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={{ width: "33.3333%" }}>
-                <Row style={styles.item}>
-                  <TouchableOpacity>
-                    <Image style={styles.littleImage} source={defaultImage} />
-                  </TouchableOpacity>
-                </Row>
-                <Row style={styles.item}>
-                  <TouchableOpacity>
-                    <Image style={styles.littleImage} source={defaultImage} />
-                  </TouchableOpacity>
-                </Row>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-          </Grid>
-        </Content>
-      </Container>
-    );
+    const { category_list } = this.state;
+    return <ExploreList category_list={category_list} />;
   }
 }
-module.export = ExploreScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ddd",
-  },
+const styles = StyleSheet.create({});
 
-  item: {
-    backgroundColor: "#ddd",
-    alignItems: "center",
-    aspectRatio: 1,
-    justifyContent: "center",
-    flex: 1,
-  },
+const mapDispatchToProps = (dispatch) => {
+  return {
+    readPostsByCategory: (category) => dispatch(readPostsByCategory(category)),
+  };
+};
 
-  bigImage: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    width: bigWidth,
-    borderWidth: 0.5,
-    borderColor: "#ddd",
-  },
-
-  littleImage: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    width: littleWidth,
-    borderWidth: 0.5,
-    borderColor: "#ddd",
-  },
-});
+export default connect(null, null)(ExploreScreen);

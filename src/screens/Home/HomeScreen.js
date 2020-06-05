@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Container, Content } from "native-base";
 import { connect } from "react-redux";
 
-import { PostList } from "../../components/posts/PostList";
+import { LoadingScreen } from "../../components/loading/LoadingScreen";
+import PostList from "../../components/posts/PostList";
 
-import { readPosts } from "../../api/post";
+import { getFeed } from "../../api/feed";
+
 class HomeScreen extends Component {
   componentDidMount() {
-    this.props.readPosts();
+    //ID=FEED_ID
+    this.props.getFeed("5ed94f7e999fcc00041166d3");
   }
   render() {
-    const { posts } = this.props;
+    const { posts } = this.props.feed;
     return (
       <Container>
-        <PostList posts={posts} />
+        {posts ? <PostList posts={posts} /> : <LoadingScreen />}
       </Container>
     );
   }
@@ -21,13 +24,13 @@ class HomeScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.post.posts,
+    feed: state.feed.feed,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    readPosts: () => dispatch(readPosts()),
+    getFeed: (id) => dispatch(getFeed(id)),
   };
 };
 

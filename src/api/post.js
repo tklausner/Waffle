@@ -3,15 +3,27 @@ import {
   fetchPostsPending,
   fetchPostsSuccess,
   fetchPostsFailure,
+  fetchPostPending,
+  fetchPostSuccess,
+  fetchPostFailure,
+  fetchProductsPending,
+  fetchProductsSuccess,
+  fetchProductsFailure,
   createPostPending,
   createPostSuccess,
   createPostFailure,
+  deletePostPending,
+  deletePostSuccess,
+  deletePostFailure,
+  updatePostPending,
+  updatePostSuccess,
+  updatePostFailure,
 } from "../store/actions/postActions";
 
 // root url
 const root = "https://waffleapp-server.herokuapp.com/";
 
-// POST DATA (post)
+// POST POST
 export const newPost = (post) => {
   return (dispatch) => {
     dispatch(createPostPending());
@@ -26,7 +38,7 @@ export const newPost = (post) => {
   };
 };
 
-// GET ALL DATA (posts)
+// GET ALL POSTS
 export const readPosts = () => {
   return (dispatch) => {
     dispatch(fetchPostsPending());
@@ -37,6 +49,67 @@ export const readPosts = () => {
       })
       .catch((error) => {
         dispatch(fetchPostsFailure(error));
+      });
+  };
+};
+
+// GET POST BY ID (posts[id])
+export const getPost = (id) => {
+  return (dispatch) => {
+    dispatch(fetchPostPending());
+    return axios
+      .get(root + "api/posts/" + id)
+      .then(({ data }) => {
+        dispatch(fetchPostSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchPostFailure(error));
+      });
+  };
+};
+
+// GET POSTS BY CATEGORY (posts[category])
+export const readPostsByCategory = (category) => {
+  console.log(category);
+  return (dispatch) => {
+    dispatch(fetchProductsPending());
+    return axios
+      .get(root + "api/posts/category/" + category)
+      .then(({ data }) => {
+        dispatch(fetchProductsSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchProductsFailure(error));
+      });
+  };
+};
+
+// DELETE POST BY ID
+export const deletePost = (id) => {
+  return (dispatch) => {
+    dispatch(deletePostPending());
+    return axios
+      .delete(root + "api/posts/" + id)
+      .then(({ data }) => {
+        dispatch(deletePostSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(deletePostFailure(error));
+      });
+  };
+};
+
+// UPDATE POST
+export const updatePost = (id, post) => {
+  return (dispatch) => {
+    dispatch(updatePostPending());
+    return axios
+      .put(root + "api/posts/" + id, { ...post })
+      .then(({ data }) => {
+        dispatch(updatePostSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(updatePostFailure(error));
       });
   };
 };
