@@ -1,8 +1,8 @@
 import React, { Component, useState, useEffect } from "react";
 import { Container, Content, Button } from "native-base";
-import { Image, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
+import { Image, View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
 import { Permissions } from "expo";
 
 import { newPost } from "../../api/post";
@@ -10,7 +10,6 @@ import { newPost } from "../../api/post";
 import { connect } from "react-redux";
 
 class SellScreen extends Component {
-
   state = {
     username: "NEW!",
     profile: require("../../../assets/images/ethan.jpeg"),

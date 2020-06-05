@@ -12,7 +12,13 @@ import {
   Input,
   Label,
 } from "native-base";
-import { StyleSheet, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../../styles";
 import { useNavigation } from "@react-navigation/native";
@@ -67,52 +73,51 @@ export default class SignUpScreen extends Component {
             </Button>
           </Left>
         </Header>
-        <View style={styles.container}>
-          <Text style={styles.welcomeText}>Register!</Text>
-          <Text style={styles.accountInfoText}>PICK A USERNAME</Text>
-          <TextInput
-            style={styles.form}
-            placeholder="Username"
-            autoCorrect={false}
-            keyboardAppearance={"dark"}
-            keyboardType={"email-address"}
-            placeholderTextColor={"white"}
-            value={this.state.username}
-            onChangeText={(text) => {
-              this.setState({ username: text });
-            }}
-          />
-          <Text style={styles.accountInfoText}>ACCOUNT INFORMATION</Text>
-          <TextInput
-            style={styles.form}
-            placeholder="E-Mail"
-            autoCorrect={false}
-            keyboardAppearance={"dark"}
-            keyboardType={"email-address"}
-            placeholderTextColor={"white"}
-            value={this.state.email}
-            onChangeText={(text) => {
-              this.setState({ email: text });
-            }}
-          />
-          <TextInput
-            style={styles.form}
-            placeholder="Password"
-            secureTextEntry={true}
-            keyboardAppearance={"dark"}
-            placeholderTextColor={"white"}
-            value={this.state.password}
-            onChangeText={(text) => {
-              this.setState({ password: text });
-            }}
-          />
-          <Button transparent style={styles.forgotPasswordButton}>
-            <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
-          </Button>
-          <Button style={styles.loginButton} onPress={this.signUp}>
-            <Text style={styles.buttonText}>Create an account</Text>
-          </Button>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <Text style={styles.welcomeText}>Register!</Text>
+            <Text style={styles.accountInfoText}>PICK A USERNAME</Text>
+            <TextInput
+              style={styles.form}
+              placeholder="Username"
+              autoCorrect={false}
+              keyboardAppearance={"dark"}
+              keyboardType={"email-address"}
+              placeholderTextColor={"white"}
+              value={this.state.username}
+              onChangeText={(text) => {
+                this.setState({ username: text });
+              }}
+            />
+            <Text style={styles.accountInfoText}>ACCOUNT INFORMATION</Text>
+            <TextInput
+              style={styles.form}
+              placeholder="E-Mail"
+              autoCorrect={false}
+              keyboardAppearance={"dark"}
+              keyboardType={"email-address"}
+              placeholderTextColor={"white"}
+              value={this.state.email}
+              onChangeText={(text) => {
+                this.setState({ email: text });
+              }}
+            />
+            <TextInput
+              style={styles.form}
+              placeholder="Password"
+              secureTextEntry={true}
+              keyboardAppearance={"dark"}
+              placeholderTextColor={"white"}
+              value={this.state.password}
+              onChangeText={(text) => {
+                this.setState({ password: text });
+              }}
+            />
+            <Button style={styles.loginButton} onPress={this.signUp}>
+              <Text style={styles.buttonText}>Create an account</Text>
+            </Button>
+          </View>
+        </TouchableWithoutFeedback>
       </Container>
     );
   }
@@ -127,6 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 12,
+    marginTop: 3,
     borderRadius: 4,
     backgroundColor: "#00B8FA",
   },
@@ -165,12 +171,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     paddingLeft: 10,
-  },
-  forgotPasswordButton: {
-    height: 35,
-    alignSelf: "flex-start",
-    marginLeft: 2.5,
-    marginTop: -10,
   },
   forgotPasswordText: {
     fontSize: 12,

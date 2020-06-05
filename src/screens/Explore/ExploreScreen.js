@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Container, Content, Body, Text, Button } from "native-base";
-import { Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 const windowWidth = Dimensions.get("window").width;
@@ -13,116 +18,116 @@ export default class ExploreScreen extends Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Content>
-          <Grid>
-            <Row>
-              <Col style={{ width: "33.3333%" }}>
-                <Row style={styles.item}>
+          <Content>
+            <Grid>
+              <Row>
+                <Col style={{ width: "33.3333%" }}>
+                  <Row style={styles.item}>
+                    <TouchableOpacity>
+                      <Image style={styles.littleImage} source={defaultImage} />
+                    </TouchableOpacity>
+                  </Row>
+                  <Row style={styles.item}>
+                    <TouchableOpacity>
+                      <Image style={styles.littleImage} source={defaultImage} />
+                    </TouchableOpacity>
+                  </Row>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.bigImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={styles.item}>
                   <TouchableOpacity>
                     <Image style={styles.littleImage} source={defaultImage} />
                   </TouchableOpacity>
-                </Row>
-                <Row style={styles.item}>
+                </Col>
+                <Col style={styles.item}>
                   <TouchableOpacity>
                     <Image style={styles.littleImage} source={defaultImage} />
                   </TouchableOpacity>
-                </Row>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.bigImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.bigImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={{ width: "33.3333%" }}>
-                <Row style={styles.item}>
+                </Col>
+                <Col style={styles.item}>
                   <TouchableOpacity>
                     <Image style={styles.littleImage} source={defaultImage} />
                   </TouchableOpacity>
-                </Row>
-                <Row style={styles.item}>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={styles.item}>
                   <TouchableOpacity>
                     <Image style={styles.littleImage} source={defaultImage} />
                   </TouchableOpacity>
-                </Row>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-            <Row>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-              <Col style={styles.item}>
-                <TouchableOpacity>
-                  <Image style={styles.littleImage} source={defaultImage} />
-                </TouchableOpacity>
-              </Col>
-            </Row>
-          </Grid>
-        </Content>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.bigImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={{ width: "33.3333%" }}>
+                  <Row style={styles.item}>
+                    <TouchableOpacity>
+                      <Image style={styles.littleImage} source={defaultImage} />
+                    </TouchableOpacity>
+                  </Row>
+                  <Row style={styles.item}>
+                    <TouchableOpacity>
+                      <Image style={styles.littleImage} source={defaultImage} />
+                    </TouchableOpacity>
+                  </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+                <Col style={styles.item}>
+                  <TouchableOpacity>
+                    <Image style={styles.littleImage} source={defaultImage} />
+                  </TouchableOpacity>
+                </Col>
+              </Row>
+            </Grid>
+          </Content>
       </Container>
     );
   }

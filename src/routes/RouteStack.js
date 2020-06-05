@@ -21,6 +21,7 @@ import { MessagesHeader } from "../components/headers/MessagesHeader";
 import { ProfileHeader } from "../components/headers/ProfileHeader";
 import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
+import { SellImageHeader } from "../components/headers/SellImageHeader";
 
 // helper function for  getting associated header
 function GetHeader(route) {
@@ -40,6 +41,9 @@ function GetHeader(route) {
       break;
     case "Search":
       return <SearchHeader />;
+      break;
+    case "Sell":
+      return <SellImageHeader />;
       break;
     default:
       return <DefaultHeader />;
@@ -96,13 +100,15 @@ const SellStack = createStackNavigator();
 
 function SellStackScreen() {
   return (
-    <SellStack.Navigator>
+    <SellStack.Navigator
+      headerMode='float'
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name),
+    })}
+    >
       <SellStack.Screen
         name="Sell"
         component={SellScreen}
-        options={{
-          header: () => <DefaultHeader />,
-        }}
       />
     </SellStack.Navigator>
   );
