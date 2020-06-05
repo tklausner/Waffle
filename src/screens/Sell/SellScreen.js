@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
@@ -71,34 +72,36 @@ class SellScreen extends Component {
     } else {
       return (
         <Container>
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-            accessible={false}
-          >
-            <View style={styles.view}>
-              <TouchableOpacity
-                onPress={this.pickImage}
-                style={styles.imageContainer}
-              >
-                {this.state.image && (
-                  <Image
-                    source={{ uri: this.state.image }}
-                    style={styles.image}
-                  />
-                )}
-              </TouchableOpacity>
-              <Text style={styles.descriptionText}>Description</Text>
-              <TextInput
-                style={styles.form}
-                placeholder="Enter your description here"
-                autoCorrect={true}
-                keyboardAppearance={"dark"}
-                placeholderTextColor={"white"}
-                multiline={true}
-                textAlignVertical={"top"}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+          <KeyboardAvoidingView style={styles.keyboardView} behavior="padding">
+            <TouchableWithoutFeedback
+              onPress={Keyboard.dismiss}
+              accessible={false}
+            >
+              <View style={styles.view}>
+                <TouchableOpacity
+                  onPress={this.pickImage}
+                  style={styles.imageContainer}
+                >
+                  {this.state.image && (
+                    <Image
+                      source={{ uri: this.state.image }}
+                      style={styles.image}
+                    />
+                  )}
+                </TouchableOpacity>
+                <Text style={styles.descriptionText}>Description</Text>
+                <TextInput
+                  style={styles.form}
+                  placeholder="Write your description..."
+                  autoCorrect={true}
+                  keyboardAppearance={"dark"}
+                  placeholderTextColor={"white"}
+                  multiline={true}
+                  textAlignVertical={"top"}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
         </Container>
       );
     }
@@ -117,6 +120,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
   },
+  keyboardView: {
+    flex: 1,
+  },
   image: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").width,
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 8,
     color: "#00B8FA",
-    marginTop: 10
+    marginTop: 10,
   },
   form: {
     borderWidth: 0,
