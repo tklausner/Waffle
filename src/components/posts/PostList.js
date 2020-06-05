@@ -26,7 +26,7 @@ class PostList extends Component {
     }));
   };
   _renderItem = ({ item }) => {
-    return <Post post={item} key={item.id} />;
+    return <Post post={item} key={item._id} />;
   };
   render() {
     return (
@@ -35,7 +35,7 @@ class PostList extends Component {
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
             ListEmptyComponent={() => <Text>Ethan's a Bitch</Text>}
           />
         ) : (

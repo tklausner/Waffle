@@ -1,23 +1,67 @@
-import React from "react";
+import React, { Component } from "react";
 import { ProductList } from "./ProductList";
 import { Content, Container, Text, View, Header, Card } from "native-base";
-import { FlatList, StyleSheet, Dimensions } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 
-const renderItem = ({ item, index }) => {
-  return <ProductList products={item} key={item.id} style={styles.item} />;
-};
+import { connect } from "react-redux";
+import { readPostsByCategory } from "../../api/post";
 
-export function ExploreList({ products }) {
-  return (
-    <FlatList
-      data={products}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      ListEmptyComponent={() => <Text>There are no categories?</Text>}
-    />
-  );
+class ExploreList extends Component {
+  state = {
+    feed: [[]],
+  };
+
+  componentDidMount() {
+    const { category_list } = this.props;
+    for (category of category_list) {
+      this.loadPosts(category.category);
+    }
+  }
+
+  loadPosts = async (category) => {
+    await this.props.readPostsByCategory(category);
+    const { posts } = this.props;
+    this.setState((state) => ({
+      feed: [...state.feed, { category: category, posts: posts }],
+    }));
+  };
+
+  _renderItem = ({ item, index }) => {
+    console.log("RENDERITEM", item);
+    return (
+      <ProductList
+        products={item.posts}
+        category={item.category}
+        key={item.index}
+      />
+    );
+  };
+  render() {
+    return (
+      <Container>
+        {this.state.feed.length === this.props.category_list.length ? (
+          <FlatList
+            data={this.state.feed}
+            renderItem={this._renderItem}
+            keyExtractor={(item) => item.index}
+            ListEmptyComponent={() => <Text>There are no categories?</Text>}
+          />
+        ) : null}
+      </Container>
+    );
+  }
 }
 
-module.export = ExploreList;
+const mapStateToProps = (state) => {
+  return {
+    posts: state.post.posts,
+  };
+};
 
-const styles = StyleSheet.create({});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    readPostsByCategory: (category) => dispatch(readPostsByCategory(category)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreList);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Product } from "./Product";
 import { Content, Container, Text, View, Header, Card } from "native-base";
 import { FlatList, StyleSheet, Dimensions } from "react-native";
@@ -7,14 +7,14 @@ const renderItem = ({ item, index }) => {
   return <Product product={item} key={item.id} />;
 };
 
-export function ProductList({ products }) {
+export function ProductList({ products, category }) {
   return (
     <Card style={styles.container}>
-      <Text style={styles.header}>{products.category}</Text>
+      <Text style={styles.header}>{category}</Text>
       <FlatList
-        data={products.product}
+        data={products}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         ListEmptyComponent={() => (
           <Text>There are no products in this category</Text>
         )}

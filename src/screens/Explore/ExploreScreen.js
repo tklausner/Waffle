@@ -3,27 +3,29 @@ import { Container, Content, Body, Text, Button } from "native-base";
 import { Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { connect } from "react-redux";
 
-import { ProductList } from "../../components/explore/ProductList";
-import { ExploreList } from "../../components/explore/ExploreList";
+import ExploreList from "../../components/explore/ExploreList";
 
+import { readPostsByCategory } from "../../api/post";
 class ExploreScreen extends Component {
+  state = {
+    category_list: [
+      { id: "1", category: "tech" },
+      { id: "2", category: "category2" },
+      { id: "3", category: "category" },
+    ],
+  };
   render() {
-    const { products } = this.props;
-    return <ExploreList products={products} />;
-    //return <ProductList products={products} />;
+    const { category_list } = this.state;
+    return <ExploreList category_list={category_list} />;
   }
 }
 
 const styles = StyleSheet.create({});
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    products: state.post.products,
+    readPostsByCategory: (category) => dispatch(readPostsByCategory(category)),
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, null)(ExploreScreen);
+export default connect(null, null)(ExploreScreen);

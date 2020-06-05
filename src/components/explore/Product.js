@@ -28,6 +28,7 @@ export function Product({ product }) {
   return (
     <TouchableOpacity>
       <View style={styles.view}>
+        <Text>{product.username}</Text>
         <Image source={product.image} style={styles.image} />
       </View>
     </TouchableOpacity>

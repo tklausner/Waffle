@@ -59,10 +59,10 @@ export function fetchProductsPending() {
   return { type: FETCH_POSTS_BY_CATEGORY_PENDING };
 }
 
-export function fetchProductsSuccess(product) {
+export function fetchProductsSuccess(posts) {
   return {
     type: FETCH_POSTS_BY_CATEGORY_SUCCESS,
-    payload: product,
+    payload: posts,
   };
 }
 

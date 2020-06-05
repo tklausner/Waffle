@@ -156,7 +156,7 @@ export function postReducer(state = initialState, action) {
       return {
         ...state,
         pending: false,
-        product: action.payload,
+        posts: action.payload,
       };
     case FETCH_POSTS_BY_CATEGORY_FAILURE:
       return { ...state, pending: false, error: action.error };
