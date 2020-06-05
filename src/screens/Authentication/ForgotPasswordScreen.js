@@ -12,7 +12,13 @@ import {
   Input,
   Label,
 } from "native-base";
-import { StyleSheet, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../../styles";
 import * as firebase from "firebase";
@@ -22,19 +28,22 @@ export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ""
+      email: "",
     };
   }
 
   forgotPassword = () => {
-    firebase.auth().sendPasswordResetEmail(this.state.email).then(function() {
-      // Email sent.
-    }).catch(function(error) {
-      // An error happened.
-    });
-    this.props.navigation.goBack()
+    firebase
+      .auth()
+      .sendPasswordResetEmail(this.state.email)
+      .then(function () {
+        // Email sent.
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+    this.props.navigation.goBack();
   };
-
 
   render() {
     return (
@@ -63,27 +72,30 @@ export default class LoginScreen extends Component {
             </Button>
           </Left>
         </Header>
-        <View style={styles.container}>
-          <Text style={styles.welcomeText}>Forgot your password?</Text>
-          <Text style={styles.smallText}>
-            Enter your e-mail below so we can send you a link to reset your password
-          </Text>
-          <TextInput
-            style={styles.form}
-            placeholder="E-Mail"
-            autoCorrect={false}
-            keyboardAppearance={"dark"}
-            keyboardType={"email-address"}
-            placeholderTextColor={"white"}
-            value={this.state.email}
-            onChangeText={(text) => {
-              this.setState({ email: text });
-            }}
-          />
-          <Button style={styles.loginButton} onPress={this.forgotPassword}>
-            <Text style={styles.buttonText}>Reset password</Text>
-          </Button>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <Text style={styles.welcomeText}>Forgot your password?</Text>
+            <Text style={styles.smallText}>
+              Enter your e-mail below so we can send you a link to reset your
+              password
+            </Text>
+            <TextInput
+              style={styles.form}
+              placeholder="E-Mail"
+              autoCorrect={false}
+              keyboardAppearance={"dark"}
+              keyboardType={"email-address"}
+              placeholderTextColor={"white"}
+              value={this.state.email}
+              onChangeText={(text) => {
+                this.setState({ email: text });
+              }}
+            />
+            <Button style={styles.loginButton} onPress={this.forgotPassword}>
+              <Text style={styles.buttonText}>Reset password</Text>
+            </Button>
+          </View>
+        </TouchableWithoutFeedback>
       </Container>
     );
   }

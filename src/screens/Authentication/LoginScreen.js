@@ -12,7 +12,13 @@ import {
   Input,
   Label,
 } from "native-base";
-import { StyleSheet, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../../styles";
 import * as firebase from "firebase";
@@ -38,7 +44,6 @@ export default class LoginScreen extends Component {
         }
       );
   };
-
 
   render() {
     return (
@@ -67,42 +72,52 @@ export default class LoginScreen extends Component {
             </Button>
           </Left>
         </Header>
-        <View style={styles.container}>
-          <Text style={styles.welcomeText}>Welcome back!</Text>
-          <Text style={styles.smallText}>
-            Login with your email to start Waffling
-          </Text>
-          <Text style={styles.accountInfoText}>ACCOUNT INFORMATION</Text>
-          <TextInput
-            style={styles.form}
-            placeholder="Username or E-Mail"
-            autoCorrect={false}
-            keyboardAppearance={"dark"}
-            keyboardType={"email-address"}
-            placeholderTextColor={"white"}
-            value={this.state.email}
-            onChangeText={(text) => {
-              this.setState({ email: text });
-            }}
-          />
-          <TextInput
-            style={styles.form}
-            placeholder="Password"
-            secureTextEntry={true}
-            keyboardAppearance={"dark"}
-            placeholderTextColor={"white"}
-            value={this.state.password}
-            onChangeText={(text) => {
-              this.setState({ password: text });
-            }}
-          />
-          <Button transparent style={styles.forgotPasswordButton} onPress={() => this.props.navigation.navigate("ForgotPasswordScreen")}>
-            <Text style={styles.forgotPasswordText}>Forgot your password?</Text>
-          </Button>
-          <Button style={styles.loginButton} onPress={this.signIn}>
-            <Text style={styles.buttonText}>Login</Text>
-          </Button>
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={styles.container}>
+            <Text style={styles.welcomeText}>Welcome back!</Text>
+            <Text style={styles.smallText}>
+              Login with your email to start Waffling
+            </Text>
+            <Text style={styles.accountInfoText}>ACCOUNT INFORMATION</Text>
+            <TextInput
+              style={styles.form}
+              placeholder="Username or E-Mail"
+              autoCorrect={false}
+              keyboardAppearance={"dark"}
+              keyboardType={"email-address"}
+              placeholderTextColor={"white"}
+              value={this.state.email}
+              onChangeText={(text) => {
+                this.setState({ email: text });
+              }}
+            />
+            <TextInput
+              style={styles.form}
+              placeholder="Password"
+              secureTextEntry={true}
+              keyboardAppearance={"dark"}
+              placeholderTextColor={"white"}
+              value={this.state.password}
+              onChangeText={(text) => {
+                this.setState({ password: text });
+              }}
+            />
+            <Button
+              transparent
+              style={styles.forgotPasswordButton}
+              onPress={() =>
+                this.props.navigation.navigate("ForgotPasswordScreen")
+              }
+            >
+              <Text style={styles.forgotPasswordText}>
+                Forgot your password?
+              </Text>
+            </Button>
+            <Button style={styles.loginButton} onPress={this.signIn}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Button>
+          </View>
+        </TouchableWithoutFeedback>
       </Container>
     );
   }
