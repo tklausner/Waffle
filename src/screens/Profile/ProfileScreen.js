@@ -41,8 +41,7 @@ export default class ProfileScreen extends Component {
             <CardItem>
               <Body>
                 <Text style={{ fontSize: 15, paddingLeft: "5%" }}>
-                  Follow my shop if you're like Ethan and like penis up your
-                  butt
+                  Follow my shop
                 </Text>
               </Body>
             </CardItem>
