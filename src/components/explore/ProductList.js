@@ -15,9 +15,7 @@ export function ProductList({ products, category }) {
         data={products}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
-        ListEmptyComponent={() => (
-          <Text>There are no products in this category</Text>
-        )}
+        ListEmptyComponent={() => null}
         horizontal={true}
       />
     </Card>
@@ -29,8 +27,9 @@ module.export = ProductList;
 const styles = StyleSheet.create({
   header: {
     textAlign: "left",
-    padding: "2%",
+    padding: "0%",
     fontWeight: "bold",
     fontSize: 20,
+    marginTop: 0,
   },
 });

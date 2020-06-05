@@ -25,14 +25,15 @@ const dim = Dimensions.get("window").width / 4;
 
 export function Product({ product }) {
   const navigation = useNavigation();
-  return (
+  console.log("PROFILE", product.profile);
+  return product ? (
     <TouchableOpacity>
       <View style={styles.view}>
         <Text>{product.username}</Text>
-        <Image source={product.image} style={styles.image} />
+        <Image source={product.profile} style={styles.image} />
       </View>
     </TouchableOpacity>
-  );
+  ) : null;
 }
 
 module.export = Product;
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   view: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 2,
+    padding: 5,
   },
   image: {
     marginLeft: "0%",

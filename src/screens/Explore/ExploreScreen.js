@@ -10,8 +10,10 @@ class ExploreScreen extends Component {
   state = {
     category_list: [
       { id: "1", category: "tech" },
-      { id: "2", category: "category2" },
-      { id: "3", category: "category" },
+      { id: "2", category: "animals" },
+      { id: "3", category: "tech" },
+      { id: "4", category: "animals" },
+      { id: "5", category: "trash" },
     ],
   };
   render() {
