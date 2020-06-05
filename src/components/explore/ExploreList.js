@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ProductList } from "./ProductList";
 import { Content, Container, Text, View, Header, Card } from "native-base";
 import { FlatList, StyleSheet } from "react-native";
+import { LoadingScreen } from "../loading/LoadingScreen";
 
 import { connect } from "react-redux";
 import { readPostsByCategory } from "../../api/post";
@@ -13,8 +14,8 @@ class ExploreList extends Component {
 
   componentDidMount() {
     const { category_list } = this.props;
-    for (category of category_list) {
-      this.loadPosts(category.category);
+    for (let i = 0; i < category_list.length - 1; i += 1) {
+      this.loadPosts(category_list[i].category);
     }
   }
 
@@ -37,6 +38,7 @@ class ExploreList extends Component {
     );
   };
   render() {
+    console.log("FEED_LENGTH", this.state.feed.length);
     return (
       <Container>
         {this.state.feed.length === this.props.category_list.length ? (
@@ -46,7 +48,9 @@ class ExploreList extends Component {
             keyExtractor={(item) => item.index}
             ListEmptyComponent={() => <Text>There are no categories?</Text>}
           />
-        ) : null}
+        ) : (
+          <LoadingScreen />
+        )}
       </Container>
     );
   }
