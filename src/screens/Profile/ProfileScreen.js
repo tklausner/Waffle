@@ -14,11 +14,13 @@ import {
   Right,
   List,
   ListItem,
-  Image,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
 export default class ProfileScreen extends Component {
+  state = {
+    url: "",
+  };
   render() {
     return (
       <Container>
@@ -62,7 +64,12 @@ export default class ProfileScreen extends Component {
                 </Button>
               </Left>
               <Body>
-                <Button transparent>
+                <Button
+                  transparent
+                  onPress={() => {
+                    console.log(this.state.url);
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 20,
@@ -89,6 +96,7 @@ export default class ProfileScreen extends Component {
               </Right>
             </CardItem>
           </Card>
+          <Card></Card>
         </Content>
       </Container>
     );

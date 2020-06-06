@@ -18,12 +18,10 @@ export function SellImageHeader() {
 
   const _keyboardDidShow = () => {
     setKeyboardOpen(true);
-    console.log(keyboardOpen);
   };
 
   const _keyboardDidHide = () => {
     setKeyboardOpen(false);
-    console.log(keyboardOpen);
   };
 
   return (

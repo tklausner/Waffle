@@ -17,6 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 
+import AsyncImage from "../images/AsyncImage";
+
 const _renderItem = ({ item }) => {
   return (
     <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
@@ -27,7 +29,6 @@ const _renderItem = ({ item }) => {
 };
 
 export function Post({ post }) {
-  console.log(post);
   const navigation = useNavigation();
   return (
     <Content style={styles.content}>
@@ -49,9 +50,7 @@ export function Post({ post }) {
           </Right>
         </CardItem>
         <CardItem>
-          <Body>
-            <Image source={post.image} style={styles.image} />
-          </Body>
+          <AsyncImage image={post.image} style={styles.image}></AsyncImage>
         </CardItem>
         <CardItem>
           <Left style={styles.bar}>
@@ -149,6 +148,7 @@ const styles = StyleSheet.create({
     height: 345,
     width: "110%",
     flex: 1,
-    marginLeft: "-5%",
+    marginLeft: "0%",
+    resizeMode: "contain",
   },
 });
