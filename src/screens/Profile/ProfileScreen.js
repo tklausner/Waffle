@@ -14,11 +14,20 @@ import {
   Right,
   List,
   ListItem,
-  Image,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
-export default class ProfileScreen extends Component {
+import { connect } from "react-redux";
+
+import AsyncImage from "../../components/images/AsyncImage";
+
+class ProfileScreen extends Component {
+  state = {
+    profile: "test/F6A43F1B-CF32-4ED3-A8A8-30E6B4B9F28A",
+    username: "@Kylesabeast",
+    profileName: "Kyle Harris",
+    description: "Welcome to the Shop!",
+  };
   render() {
     return (
       <Container>
@@ -26,13 +35,13 @@ export default class ProfileScreen extends Component {
           <Card transparent style={styles.profTop}>
             <CardItem>
               <Left>
-                <Thumbnail
-                  source={require("../../../assets/images/kyle.jpg")}
-                  style={{ height: 100, width: 100, borderRadius: 100 }}
+                <AsyncImage
+                  image={this.state.profile}
+                  style={styles.profImage}
                 />
                 <Body>
-                  <Text style={styles.profName}>Kyle Harris</Text>
-                  <Text style={styles.profUsername}>@Kylesabeast</Text>
+                  <Text style={styles.profName}>{this.state.profileName}</Text>
+                  <Text style={styles.profUsername}>{this.state.username}</Text>
                 </Body>
               </Left>
             </CardItem>
@@ -41,7 +50,7 @@ export default class ProfileScreen extends Component {
             <CardItem>
               <Body>
                 <Text style={{ fontSize: 15, paddingLeft: "5%" }}>
-                  Follow my shop
+                  {this.state.description}
                 </Text>
               </Body>
             </CardItem>
@@ -62,7 +71,12 @@ export default class ProfileScreen extends Component {
                 </Button>
               </Left>
               <Body>
-                <Button transparent>
+                <Button
+                  transparent
+                  onPress={() => {
+                    console.log(this.state.url);
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 20,
@@ -89,12 +103,13 @@ export default class ProfileScreen extends Component {
               </Right>
             </CardItem>
           </Card>
+          <Card></Card>
         </Content>
       </Container>
     );
   }
 }
-module.export = ProfileScreen;
+export default connect(null, null)(ProfileScreen);
 
 const styles = StyleSheet.create({
   profName: {
@@ -109,5 +124,11 @@ const styles = StyleSheet.create({
   profTop: {
     paddingTop: "5%",
     paddingLeft: "10%",
+  },
+  profImage: {
+    height: 75,
+    width: 75,
+    borderRadius: 200 / 2,
+    marginLeft: "-10%",
   },
 });

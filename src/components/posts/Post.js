@@ -1,10 +1,9 @@
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import {
   Content,
   Card,
   CardItem,
-  Thumbnail,
   Text,
   Button,
   Left,
@@ -17,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 
+import AsyncImage from "../images/AsyncImage";
+
 const _renderItem = ({ item }) => {
   return (
     <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
@@ -27,14 +28,16 @@ const _renderItem = ({ item }) => {
 };
 
 export function Post({ post }) {
-  console.log(post);
   const navigation = useNavigation();
   return (
     <Content style={styles.content}>
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={post.profile} />
+            <AsyncImage
+              image={post.profile}
+              style={styles.profile}
+            ></AsyncImage>
             <Body>
               <Text>{post.username}</Text>
             </Body>
@@ -49,9 +52,7 @@ export function Post({ post }) {
           </Right>
         </CardItem>
         <CardItem>
-          <Body>
-            <Image source={post.image} style={styles.image} />
-          </Body>
+          <AsyncImage image={post.image} style={styles.image}></AsyncImage>
         </CardItem>
         <CardItem>
           <Left style={styles.bar}>
@@ -140,15 +141,22 @@ const styles = StyleSheet.create({
     color: "lightgray",
     justifyContent: "space-around",
     paddingTop: "1%",
+    paddingBottom: "1%",
   },
   waffleButton: {
     color: "red",
     justifyContent: "space-around",
   },
+  profile: {
+    width: 50,
+    height: 50,
+    borderRadius: 400 / 2,
+  },
   image: {
     height: 345,
     width: "110%",
     flex: 1,
-    marginLeft: "-5%",
+    marginLeft: "0%",
+    resizeMode: "contain",
   },
 });
