@@ -17,6 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 
+import AsyncImage from "../images/AsyncImage";
+
 export function Waffle({ post }) {
   const navigation = useNavigation();
   return (
@@ -24,7 +26,7 @@ export function Waffle({ post }) {
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={post.profile} />
+            <AsyncImage image={post.profile} style={styles.profile} />
             <Body>
               <Text>{post.username}</Text>
             </Body>
@@ -88,5 +90,10 @@ const styles = StyleSheet.create({
     width: "110%",
     flex: 1,
     marginLeft: "-5%",
+  },
+  profile: {
+    width: 50,
+    height: 50,
+    borderRadius: 400 / 2,
   },
 });

@@ -11,6 +11,7 @@ class HomeScreen extends Component {
   componentDidMount() {
     //ID=FEED_ID
     this.props.getFeed("5ed94f7e999fcc00041166d3");
+    // PROBLEM BBECAUSE POSTS ARE NOT UNIQUE IN THIS FEED
   }
   render() {
     const { posts } = this.props.feed;

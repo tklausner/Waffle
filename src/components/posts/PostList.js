@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Post } from "./Post";
-import { Content, Container, Text } from "native-base";
+import { Container } from "native-base";
 import { FlatList, StyleSheet } from "react-native";
 
 import { connect } from "react-redux";

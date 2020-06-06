@@ -1,10 +1,9 @@
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import {
   Content,
   Card,
   CardItem,
-  Thumbnail,
   Text,
   Button,
   Left,
@@ -35,7 +34,10 @@ export function Post({ post }) {
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={post.profile} />
+            <AsyncImage
+              image={post.profile}
+              style={styles.profile}
+            ></AsyncImage>
             <Body>
               <Text>{post.username}</Text>
             </Body>
@@ -139,10 +141,16 @@ const styles = StyleSheet.create({
     color: "lightgray",
     justifyContent: "space-around",
     paddingTop: "1%",
+    paddingBottom: "1%",
   },
   waffleButton: {
     color: "red",
     justifyContent: "space-around",
+  },
+  profile: {
+    width: 50,
+    height: 50,
+    borderRadius: 400 / 2,
   },
   image: {
     height: 345,
