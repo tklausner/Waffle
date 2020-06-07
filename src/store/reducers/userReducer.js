@@ -18,7 +18,7 @@ import {
 
 const initialState = {
   users: [],
-  user: null,
+  user: {},
   pending: false,
   error: null,
 };

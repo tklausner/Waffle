@@ -25,7 +25,7 @@ export const newUser = (user) => {
   return (dispatch) => {
     dispatch(createUserPending());
     return axios
-      .user(root + "api/user", { ...user })
+      .user(root + "api/users", { ...user })
       .then(({ data }) => {
         dispatch(createUserSuccess(data));
       })
@@ -40,7 +40,7 @@ export const readUsers = () => {
   return (dispatch) => {
     dispatch(fetchUsersPending());
     return axios
-      .get(root + "api/user")
+      .get(root + "api/users")
       .then(({ data }) => {
         dispatch(fetchUsersSuccess(data));
       })
@@ -55,7 +55,22 @@ export const getUser = (id) => {
   return (dispatch) => {
     dispatch(fetchUserPending());
     return axios
-      .get(root + "api/user/" + id)
+      .get(root + "api/users/" + id)
+      .then(({ data }) => {
+        dispatch(fetchUserSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchUserFailure(error));
+      });
+  };
+};
+
+// GET USER BY FB_ID (users[id])
+export const getUserFB = (id) => {
+  return (dispatch) => {
+    dispatch(fetchUserPending());
+    return axios
+      .get(root + "api/users/fb/" + id)
       .then(({ data }) => {
         dispatch(fetchUserSuccess(data));
       })
@@ -70,7 +85,7 @@ export const deleteUser = (id) => {
   return (dispatch) => {
     dispatch(deleteUserPending());
     return axios
-      .delete(root + "api/user/" + id)
+      .delete(root + "api/users/" + id)
       .then(({ data }) => {
         dispatch(deleteUserSuccess(data));
       })
@@ -85,7 +100,7 @@ export const updateUser = (id, user) => {
   return (dispatch) => {
     dispatch(updateUserPending());
     return axios
-      .put(root + "api/user/" + id, { ...user })
+      .put(root + "api/users/" + id, { ...user })
       .then(({ data }) => {
         dispatch(updateUserSuccess(data));
       })
