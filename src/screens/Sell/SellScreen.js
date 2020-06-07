@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
@@ -50,6 +51,7 @@ class SellScreen extends Component {
   }
 
   pickImage = async () => {
+    Keyboard.dismiss();
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -71,24 +73,28 @@ class SellScreen extends Component {
       return <Text>Access to camera has been denied.</Text>;
     } else {
       return (
-        <Container>
-          <KeyboardAvoidingView style={styles.keyboardView} behavior="padding">
-            <TouchableWithoutFeedback
-              onPress={Keyboard.dismiss}
-              accessible={false}
-            >
-              <View style={styles.view}>
-                <TouchableOpacity
-                  onPress={this.pickImage}
-                  style={styles.imageContainer}
-                >
-                  {this.state.image && (
-                    <Image
-                      source={{ uri: this.state.image }}
-                      style={styles.image}
-                    />
-                  )}
-                </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={styles.keyboardView}
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={20}
+        >
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+            accessible={false}
+          >
+            <View style={styles.view}>
+              <TouchableOpacity
+                onPress={this.pickImage}
+                style={styles.imageContainer}
+              >
+                {this.state.image && (
+                  <Image
+                    source={{ uri: this.state.image }}
+                    style={styles.image}
+                  />
+                )}
+              </TouchableOpacity>
+              <View style={{ width: "100%", marginLeft: "5%" }}>
                 <Text style={styles.descriptionText}>Description</Text>
                 <TextInput
                   style={styles.form}
@@ -100,9 +106,9 @@ class SellScreen extends Component {
                   textAlignVertical={"top"}
                 />
               </View>
-            </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
-        </Container>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       );
     }
   }
@@ -119,9 +125,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
+    height: "100%",
+    justifyContent: "flex-end",
+    marginBottom: 100,
   },
   keyboardView: {
     flex: 1,
+    height: "100%",
+    backgroundColor: "white",
   },
   image: {
     width: Dimensions.get("window").width,
@@ -135,7 +146,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     alignSelf: "flex-start",
-    marginLeft: "5%",
+    marginLeft: "2%",
     fontWeight: "bold",
     fontSize: 14,
     marginBottom: 8,

@@ -1,6 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Header, Body, Title, Container, Right, Left, Text, Button } from "native-base";
-import { StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  Header,
+  Body,
+  Title,
+  Container,
+  Right,
+  Left,
+  Text,
+  Button,
+} from "native-base";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+  View,
+} from "react-native";
 import globalStyles from "../../styles";
 
 export function SellImageHeader() {
@@ -33,23 +47,23 @@ export function SellImageHeader() {
   }
 
   return (
-    <Header>
-      <Left></Left>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <Body>
-          <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
-        </Body>
-      </TouchableWithoutFeedback>
-      <Right>
-        <Button transparent onPress={buttonClick}>
-        <Text
-          style={[styles.text, globalStyles.wBlue]}
-        >
-          {keyboardOpen}
-        </Text>
-        </Button>
-      </Right>
-    </Header>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View>
+        <Header>
+          <Left></Left>
+          <Body>
+            <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
+          </Body>
+          <Right>
+            <Button transparent onPress={buttonClick}>
+              <Text style={[styles.text, globalStyles.wBlue]}>
+                {keyboardOpen}
+              </Text>
+            </Button>
+          </Right>
+        </Header>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -62,6 +76,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
