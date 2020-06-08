@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { View, Image } from "react-native";
-import { LoadingScreen } from "../loading/LoadingScreen";
+import { View, Image, ActivityIndicator } from "react-native";
 import { storageRef } from "../../utils";
 
 export default class AsyncImage extends Component {
@@ -35,7 +34,7 @@ export default class AsyncImage extends Component {
               justifyContent: "center",
             }}
           >
-            <LoadingScreen />
+            <ActivityIndicator />
           </View>
         );
       } else {

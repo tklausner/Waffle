@@ -65,6 +65,21 @@ export const getFeed = (id) => {
   };
 };
 
+// GET FEED BY USER (feeds[id])
+export const getFeedByUser = (id) => {
+  return (dispatch) => {
+    dispatch(fetchFeedPending());
+    return axios
+      .get(root + "api/feed/user/" + id)
+      .then(({ data }) => {
+        dispatch(fetchFeedSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchFeedFailure(error));
+      });
+  };
+};
+
 // DELETE FEED BY ID
 export const deleteFeed = (id) => {
   return (dispatch) => {

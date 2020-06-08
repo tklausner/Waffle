@@ -5,13 +5,20 @@ import { connect } from "react-redux";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 import PostList from "../../components/posts/PostList";
 
-import { getFeed } from "../../api/feed";
+import { getFeedByUser } from "../../api/feed";
+import { getUserFB } from "../../api/user";
 
 class HomeScreen extends Component {
   componentDidMount() {
-    //ID=FEED_ID
-    this.props.getFeed("5ed94f7e999fcc00041166d3");
+    this._loadUser();
   }
+
+  async _loadUser() {
+    await this.props.getUserFB("0Z1rLUJc8ZXV1OONn9ptOuegFOf1");
+    const { _id } = this.props.user;
+    this.props.getFeedByUser(_id);
+  }
+
   render() {
     const { posts } = this.props.feed;
     return (
@@ -25,12 +32,14 @@ class HomeScreen extends Component {
 const mapStateToProps = (state) => {
   return {
     feed: state.feed.feed,
+    user: state.user.user,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getFeed: (id) => dispatch(getFeed(id)),
+    getFeedByUser: (id) => dispatch(getFeedByUser(id)),
+    getUserFB: (id) => dispatch(getUserFB(id)),
   };
 };
 

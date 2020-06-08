@@ -2,30 +2,33 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import ExploreList from "../../components/explore/ExploreList";
-import { readPostsByCategory } from "../../api/post";
+import { getExploreByUser } from "../../api/explore";
+
+import { Container } from "native-base";
 
 class ExploreScreen extends Component {
-  state = {
-    category_list: [
-      { id: "1", category: "tech" },
-      { id: "2", category: "animals" },
-      { id: "3", category: "nature" },
-      { id: "4", category: "animals" },
-      { id: "5", category: "trash" },
-    ],
-  };
+  componentDidMount() {
+    /**  5edc94f1f9d5d500047d9247 */
+    this.props.getExploreByUser("5edc94f1f9d5d500047d9247");
+  }
   render() {
-    const { category_list } = this.state;
-    return <ExploreList category_list={category_list} />;
+    const { category_list } = this.props.explore;
+    return category_list ? <ExploreList category_list={category_list} /> : null;
   }
 }
 
 const styles = StyleSheet.create({});
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    readPostsByCategory: (category) => dispatch(readPostsByCategory(category)),
+    explore: state.explore.explore,
   };
 };
 
-export default connect(null, null)(ExploreScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getExploreByUser: (id) => dispatch(getExploreByUser(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreScreen);

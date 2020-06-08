@@ -14,8 +14,9 @@ class ExploreList extends Component {
 
   componentDidMount() {
     const { category_list } = this.props;
+    category_list.push(null);
     for (let i = 0; i < category_list.length - 1; i += 1) {
-      this.loadPosts(category_list[i].category);
+      this.loadPosts(category_list[i]);
     }
   }
 
@@ -28,7 +29,6 @@ class ExploreList extends Component {
   };
 
   _renderItem = ({ item, index }) => {
-    console.log("RENDERITEM", item);
     return (
       <ProductList
         products={item.posts}
@@ -38,7 +38,6 @@ class ExploreList extends Component {
     );
   };
   render() {
-    console.log("FEED_LENGTH", this.state.feed.length);
     return (
       <Container>
         {this.state.feed.length === this.props.category_list.length ? (
