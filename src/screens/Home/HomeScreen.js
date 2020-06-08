@@ -6,10 +6,14 @@ import { LoadingScreen } from "../../components/loading/LoadingScreen";
 import PostList from "../../components/posts/PostList";
 
 import { getFeedByUser } from "../../api/feed";
-import { getUserFB } from "../../api/user";
 
 class HomeScreen extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const { _id } = this.props.user;
+    if (_id) {
+      this.props.getFeedByUser(_id);
+    }
+  }
 
   render() {
     const { posts } = this.props.feed;

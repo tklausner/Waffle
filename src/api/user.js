@@ -25,7 +25,7 @@ export const newUser = (user) => {
   return (dispatch) => {
     dispatch(createUserPending());
     return axios
-      .user(root + "api/users", { ...user })
+      .post(root + "api/users", { ...user })
       .then(({ data }) => {
         dispatch(createUserSuccess(data));
       })

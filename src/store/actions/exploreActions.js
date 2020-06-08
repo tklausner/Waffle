@@ -82,11 +82,11 @@ export function updateExplorePending() {
 }
 
 export function updateExploreSuccess(explore) {
-  console.log(`@${explore.user_id} Succesfully Updated Item`);
+  console.log(`[EXPLORE] @${explore.user_id} Updated`);
   return { type: UPDATE_EXPLORE_SUCCESS, payload: explore };
 }
 
 export function updateExploreFailure(error) {
-  console.log("Update Failed, ERROR: ", error);
+  console.log("[EXPLORE] Update Failed, ERROR: ", error);
   return { type: UPDATE_EXPLORE_FAILURE, error: error };
 }

@@ -19,97 +19,191 @@ import { StyleSheet, Image } from "react-native";
 
 import { connect } from "react-redux";
 
+import ProfileFeed from "../../components/profile/ProfileFeed";
+
 import AsyncImage from "../../components/images/AsyncImage";
+import { LoadingScreen } from "../../components/loading/LoadingScreen";
+
+import { readPostsByUser } from "../../api/post";
 
 class ProfileScreen extends Component {
-  state = {
-    profile: "test/F6A43F1B-CF32-4ED3-A8A8-30E6B4B9F28A",
-    username: "@Kylesabeast",
-    profileName: "Kyle Harris",
-    description: "Welcome to the Shop!",
-  };
+  componentDidMount() {
+    const { _id } = this.props.user;
+    if (_id) {
+      this.props.readPostsByUser(_id);
+    }
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      feed: [],
+      isRendering: true,
+    };
+  }
+
   render() {
+    const { user } = this.props;
     return (
       <Container>
-        <Content>
-          <Card transparent style={styles.profTop}>
-            <CardItem>
-              <Left>
-                <AsyncImage
-                  image={this.state.profile}
-                  style={styles.profImage}
-                />
-                <Body>
-                  <Text style={styles.profName}>{this.state.profileName}</Text>
-                  <Text style={styles.profUsername}>{this.state.username}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-          </Card>
-          <Card transparent>
-            <CardItem>
+        <Card transparent style={styles.profTop}>
+          <CardItem>
+            <Left>
+              <AsyncImage
+                image={this.props.user.profile}
+                style={styles.profImage}
+              />
               <Body>
-                <Text style={{ fontSize: 15, paddingLeft: "5%" }}>
-                  {this.state.description}
+                <Text style={styles.profName}>
+                  {this.props.user.first_name} {this.props.user.last_name}
+                </Text>
+                <Text style={styles.profUsername}>
+                  @{this.props.user.username}
                 </Text>
               </Body>
-            </CardItem>
-          </Card>
-          <Card>
-            <CardItem>
-              <Left>
-                <Button transparent>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingLeft: "10%",
-                      color: "#000000",
-                    }}
-                  >
-                    Waffles
-                  </Text>
-                </Button>
-              </Left>
-              <Body>
-                <Button
-                  transparent
-                  onPress={() => {
-                    console.log(this.state.url);
+            </Left>
+          </CardItem>
+        </Card>
+        <Card transparent>
+          <CardItem>
+            <Body>
+              <Text style={{ fontSize: 15, paddingLeft: "5%" }}>
+                {this.props.user.store_description}
+              </Text>
+            </Body>
+          </CardItem>
+        </Card>
+        <Card>
+          <CardItem>
+            <Left>
+              <Button
+                transparent
+                onPress={() => {
+                  this.setState({
+                    isRendering: true,
+                  });
+                  const feed = this.props.posts;
+                  this.setState(
+                    {
+                      feed: feed,
+                    },
+                    () => {
+                      this.setState({
+                        isRendering: false,
+                      });
+                    }
+                  );
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    paddingLeft: "15%",
+                    color: "#000000",
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingLeft: "15%",
-                      color: "#000000",
-                    }}
-                  >
-                    Market
-                  </Text>
-                </Button>
-              </Body>
-              <Right>
-                <Button transparent>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingRight: "30%",
-                      color: "#000000",
-                    }}
-                  >
-                    Saved
-                  </Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
-          <Card></Card>
-        </Content>
+                  Waffles
+                </Text>
+              </Button>
+            </Left>
+            <Body>
+              <Button
+                transparent
+                onPress={() => {
+                  this.setState({
+                    isRendering: true,
+                  });
+                  const feed = _renderFeed(user, "Store");
+                  this.setState(
+                    {
+                      feed: feed,
+                    },
+                    () => {
+                      this.setState({
+                        isRendering: false,
+                      });
+                    }
+                  );
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    paddingLeft: "15%",
+                    color: "#000000",
+                  }}
+                >
+                  Market
+                </Text>
+              </Button>
+            </Body>
+            <Right>
+              <Button
+                transparent
+                onPress={() => {
+                  this.setState({
+                    isRendering: true,
+                  });
+                  const feed = _renderFeed(user, "Saved");
+                  this.setState(
+                    {
+                      feed: feed,
+                    },
+                    () => {
+                      this.setState({
+                        isRendering: false,
+                      });
+                    }
+                  );
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    paddingRight: "30%",
+                    color: "#000000",
+                  }}
+                >
+                  Saved
+                </Text>
+              </Button>
+            </Right>
+          </CardItem>
+        </Card>
+        {!this.state.isRendering && this.state.feed.length > 0 ? (
+          <ProfileFeed posts={this.state.feed} />
+        ) : (
+          <Text>You have no posts</Text>
+        )}
       </Container>
     );
   }
 }
-export default connect(null, null)(ProfileScreen);
+
+const _renderFeed = (user, val) => {
+  switch (val) {
+    case "Store":
+      return user.store;
+    case "Saved":
+      return user.saved;
+    default:
+      return null;
+  }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+    posts: state.post.posts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    readPostsByUser: (id) => dispatch(readPostsByUser(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
   profName: {

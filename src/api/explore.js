@@ -25,7 +25,7 @@ export const newExplore = (explore) => {
   return (dispatch) => {
     dispatch(createExplorePending());
     return axios
-      .explore(root + "api/explore", { ...explore })
+      .post(root + "api/explore", { ...explore })
       .then(({ data }) => {
         dispatch(createExploreSuccess(data));
       })

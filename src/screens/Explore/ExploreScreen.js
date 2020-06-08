@@ -8,8 +8,10 @@ import { Container } from "native-base";
 
 class ExploreScreen extends Component {
   componentDidMount() {
-    /**  5edc94f1f9d5d500047d9247 */
-    this.props.getExploreByUser("5edc94f1f9d5d500047d9247");
+    const { _id } = this.props.user;
+    if (_id) {
+      this.props.getExploreByUser(_id);
+    }
   }
   render() {
     const { category_list } = this.props.explore;
@@ -21,6 +23,7 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user.user,
     explore: state.explore.explore,
   };
 };

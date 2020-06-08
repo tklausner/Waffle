@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -22,6 +22,10 @@ import { ProfileHeader } from "../components/headers/ProfileHeader";
 import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getUserFB } from "../api/user";
+import { AuthContext } from "./AuthNavigator";
 
 // helper function for  getting associated header
 function GetHeader(route) {
@@ -101,15 +105,12 @@ const SellStack = createStackNavigator();
 function SellStackScreen() {
   return (
     <SellStack.Navigator
-      headerMode='float'
+      headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
-    })}
+      })}
     >
-      <SellStack.Screen
-        name="Sell"
-        component={SellScreen}
-      />
+      <SellStack.Screen name="Sell" component={SellScreen} />
     </SellStack.Navigator>
   );
 }
@@ -128,9 +129,19 @@ function ProfileStackScreen() {
   );
 }
 
+const _linkUser = () => {
+  const user = useSelector((state) => state.user.user);
+  const context = useContext(AuthContext);
+  const dispatch = useDispatch();
+  if (!user._id) {
+    dispatch(getUserFB(context.uid));
+  }
+  return user._id != null;
+};
+
 const BottomTab = createBottomTabNavigator();
 export default function RouteStack() {
-  return (
+  return _linkUser() ? (
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({ route }) => ({
@@ -171,6 +182,6 @@ export default function RouteStack() {
         <BottomTab.Screen name="Profile" component={ProfileStackScreen} />
       </BottomTab.Navigator>
     </NavigationContainer>
-  );
+  ) : null;
 }
 module.export = RouteStack;

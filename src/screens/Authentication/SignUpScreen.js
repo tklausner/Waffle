@@ -23,14 +23,18 @@ import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../../styles";
 import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
+import { connect } from "react-redux";
+import { newUser } from "../../api/user";
 
-export default class SignUpScreen extends Component {
+class SignUpScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       email: "",
       password: "",
+      first_name: "",
+      last_name: "",
     };
   }
 
@@ -39,7 +43,15 @@ export default class SignUpScreen extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        () => {},
+        (res) => {
+          const newUser = {
+            fb_id: res.user.uid,
+            username: this.state.username,
+            first_name: this.state.first_name,
+            last_name: this.tate.last_name,
+          };
+          this.props.newUser(newUser);
+        },
         (error) => {
           Alert.alert(error.message);
         }
@@ -122,7 +134,14 @@ export default class SignUpScreen extends Component {
     );
   }
 }
-module.export = SignUpScreen;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    newUser: (user) => dispatch(newUser(user)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignUpScreen);
 
 const styles = StyleSheet.create({
   loginButton: {

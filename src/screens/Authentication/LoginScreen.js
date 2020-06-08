@@ -26,6 +26,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { connect } from "react-redux";
 
+import { getUserFB } from "../../api/user";
+
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,9 @@ class LoginScreen extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        () => {},
+        (res) => {
+          this.props.getUserFB(res.user.uid);
+        },
         (error) => {
           Alert.alert(error.message);
         }
@@ -125,19 +129,13 @@ class LoginScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.user,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     getUserFB: (id) => dispatch(getUserFB(id)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(null, mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   loginButton: {
