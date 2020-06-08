@@ -38,7 +38,7 @@ export function fetchPostsSuccess(posts) {
 }
 
 export function fetchPostsFailure(error) {
-  console.log("Fetch Posts Failed, ERROR: ", error);
+  console.log("[POST] Fetch Posts Failed, ERROR: ", error);
   return { type: FETCH_POSTS_FAILURE, error: error };
 }
 
@@ -51,7 +51,7 @@ export function fetchPostSuccess(post) {
 }
 
 export function fetchPostFailure(error) {
-  console.log("Fetch Post Failed, ERROR: ", error);
+  console.log("[POST] Fetch Post Failed, ERROR: ", error);
   return { type: FETCH_POST_FAILURE, error: error };
 }
 
@@ -67,7 +67,7 @@ export function fetchProductsSuccess(posts) {
 }
 
 export function fetchProductsFailure(error) {
-  console.log("Fetch Products Failed, ERROR: ", error);
+  console.log("[POST] Fetch Products Failed, ERROR: ", error);
   return { type: FETCH_POSTS_BY_CATEGORY_FAILURE, error: error };
 }
 
@@ -76,12 +76,12 @@ export function createPostPending() {
 }
 
 export function createPostSuccess(post) {
-  console.log(`@${post.username} Succesfully Uploaded Item`);
+  console.log(`[POST] @${post.username} Uploaded Item`);
   return { type: CREATE_POST_SUCCESS, payload: post };
 }
 
 export function createPostFailure(error) {
-  console.log("Upload Failed, ERROR: ", error);
+  console.log("[POST] Upload Failed, ERROR: ", error);
   return { type: CREATE_POST_FAILURE, error: error };
 }
 
@@ -90,12 +90,12 @@ export function deletePostPending() {
 }
 
 export function deletePostSuccess(post) {
-  console.log(`@${post.username} Succesfully Deleted Item`);
+  console.log(`[POST] @${post.username} Deleted Item`);
   return { type: DELETE_POST_SUCCESS, payload: post };
 }
 
 export function deletePostFailure(error) {
-  console.log("Delete Failed, ERROR: ", error);
+  console.log("[POST] Delete Failed, ERROR: ", error);
   return { type: DELETE_POST_FAILURE, error: error };
 }
 
@@ -104,11 +104,11 @@ export function updatePostPending() {
 }
 
 export function updatePostSuccess(post) {
-  console.log(`@${post.username} Succesfully Updated Item`);
+  console.log(`[POST] @${post.username} Updated Item`);
   return { type: UPDATE_POST_SUCCESS, payload: post };
 }
 
 export function updatePostFailure(error) {
-  console.log("Update Failed, ERROR: ", error);
+  console.log("[POST] Update Failed, ERROR: ", error);
   return { type: UPDATE_POST_FAILURE, error: error };
 }

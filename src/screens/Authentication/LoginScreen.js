@@ -24,7 +24,9 @@ import stylesPage from "../../styles";
 import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 
-export default class LoginScreen extends Component {
+import { connect } from "react-redux";
+
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -122,7 +124,20 @@ export default class LoginScreen extends Component {
     );
   }
 }
-module.export = LoginScreen;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserFB: (id) => dispatch(getUserFB(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   loginButton: {
