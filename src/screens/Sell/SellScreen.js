@@ -18,6 +18,8 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import { Asset } from "expo-asset";
 
+import { uploadImageToFireBase } from "../../utils";
+
 import { newPost } from "../../api/post";
 
 import { connect } from "react-redux";
@@ -63,6 +65,9 @@ class SellScreen extends Component {
 
     if (!result.cancelled) {
       this.setState({ image: result.uri });
+      uploadImageToFireBase({
+        uri: this.state.image,
+      });
     }
   };
 

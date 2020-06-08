@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import { Product } from "./Product";
-import { Content, Container, Text, View, Header, Card } from "native-base";
-import { FlatList, StyleSheet, Dimensions } from "react-native";
+import { Text, Card } from "native-base";
+import { FlatList, StyleSheet } from "react-native";
 
 const renderItem = ({ item, index }) => {
   return <Product product={item} key={item.id} />;
 };
 
 export function ProductList({ products, category }) {
-  return (
+  return products ? (
     <Card style={styles.container}>
-      <Text style={styles.header}>{category}</Text>
+      <Text style={styles.header}>#{category}</Text>
       <FlatList
         data={products}
         renderItem={renderItem}
@@ -19,7 +19,7 @@ export function ProductList({ products, category }) {
         horizontal={true}
       />
     </Card>
-  );
+  ) : null;
 }
 
 module.export = ProductList;
@@ -27,9 +27,10 @@ module.export = ProductList;
 const styles = StyleSheet.create({
   header: {
     textAlign: "left",
-    padding: "0%",
+    padding: "2%",
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 0,
+    color: "#00B8FA",
   },
 });
