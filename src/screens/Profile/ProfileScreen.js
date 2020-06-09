@@ -8,21 +8,16 @@ import {
   Thumbnail,
   Text,
   Button,
-  Icon,
   Left,
   Body,
   Right,
   List,
   ListItem,
 } from "native-base";
-import { StyleSheet, Image } from "react-native";
-
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-
 import ProfileFeed from "../../components/profile/ProfileFeed";
-
 import AsyncImage from "../../components/images/AsyncImage";
-import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -36,21 +31,7 @@ class ProfileScreen extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      isRendering: true,
-      selected: "Waffles",
-    });
-    const feed = _renderFeed(this.props.user, "Waffles");
-    this.setState(
-      {
-        feed: feed,
-      },
-      () => {
-        this.setState({
-          isRendering: false,
-        });
-      }
-    );
+    this._renderFeed(this.props.user, "Waffles");
   }
 
   render() {
@@ -90,21 +71,7 @@ class ProfileScreen extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this.setState({
-                    isRendering: true,
-                    selected: "Waffles",
-                  });
-                  const feed = _renderFeed(user, "Waffles");
-                  this.setState(
-                    {
-                      feed: feed,
-                    },
-                    () => {
-                      this.setState({
-                        isRendering: false,
-                      });
-                    }
-                  );
+                  this._renderFeed(user, "Waffles");
                 }}
               >
                 <Text
@@ -125,21 +92,7 @@ class ProfileScreen extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this.setState({
-                    isRendering: true,
-                    selected: "Store",
-                  });
-                  const feed = _renderFeed(user, "Store");
-                  this.setState(
-                    {
-                      feed: feed,
-                    },
-                    () => {
-                      this.setState({
-                        isRendering: false,
-                      });
-                    }
-                  );
+                  this._renderFeed(user, "Store");
                 }}
               >
                 <Text
@@ -160,21 +113,7 @@ class ProfileScreen extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this.setState({
-                    isRendering: true,
-                    selected: "Saved",
-                  });
-                  const feed = _renderFeed(user, "Saved");
-                  this.setState(
-                    {
-                      feed: feed,
-                    },
-                    () => {
-                      this.setState({
-                        isRendering: false,
-                      });
-                    }
-                  );
+                  this._renderFeed(user, "Saved");
                 }}
               >
                 <Text
@@ -201,21 +140,31 @@ class ProfileScreen extends Component {
       </Container>
     );
   }
+  _renderFeed = (user, val) => {
+    this.setState({
+      isRendering: true,
+      selected: val,
+    });
+    var feed =
+      val === "Store"
+        ? user.store
+        : val === "Saved"
+        ? user.saved
+        : val === "Waffles"
+        ? user.waffles
+        : null;
+    this.setState(
+      {
+        feed: feed,
+      },
+      () => {
+        this.setState({
+          isRendering: false,
+        });
+      }
+    );
+  };
 }
-
-const _renderFeed = (user, val) => {
-  console.log(val);
-  switch (val) {
-    case "Store":
-      return user.store;
-    case "Saved":
-      return user.saved;
-    case "Waffles":
-      return user.waffles;
-    default:
-      return null;
-  }
-};
 
 const mapStateToProps = (state) => {
   return {

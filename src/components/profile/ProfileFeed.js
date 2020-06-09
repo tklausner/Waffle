@@ -14,7 +14,6 @@ class ProfileFeed extends Component {
   };
   componentDidMount() {
     const { posts } = this.props;
-    console.log("IN", posts);
     for (id of posts) {
       this.loadPost(id);
     }
