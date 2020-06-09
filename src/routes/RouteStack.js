@@ -101,15 +101,13 @@ const SellStack = createStackNavigator();
 function SellStackScreen() {
   return (
     <SellStack.Navigator
-      headerMode='float'
+      headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
-    })}
+      })}
+      initialRouteName="Sell"
     >
-      <SellStack.Screen
-        name="Sell"
-        component={SellScreen}
-      />
+      <SellStack.Screen name="Sell" component={SellScreen} />
     </SellStack.Navigator>
   );
 }
