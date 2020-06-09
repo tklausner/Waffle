@@ -9,10 +9,12 @@ import { getPost } from "../../api/post";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
 class PostList extends Component {
+  _isMounted = false;
   state = {
     feed: [],
   };
   componentDidMount() {
+    this._isMounted = true;
     const { posts } = this.props;
     for (id of posts) {
       this.loadPost(id);
@@ -21,13 +23,18 @@ class PostList extends Component {
   loadPost = async (id) => {
     await this.props.getPost(id);
     const { post } = this.props;
-    this.setState((state) => ({
-      feed: [...state.feed, post],
-    }));
+    if (this._isMounted) {
+      this.setState((state) => ({
+        feed: [...state.feed, post],
+      }));
+    }
   };
   _renderItem = ({ item }) => {
     return <Post post={item} key={item._id} />;
   };
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   render() {
     return (
       <Container>

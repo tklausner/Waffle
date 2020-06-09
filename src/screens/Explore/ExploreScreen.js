@@ -13,6 +13,7 @@ class ExploreScreen extends Component {
       this.props.getExploreByUser(_id);
     }
   }
+
   render() {
     const { category_list } = this.props.explore;
     return category_list ? <ExploreList category_list={category_list} /> : null;

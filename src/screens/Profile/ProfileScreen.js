@@ -24,21 +24,33 @@ import ProfileFeed from "../../components/profile/ProfileFeed";
 import AsyncImage from "../../components/images/AsyncImage";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
-import { readPostsByUser } from "../../api/post";
-
 class ProfileScreen extends Component {
-  componentDidMount() {
-    const { _id } = this.props.user;
-    if (_id) {
-      this.props.readPostsByUser(_id);
-    }
-  }
   constructor(props) {
     super(props);
     this.state = {
+      selected: "",
       feed: [],
       isRendering: true,
+      selectedColor: "#00B8FA",
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      isRendering: true,
+      selected: "Waffles",
+    });
+    const feed = _renderFeed(this.props.user, "Waffles");
+    this.setState(
+      {
+        feed: feed,
+      },
+      () => {
+        this.setState({
+          isRendering: false,
+        });
+      }
+    );
   }
 
   render() {
@@ -80,8 +92,9 @@ class ProfileScreen extends Component {
                 onPress={() => {
                   this.setState({
                     isRendering: true,
+                    selected: "Waffles",
                   });
-                  const feed = this.props.posts;
+                  const feed = _renderFeed(user, "Waffles");
                   this.setState(
                     {
                       feed: feed,
@@ -98,7 +111,10 @@ class ProfileScreen extends Component {
                   style={{
                     fontSize: 20,
                     paddingLeft: "15%",
-                    color: "#000000",
+                    color:
+                      this.state.selected === "Waffles"
+                        ? this.state.selectedColor
+                        : "#000",
                   }}
                 >
                   Waffles
@@ -111,6 +127,7 @@ class ProfileScreen extends Component {
                 onPress={() => {
                   this.setState({
                     isRendering: true,
+                    selected: "Store",
                   });
                   const feed = _renderFeed(user, "Store");
                   this.setState(
@@ -129,7 +146,10 @@ class ProfileScreen extends Component {
                   style={{
                     fontSize: 20,
                     paddingLeft: "15%",
-                    color: "#000000",
+                    color:
+                      this.state.selected === "Store"
+                        ? this.state.selectedColor
+                        : "#000",
                   }}
                 >
                   Market
@@ -142,6 +162,7 @@ class ProfileScreen extends Component {
                 onPress={() => {
                   this.setState({
                     isRendering: true,
+                    selected: "Saved",
                   });
                   const feed = _renderFeed(user, "Saved");
                   this.setState(
@@ -160,7 +181,10 @@ class ProfileScreen extends Component {
                   style={{
                     fontSize: 20,
                     paddingRight: "30%",
-                    color: "#000000",
+                    color:
+                      this.state.selected === "Saved"
+                        ? this.state.selectedColor
+                        : "#000",
                   }}
                 >
                   Saved
@@ -169,7 +193,7 @@ class ProfileScreen extends Component {
             </Right>
           </CardItem>
         </Card>
-        {!this.state.isRendering && this.state.feed.length > 0 ? (
+        {!this.state.isRendering ? (
           <ProfileFeed posts={this.state.feed} />
         ) : (
           <Text>You have no posts</Text>
@@ -180,11 +204,14 @@ class ProfileScreen extends Component {
 }
 
 const _renderFeed = (user, val) => {
+  console.log(val);
   switch (val) {
     case "Store":
       return user.store;
     case "Saved":
       return user.saved;
+    case "Waffles":
+      return user.waffles;
     default:
       return null;
   }
@@ -193,17 +220,10 @@ const _renderFeed = (user, val) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
-    posts: state.post.posts,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    readPostsByUser: (id) => dispatch(readPostsByUser(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
+export default connect(mapStateToProps, null)(ProfileScreen);
 
 const styles = StyleSheet.create({
   profName: {

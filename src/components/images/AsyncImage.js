@@ -33,9 +33,7 @@ export default class AsyncImage extends Component {
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            <ActivityIndicator />
-          </View>
+          ></View>
         );
       } else {
         return (
