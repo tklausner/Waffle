@@ -8,8 +8,8 @@ import {
   Dimensions,
   TextInput,
   Keyboard,
-  TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
@@ -29,7 +29,7 @@ class SellScreen extends Component {
     super(props);
     this.state = {
       hasCameraPermission: null,
-      image: Asset.fromModule(require("../../../assets/images/CameraRoll.png"))
+      image: Asset.fromModule(require("../../../assets/images/CameraRollLight.png"))
         .uri,
       description: "",
       postingPrice: 0,
@@ -86,10 +86,23 @@ class SellScreen extends Component {
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });
-        uploadImageToFireBase({
-          uri: this.state.image,
-        });
       }
+    }
+  };
+
+  waffleUpload = async () => {
+    if (this.state.image == Asset.fromModule(require("../../../assets/images/CameraRollLight.png")).uri) {
+      Alert.alert("You must upload an image before posting");
+    }
+    else if (this.state.postingPrice <= 0) {
+      Alert.alert("Posting price must be greater than $0");
+    }
+    else if (this.state.mainSpots <= 0) {
+      Alert.alert("You must have at least one spot in your main");
+    } else {
+      uploadImageToFireBase({
+        uri: this.state.image,
+      });
     }
   };
 
@@ -100,112 +113,105 @@ class SellScreen extends Component {
       return <Text>Access to camera has been denied.</Text>;
     } else {
       return (
-        <TouchableOpacity
-          onPress={Keyboard.dismiss}
-          accessible={false}
-          activeOpacity={1}
+        <KeyboardAwareScrollView
+          style={{ backgroundColor: "white", flexGrow: 1 }}
+          contentContainerStyle={styles.view}
+          extraHeight={100}
+          keyboardOpeningTime={0}
         >
-          <KeyboardAwareScrollView
-            style={{ backgroundColor: "white" }}
-            contentContainerStyle={styles.view}
-            extraHeight={100}
-            keyboardOpeningTime={0}
-          >
-            <View style={styles.imageContainer}>
-              {this.state.image && (
-                <Image
-                  source={{ uri: this.state.image }}
-                  style={styles.image}
-                />
-              )}
-            </View>
-            <View style={styles.innerView}>
-              <Button transparent>
-                <View style={styles.outerButtonView}>
-                  <Ionicons name="ios-color-filter" style={styles.icon} />
-                </View>
-              </Button>
-              <Button transparent onPress={this.takePicture}>
-                <View style={styles.centerButtonView}>
-                  <Ionicons name="ios-camera" style={styles.centerIcon} />
-                </View>
-              </Button>
-              <Button transparent onPress={this.pickImage}>
-                <View style={styles.outerButtonView}>
-                  <Ionicons name="md-images" style={styles.icon} />
-                </View>
-              </Button>
-            </View>
-            <View style={{ width: "100%", marginLeft: "5%" }}>
-              <Text style={styles.descriptionText}>Description</Text>
-              <TextInput
-                style={styles.form}
-                placeholder="Write your description..."
-                autoCorrect={true}
-                keyboardAppearance={"dark"}
-                placeholderTextColor={"white"}
-                multiline={true}
-                textAlignVertical={"top"}
-                value={this.state.description}
-                onChangeText={(text) => {
-                  this.setState({ description: text });
-                }}
-              />
-            </View>
-              <View style={styles.secondaryView}>
-                <Text style={styles.textStyle}>Posting Price:</Text>
-                <TextInput
-                  style={styles.secondaryInput}
-                  placeholder=""
-                  keyboardAppearance={"dark"}
-                  keyboardType={"number-pad"}
-                  placeholderTextColor={"black"}
-                  value={this.state.postingPrice}
-                  onChangeText={(text) => {
-                    this.setState({ postingPrice: Number(text) });
-                  }}
-                  onEndEditing={() => {
-                    this.setState({
-                      yourProfit: this.state.postingPrice * 0.99,
-                    });
-                    this.setState({
-                      mainPrice: this.state.postingPrice / this.state.mainSpots,
-                    });
-                  }}
-                />
+          <View style={styles.imageContainer}>
+            {this.state.image && (
+              <Image source={{ uri: this.state.image }} style={styles.image} />
+            )}
+          </View>
+          <View style={styles.innerView}>
+            <Button transparent>
+              <View style={styles.outerButtonView}>
+                <Ionicons name="ios-color-filter" style={styles.icon} />
               </View>
-              <View style={styles.secondaryView}>
-                <Text style={styles.textStyle}>Your Profit:</Text>
-                <Text style={styles.changingText}>{this.state.yourProfit}</Text>
-              </View>
-              <View style={styles.secondaryView}>
-                <Text style={styles.textStyle}>Main Spots:</Text>
-                <TextInput
-                  style={styles.secondaryInput}
-                  placeholder="10"
-                  keyboardAppearance={"dark"}
-                  keyboardType={"number-pad"}
-                  placeholderTextColor={"grey"}
-                  value={this.state.mainSpots}
-                  onChangeText={(text) => {
-                    this.setState({ mainSpots: Number(text) });
-                  }}
-                  onEndEditing={() => {
-                    this.setState({
-                      mainPrice: this.state.postingPrice / this.state.mainSpots,
-                    });
-                  }}
-                />
-              </View>
-              <View style={styles.secondaryView}>
-                <Text style={styles.textStyle}>Main Price:</Text>
-                <Text style={styles.changingText}>{this.state.mainPrice}</Text>
-              </View>
-            <Button style={styles.waffleButton}>
-              <Text style={styles.waffleText}>Waffle</Text>
             </Button>
-          </KeyboardAwareScrollView>
-        </TouchableOpacity>
+            <Button transparent onPress={this.takePicture}>
+              <View style={styles.centerButtonView}>
+                <Ionicons name="ios-camera" style={styles.centerIcon} />
+              </View>
+            </Button>
+            <Button transparent onPress={this.pickImage}>
+              <View style={styles.outerButtonView}>
+                <Ionicons name="md-images" style={styles.icon} />
+              </View>
+            </Button>
+          </View>
+          <View style={{ width: "100%", marginLeft: "5%" }}>
+            <Text style={styles.descriptionText}>Description</Text>
+            <TextInput
+              style={styles.form}
+              placeholder="Write your description..."
+              autoCorrect={true}
+              keyboardAppearance={"dark"}
+              placeholderTextColor={"white"}
+              multiline={true}
+              textAlignVertical={"top"}
+              value={this.state.description}
+              onChangeText={(text) => {
+                this.setState({ description: text });
+              }}
+            />
+          </View>
+          <View style={styles.secondaryView}>
+            <Text style={styles.textStyle}>Posting Price:</Text>
+            <TextInput
+              style={styles.secondaryInput}
+              placeholder=""
+              keyboardAppearance={"dark"}
+              keyboardType={"number-pad"}
+              placeholderTextColor={"black"}
+              value={this.state.postingPrice}
+              maxLength={4}
+              onChangeText={(text) => {
+                this.setState({ postingPrice: Number(text) });
+              }}
+              onEndEditing={() => {
+                this.setState({
+                  yourProfit: this.state.postingPrice * 0.99,
+                });
+                this.setState({
+                  mainPrice: this.state.postingPrice / this.state.mainSpots,
+                });
+              }}
+            />
+          </View>
+          <View style={styles.secondaryView}>
+            <Text style={styles.textStyle}>Your Profit:</Text>
+            <Text style={styles.changingText}>{this.state.yourProfit}</Text>
+          </View>
+          <View style={styles.secondaryView}>
+            <Text style={styles.textStyle}>Main Spots:</Text>
+            <TextInput
+              style={styles.secondaryInput}
+              placeholder="10"
+              keyboardAppearance={"dark"}
+              keyboardType={"number-pad"}
+              placeholderTextColor={"grey"}
+              value={this.state.mainSpots}
+              maxLength={2}
+              onChangeText={(text) => {
+                this.setState({ mainSpots: Number(text) });
+              }}
+              onEndEditing={() => {
+                this.setState({
+                  mainPrice: this.state.postingPrice / this.state.mainSpots,
+                });
+              }}
+            />
+          </View>
+          <View style={styles.secondaryView}>
+            <Text style={styles.textStyle}>Main Price:</Text>
+            <Text style={styles.changingText}>{this.state.mainPrice}</Text>
+          </View>
+          <Button style={styles.waffleButton} onPress={this.waffleUpload}>
+            <Text style={styles.waffleText}>Waffle</Text>
+          </Button>
+        </KeyboardAwareScrollView>
       );
     }
   }
@@ -219,9 +225,8 @@ export default connect(null, mapDispatchToProps)(SellScreen);
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "white",
     alignItems: "center",
-    flexGrow: 1,
+    backgroundColor: "white",
   },
   image: {
     width: Dimensions.get("window").width,
@@ -322,5 +327,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
-  }
+  },
 });
