@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   Header,
   Body,
@@ -18,7 +19,8 @@ import {
 import globalStyles from "../../styles";
 
 export function SellImageHeader() {
-  const [keyboardOpen, setKeyboardOpen] = useState("Next");
+  const [keyboardOpen, setKeyboardOpen] = useState("");
+  const navigation = useNavigation();
 
   useEffect(() => {
     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
@@ -35,15 +37,11 @@ export function SellImageHeader() {
   }
 
   function _keyboardDidHide() {
-    setKeyboardOpen("Next");
+    setKeyboardOpen("");
   }
 
   function buttonClick() {
-    if (keyboardOpen === "OK") {
       Keyboard.dismiss();
-    } else {
-      console.log("navigate to the next screen");
-    }
   }
 
   return (
