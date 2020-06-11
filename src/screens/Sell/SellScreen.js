@@ -28,9 +28,9 @@ class SellScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasCameraPermission: null,
-      image: Asset.fromModule(require("../../../assets/images/CameraRollLight.png"))
-        .uri,
+      image: Asset.fromModule(
+        require("../../../assets/images/CameraRollLight.png")
+      ).uri,
       description: "",
       postingPrice: 0,
       yourProfit: 0,
@@ -40,32 +40,27 @@ class SellScreen extends Component {
     };
   }
 
-  async componentDidMount() {
-    if (Constants.platform.ios) {
-      const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-      this.setState({ hasCameraPermission: status === "granted" });
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
-      }
-    }
-  }
-
   pickImage = async () => {
     Keyboard.dismiss();
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
-      uploadImageToFireBase({
-        uri: this.state.image,
+    const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+    if (status !== "granted") {
+      alert("Sorry, we need camera permissions to make this work!");
+    } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
       });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        this.setState({ image: result.uri });
+        uploadImageToFireBase({
+          uri: this.state.image,
+        });
+      }
     }
   };
 
@@ -91,13 +86,15 @@ class SellScreen extends Component {
   };
 
   waffleUpload = async () => {
-    if (this.state.image == Asset.fromModule(require("../../../assets/images/CameraRollLight.png")).uri) {
+    if (
+      this.state.image ==
+      Asset.fromModule(require("../../../assets/images/CameraRollLight.png"))
+        .uri
+    ) {
       Alert.alert("You must upload an image before posting");
-    }
-    else if (this.state.postingPrice <= 0) {
+    } else if (this.state.postingPrice <= 0) {
       Alert.alert("Posting price must be greater than $0");
-    }
-    else if (this.state.mainSpots <= 0) {
+    } else if (this.state.mainSpots <= 0) {
       Alert.alert("You must have at least one spot in your main");
     } else {
       uploadImageToFireBase({
@@ -107,17 +104,13 @@ class SellScreen extends Component {
   };
 
   render() {
-    if (this.state.hasCameraPermission === null) {
-      return <View />;
-    } else if (this.state.hasCameraPermission === false) {
-      return <Text>Access to camera has been denied.</Text>;
-    } else {
       return (
         <KeyboardAwareScrollView
           style={{ backgroundColor: "white", flexGrow: 1 }}
           contentContainerStyle={styles.view}
           extraHeight={100}
           keyboardOpeningTime={0}
+          showsVerticalScrollIndicator={false}
         >
           <View style={styles.imageContainer}>
             {this.state.image && (
@@ -213,7 +206,6 @@ class SellScreen extends Component {
           </Button>
         </KeyboardAwareScrollView>
       );
-    }
   }
 }
 const mapDispatchToProps = (dispatch) => {
