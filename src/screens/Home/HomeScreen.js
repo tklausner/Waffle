@@ -6,17 +6,13 @@ import { LoadingScreen } from "../../components/loading/LoadingScreen";
 import PostList from "../../components/posts/PostList";
 
 import { getFeedByUser } from "../../api/feed";
-import { getUserFB } from "../../api/user";
 
 class HomeScreen extends Component {
   componentDidMount() {
-    this._loadUser();
-  }
-
-  async _loadUser() {
-    await this.props.getUserFB("0Z1rLUJc8ZXV1OONn9ptOuegFOf1");
     const { _id } = this.props.user;
-    this.props.getFeedByUser(_id);
+    if (_id) {
+      this.props.getFeedByUser(_id);
+    }
   }
 
   render() {
@@ -39,7 +35,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getFeedByUser: (id) => dispatch(getFeedByUser(id)),
-    getUserFB: (id) => dispatch(getUserFB(id)),
   };
 };
 

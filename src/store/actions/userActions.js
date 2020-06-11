@@ -31,7 +31,7 @@ export function fetchUsersSuccess(users) {
 }
 
 export function fetchUsersFailure(error) {
-  console.log("Fetch Users Failed, ERROR: ", error);
+  console.log("[USERS] Fetch Users Failed, ERROR: ", error);
   return { type: FETCH_USERS_FAILURE, error: error };
 }
 
@@ -40,12 +40,12 @@ export function fetchUserPending() {
 }
 
 export function fetchUserSuccess(user) {
-  console.log(`Fetch @${user.username} Succesful`);
+  console.log(`[USERS] Fetched @${user.username}`);
   return { type: FETCH_USER_SUCCESS, payload: user };
 }
 
 export function fetchUserFailure(error) {
-  console.log("Fetch User Failed, ERROR: ", error);
+  console.log("[USERS] Fetch User Failed, ERROR: ", error);
   return { type: FETCH_USER_FAILURE, error: error };
 }
 
@@ -54,12 +54,12 @@ export function createUserPending() {
 }
 
 export function createUserSuccess(user) {
-  console.log(`New User @${user.username} Created`);
+  console.log(`[USERS] New User @${user.username}`);
   return { type: CREATE_USER_SUCCESS, payload: user };
 }
 
 export function createUserFailure(error) {
-  console.log("Failed to Create New User, ERROR: ", error);
+  console.log("[USERS] Failed to Create New User, ERROR: ", error);
   return { type: CREATE_USER_FAILURE, error: error };
 }
 
@@ -68,12 +68,12 @@ export function deleteUserPending() {
 }
 
 export function deleteUserSuccess(user) {
-  console.log(`Deleted @${user.username} Succesful`);
+  console.log(`[USERS] Deleted @${user.username}`);
   return { type: DELETE_USER_SUCCESS, payload: user };
 }
 
 export function deleteUserFailure(error) {
-  console.log("Delete Failed, ERROR: ", error);
+  console.log("[USERS] Delete Failed, ERROR: ", error);
   return { type: DELETE_USER_FAILURE, error: error };
 }
 
@@ -82,11 +82,11 @@ export function updateUserPending() {
 }
 
 export function updateUserSuccess(user) {
-  console.log(`@${user.username} Succesfully Updated`);
+  console.log(`[USERS] @${user.username} Updated`);
   return { type: UPDATE_USER_SUCCESS, payload: user };
 }
 
 export function updateUserFailure(error) {
-  console.log("Update User Failed, ERROR: ", error);
+  console.log("[USERS] Update User Failed, ERROR: ", error);
   return { type: UPDATE_USER_FAILURE, error: error };
 }

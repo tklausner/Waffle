@@ -25,7 +25,7 @@ export const newFeed = (feed) => {
   return (dispatch) => {
     dispatch(createFeedPending());
     return axios
-      .feed(root + "api/feed", { ...feed })
+      .post(root + "api/feed", { ...feed })
       .then(({ data }) => {
         dispatch(createFeedSuccess(data));
       })

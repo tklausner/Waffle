@@ -70,7 +70,6 @@ export const getPost = (id) => {
 
 // GET POSTS BY CATEGORY (posts[category])
 export const readPostsByCategory = (category) => {
-  console.log(category);
   return (dispatch) => {
     dispatch(fetchProductsPending());
     return axios
@@ -80,6 +79,21 @@ export const readPostsByCategory = (category) => {
       })
       .catch((error) => {
         dispatch(fetchProductsFailure(error));
+      });
+  };
+};
+
+// GET POSTS BY USER (posts[user_id])
+export const readPostsByUser = (user_id) => {
+  return (dispatch) => {
+    dispatch(fetchPostsPending());
+    return axios
+      .get(root + "api/posts/user/" + user_id)
+      .then(({ data }) => {
+        dispatch(fetchPostsSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchPostsFailure(error));
       });
   };
 };

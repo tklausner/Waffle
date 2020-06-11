@@ -17,15 +17,23 @@ import {
   updateUserFailure,
 } from "../store/actions/userActions";
 
+import { logoutUser } from "../store/actions/authActions";
+
 // root url
 const root = "https://waffleapp-server.herokuapp.com/";
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch(logoutUser());
+  };
+};
 
 // POST USER
 export const newUser = (user) => {
   return (dispatch) => {
     dispatch(createUserPending());
     return axios
-      .user(root + "api/users", { ...user })
+      .post(root + "api/users", { ...user })
       .then(({ data }) => {
         dispatch(createUserSuccess(data));
       })

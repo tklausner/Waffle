@@ -8,24 +8,34 @@ import { connect } from "react-redux";
 import { readPostsByCategory } from "../../api/post";
 
 class ExploreList extends Component {
+  _isMounted = false;
   state = {
     feed: [[]],
   };
 
   componentDidMount() {
+    this._isMounted = true;
     const { category_list } = this.props;
-    category_list.push(null);
-    for (let i = 0; i < category_list.length - 1; i += 1) {
-      this.loadPosts(category_list[i]);
+    for (let i = 0; i < category_list.length; i += 1) {
+      this.loadPosts(category_list[i], i + 1);
     }
   }
 
-  loadPosts = async (category) => {
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  loadPosts = async (category, id) => {
     await this.props.readPostsByCategory(category);
     const { posts } = this.props;
-    this.setState((state) => ({
-      feed: [...state.feed, { category: category, posts: posts }],
-    }));
+    if (this._isMounted) {
+      this.setState((state) => ({
+        feed: [
+          ...state.feed,
+          { id: id.toString(), category: category, posts: posts },
+        ],
+      }));
+    }
   };
 
   _renderItem = ({ item, index }) => {
@@ -33,18 +43,18 @@ class ExploreList extends Component {
       <ProductList
         products={item.posts}
         category={item.category}
-        key={item.index}
+        key={item.id}
       />
     );
   };
   render() {
     return (
       <Container>
-        {this.state.feed.length === this.props.category_list.length ? (
+        {this.state.feed.length >= this.props.category_list.length ? (
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}
-            keyExtractor={(item) => item.index}
+            keyExtractor={(item) => item.id}
             ListEmptyComponent={() => <Text>There are no categories?</Text>}
           />
         ) : (

@@ -1,24 +1,18 @@
 import React, { Component } from "react";
-import { Post } from "./Post";
+import { PostPreview } from "./PostPreview";
 import { Container } from "native-base";
 import { FlatList, StyleSheet } from "react-native";
 
 import { connect } from "react-redux";
 import { getPost } from "../../api/post";
 
-import { LoadingScreen } from "../../components/loading/LoadingScreen";
+import { LoadingScreen } from "../loading/LoadingScreen";
 
-class PostList extends Component {
-  _isMounted = false;
-  constructor(props) {
-    super(props);
-    this.state = {
-      feed: [],
-    };
-  }
-
+class ProfileFeed extends Component {
+  state = {
+    feed: [],
+  };
   componentDidMount() {
-    this._isMounted = true;
     const { posts } = this.props;
     for (id of posts) {
       this.loadPost(id);
@@ -27,18 +21,13 @@ class PostList extends Component {
   loadPost = async (id) => {
     await this.props.getPost(id);
     const { post } = this.props;
-    if (this._isMounted) {
-      this.setState((state) => ({
-        feed: [...state.feed, post],
-      }));
-    }
+    this.setState((state) => ({
+      feed: [...state.feed, post],
+    }));
   };
   _renderItem = ({ item }) => {
-    return <Post post={item} key={item._id} />;
+    return <PostPreview post={item} key={item._id} />;
   };
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
   render() {
     return (
       <Container>
@@ -47,11 +36,11 @@ class PostList extends Component {
             data={this.state.feed}
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
-            ListEmptyComponent={() => <Text>Ethan's a Bitch</Text>}
+            ListEmptyComponent={() => null}
+            numColumns={2}
+            style={{ flex: 1, marginLeft: 20 }}
           />
-        ) : (
-          <LoadingScreen />
-        )}
+        ) : null}
       </Container>
     );
   }
@@ -69,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileFeed);

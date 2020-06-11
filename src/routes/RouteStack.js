@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -22,6 +22,10 @@ import { ProfileHeader } from "../components/headers/ProfileHeader";
 import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getUserFB } from "../api/user";
+import { AuthContext } from "./AuthNavigator";
 
 // helper function for  getting associated header
 function GetHeader(route) {
@@ -128,7 +132,7 @@ function ProfileStackScreen() {
 
 const BottomTab = createBottomTabNavigator();
 export default function RouteStack() {
-  return (
+  return true ? (
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({ route }) => ({
@@ -169,6 +173,6 @@ export default function RouteStack() {
         <BottomTab.Screen name="Profile" component={ProfileStackScreen} />
       </BottomTab.Navigator>
     </NavigationContainer>
-  );
+  ) : null;
 }
 module.export = RouteStack;

@@ -24,7 +24,11 @@ import stylesPage from "../../styles";
 import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 
-export default class LoginScreen extends Component {
+import { connect } from "react-redux";
+
+import { getUserFB } from "../../api/user";
+
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +42,9 @@ export default class LoginScreen extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        () => {},
+        (res) => {
+          this.props.getUserFB(res.user.uid);
+        },
         (error) => {
           Alert.alert(error.message);
         }
@@ -122,7 +128,14 @@ export default class LoginScreen extends Component {
     );
   }
 }
-module.export = LoginScreen;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserFB: (id) => dispatch(getUserFB(id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   loginButton: {

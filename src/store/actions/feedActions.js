@@ -31,7 +31,7 @@ export function fetchFeedsSuccess(feeds) {
 }
 
 export function fetchFeedsFailure(error) {
-  console.log("Fetch Feeds Failed, ERROR: ", error);
+  console.log("[FEED] Fetch Feeds Failed, ERROR: ", error);
   return { type: FETCH_FEEDS_FAILURE, error: error };
 }
 
@@ -40,12 +40,12 @@ export function fetchFeedPending() {
 }
 
 export function fetchFeedSuccess(feed) {
-  console.log(`@${feed.user_id} Succesfully Uploaded Item`);
+  console.log(`[FEED] @${feed.user_id} Fetched`);
   return { type: FETCH_FEED_SUCCESS, payload: feed };
 }
 
 export function fetchFeedFailure(error) {
-  console.log("Fetch Feed Failed, ERROR: ", error);
+  console.log("[FEED] Fetch Feed Failed, ERROR: ", error);
   return { type: FETCH_FEED_FAILURE, error: error };
 }
 
@@ -54,12 +54,12 @@ export function createFeedPending() {
 }
 
 export function createFeedSuccess(feed) {
-  console.log(`@${feed.user_id} Succesfully Uploaded Item`);
+  console.log(`[FEED] @${feed.user_id} New Feed`);
   return { type: CREATE_FEED_SUCCESS, payload: feed };
 }
 
 export function createFeedFailure(error) {
-  console.log("Upload Failed, ERROR: ", error);
+  console.log("[FEED] Upload Failed, ERROR: ", error);
   return { type: CREATE_FEED_FAILURE, error: error };
 }
 
@@ -68,12 +68,12 @@ export function deleteFeedPending() {
 }
 
 export function deleteFeedSuccess(feed) {
-  console.log(`@${feed.user_id} Succesfully Deleted Item`);
+  console.log(`[FEED] @${feed.user_id} Deleted Feed`);
   return { type: DELETE_FEED_SUCCESS, payload: feed };
 }
 
 export function deleteFeedFailure(error) {
-  console.log("Delete Failed, ERROR: ", error);
+  console.log("[FEED] Delete Failed, ERROR: ", error);
   return { type: DELETE_FEED_FAILURE, error: error };
 }
 
@@ -82,7 +82,7 @@ export function updateFeedPending() {
 }
 
 export function updateFeedSuccess(feed) {
-  console.log(`@${feed.user_id} Succesfully Updated Item`);
+  console.log(`[FEED] @${feed.user_id} Updated Feed`);
   return { type: UPDATE_FEED_SUCCESS, payload: feed };
 }
 
