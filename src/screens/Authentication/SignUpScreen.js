@@ -48,7 +48,7 @@ class SignUpScreen extends Component {
             fb_id: res.user.uid,
             username: this.state.username,
             first_name: this.state.first_name,
-            last_name: this.tate.last_name,
+            last_name: this.state.last_name,
           };
           this.props.newUser(newUser);
         },

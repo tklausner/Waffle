@@ -129,19 +129,9 @@ function ProfileStackScreen() {
   );
 }
 
-const _linkUser = () => {
-  const user = useSelector((state) => state.user.user);
-  const context = useContext(AuthContext);
-  const dispatch = useDispatch();
-  if (!user._id) {
-    dispatch(getUserFB(context.uid));
-  }
-  return user._id != null;
-};
-
 const BottomTab = createBottomTabNavigator();
 export default function RouteStack() {
-  return _linkUser() ? (
+  return true ? (
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({ route }) => ({

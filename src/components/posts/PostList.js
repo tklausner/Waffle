@@ -10,9 +10,13 @@ import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
 class PostList extends Component {
   _isMounted = false;
-  state = {
-    feed: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      feed: [],
+    };
+  }
+
   componentDidMount() {
     this._isMounted = true;
     const { posts } = this.props;
