@@ -109,6 +109,7 @@ function SellStackScreen() {
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
       })}
+      initialRouteName="Sell"
     >
       <SellStack.Screen name="Sell" component={SellScreen} />
     </SellStack.Navigator>

@@ -53,32 +53,32 @@ class LoginScreen extends Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: "white" }}>
-        <Header
-          style={{ backgroundColor: "transparent", borderBottomWidth: 0 }}
-        >
-          <Left>
-            <Button
-              transparent
-              style={styles.backButton}
-              onPress={() => this.props.navigation.goBack()}
-            >
-              <MaterialIcons
-                name="keyboard-arrow-left"
-                style={[{ fontSize: 40 }, stylesPage.wGray]}
-              />
-              <Text
-                style={[
-                  { fontSize: 18, marginLeft: -10, marginTop: 2.5 },
-                  stylesPage.wGray,
-                ]}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <Container style={{ backgroundColor: "white" }}>
+          <Header
+            style={{ backgroundColor: "transparent", borderBottomWidth: 0 }}
+          >
+            <Left>
+              <Button
+                transparent
+                style={styles.backButton}
+                onPress={() => this.props.navigation.goBack()}
               >
-                Back
-              </Text>
-            </Button>
-          </Left>
-        </Header>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                <MaterialIcons
+                  name="keyboard-arrow-left"
+                  style={[{ fontSize: 40 }, stylesPage.wGray]}
+                />
+                <Text
+                  style={[
+                    { fontSize: 18, marginLeft: -10, marginTop: 2.5 },
+                    stylesPage.wGray,
+                  ]}
+                >
+                  Back
+                </Text>
+              </Button>
+            </Left>
+          </Header>
           <View style={styles.container}>
             <Text style={styles.welcomeText}>Welcome back!</Text>
             <Text style={styles.smallText}>
@@ -123,8 +123,8 @@ class LoginScreen extends Component {
               <Text style={styles.buttonText}>Login</Text>
             </Button>
           </View>
-        </TouchableWithoutFeedback>
-      </Container>
+        </Container>
+      </TouchableWithoutFeedback>
     );
   }
 }
