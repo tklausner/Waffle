@@ -18,9 +18,10 @@ import { Ionicons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { uploadImageToFireBase } from "../../utils";
+import { uploadImageToFireBase, _processImage } from "../../utils";
 
 import { newPost } from "../../api/post";
+import { updateUser } from "../../api/user";
 
 import { connect } from "react-redux";
 
@@ -31,6 +32,7 @@ class SellScreen extends Component {
       image: Asset.fromModule(
         require("../../../assets/images/CameraRollLight.png")
       ).uri,
+      category: "",
       description: "",
       postingPrice: 0,
       yourProfit: 0,
@@ -57,9 +59,6 @@ class SellScreen extends Component {
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });
-        uploadImageToFireBase({
-          uri: this.state.image,
-        });
       }
     }
   };
@@ -100,120 +99,151 @@ class SellScreen extends Component {
       uploadImageToFireBase({
         uri: this.state.image,
       });
+      const newPost = {
+        user_id: this.props.user._id,
+        username: this.props.user.username,
+        category: this.state.category,
+        image: "test/" + _processImage(this.state.image),
+        description: this.state.description,
+        value: this.state.postingPrice,
+        waffles_remaining: this.state.mainSpots,
+      };
+      await this.props.newPost(newPost);
+      this.updateStore();
     }
   };
 
+  updateStore = () => {
+    let updatedStore = this.props.user.store.slice();
+    console.log("STORE PRE", updatedStore);
+    updatedStore.splice(updatedStore.length - 1, 0, this.props.post._id);
+    console.log("STORE POST", updatedStore);
+    this.props.updateUser(this.props.user._id, {
+      store: updatedStore,
+    });
+    console.log("STORE NOT UPDATING");
+  };
+
   render() {
-      return (
-        <KeyboardAwareScrollView
-          style={{ backgroundColor: "white", flexGrow: 1 }}
-          contentContainerStyle={styles.view}
-          extraHeight={100}
-          keyboardOpeningTime={0}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.imageContainer}>
-            {this.state.image && (
-              <Image source={{ uri: this.state.image }} style={styles.image} />
-            )}
-          </View>
-          <View style={styles.innerView}>
-            <Button transparent>
-              <View style={styles.outerButtonView}>
-                <Ionicons name="ios-color-filter" style={styles.icon} />
-              </View>
-            </Button>
-            <Button transparent onPress={this.takePicture}>
-              <View style={styles.centerButtonView}>
-                <Ionicons name="ios-camera" style={styles.centerIcon} />
-              </View>
-            </Button>
-            <Button transparent onPress={this.pickImage}>
-              <View style={styles.outerButtonView}>
-                <Ionicons name="md-images" style={styles.icon} />
-              </View>
-            </Button>
-          </View>
-          <View style={{ width: "100%", marginLeft: "5%" }}>
-            <Text style={styles.descriptionText}>Description</Text>
-            <TextInput
-              style={styles.form}
-              placeholder="Write your description..."
-              autoCorrect={true}
-              keyboardAppearance={"dark"}
-              placeholderTextColor={"white"}
-              multiline={true}
-              textAlignVertical={"top"}
-              value={this.state.description}
-              onChangeText={(text) => {
-                this.setState({ description: text });
-              }}
-            />
-          </View>
-          <View style={styles.secondaryView}>
-            <Text style={styles.textStyle}>Posting Price:</Text>
-            <TextInput
-              style={styles.secondaryInput}
-              placeholder=""
-              keyboardAppearance={"dark"}
-              keyboardType={"number-pad"}
-              placeholderTextColor={"black"}
-              value={this.state.postingPrice}
-              maxLength={4}
-              onChangeText={(text) => {
-                this.setState({ postingPrice: Number(text) });
-              }}
-              onEndEditing={() => {
-                this.setState({
-                  yourProfit: this.state.postingPrice * 0.99,
-                });
-                this.setState({
-                  mainPrice: this.state.postingPrice / this.state.mainSpots,
-                });
-              }}
-            />
-          </View>
-          <View style={styles.secondaryView}>
-            <Text style={styles.textStyle}>Your Profit:</Text>
-            <Text style={styles.changingText}>{this.state.yourProfit}</Text>
-          </View>
-          <View style={styles.secondaryView}>
-            <Text style={styles.textStyle}>Main Spots:</Text>
-            <TextInput
-              style={styles.secondaryInput}
-              placeholder="10"
-              keyboardAppearance={"dark"}
-              keyboardType={"number-pad"}
-              placeholderTextColor={"grey"}
-              value={this.state.mainSpots}
-              maxLength={2}
-              onChangeText={(text) => {
-                this.setState({ mainSpots: Number(text) });
-              }}
-              onEndEditing={() => {
-                this.setState({
-                  mainPrice: this.state.postingPrice / this.state.mainSpots,
-                });
-              }}
-            />
-          </View>
-          <View style={styles.secondaryView}>
-            <Text style={styles.textStyle}>Main Price:</Text>
-            <Text style={styles.changingText}>{this.state.mainPrice}</Text>
-          </View>
-          <Button style={styles.waffleButton} onPress={this.waffleUpload}>
-            <Text style={styles.waffleText}>Waffle</Text>
+    return (
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: "white", flexGrow: 1 }}
+        contentContainerStyle={styles.view}
+        extraHeight={100}
+        keyboardOpeningTime={0}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.imageContainer}>
+          {this.state.image && (
+            <Image source={{ uri: this.state.image }} style={styles.image} />
+          )}
+        </View>
+        <View style={styles.innerView}>
+          <Button transparent>
+            <View style={styles.outerButtonView}>
+              <Ionicons name="ios-color-filter" style={styles.icon} />
+            </View>
           </Button>
-        </KeyboardAwareScrollView>
-      );
+          <Button transparent onPress={this.takePicture}>
+            <View style={styles.centerButtonView}>
+              <Ionicons name="ios-camera" style={styles.centerIcon} />
+            </View>
+          </Button>
+          <Button transparent onPress={this.pickImage}>
+            <View style={styles.outerButtonView}>
+              <Ionicons name="md-images" style={styles.icon} />
+            </View>
+          </Button>
+        </View>
+        <View style={{ width: "100%", marginLeft: "5%" }}>
+          <Text style={styles.descriptionText}>Description</Text>
+          <TextInput
+            style={styles.form}
+            placeholder="Write your description..."
+            autoCorrect={true}
+            keyboardAppearance={"dark"}
+            placeholderTextColor={"white"}
+            multiline={true}
+            textAlignVertical={"top"}
+            value={this.state.description}
+            onChangeText={(text) => {
+              this.setState({ description: text });
+            }}
+          />
+        </View>
+        <View style={styles.secondaryView}>
+          <Text style={styles.textStyle}>Posting Price:</Text>
+          <TextInput
+            style={styles.secondaryInput}
+            placeholder=""
+            keyboardAppearance={"dark"}
+            keyboardType={"number-pad"}
+            placeholderTextColor={"black"}
+            value={this.state.postingPrice}
+            maxLength={4}
+            onChangeText={(text) => {
+              this.setState({ postingPrice: Number(text) });
+            }}
+            onEndEditing={() => {
+              this.setState({
+                yourProfit: this.state.postingPrice * 0.99,
+              });
+              this.setState({
+                mainPrice: this.state.postingPrice / this.state.mainSpots,
+              });
+            }}
+          />
+        </View>
+        <View style={styles.secondaryView}>
+          <Text style={styles.textStyle}>Your Profit:</Text>
+          <Text style={styles.changingText}>{this.state.yourProfit}</Text>
+        </View>
+        <View style={styles.secondaryView}>
+          <Text style={styles.textStyle}>Main Spots:</Text>
+          <TextInput
+            style={styles.secondaryInput}
+            placeholder="10"
+            keyboardAppearance={"dark"}
+            keyboardType={"number-pad"}
+            placeholderTextColor={"grey"}
+            value={this.state.mainSpots}
+            maxLength={2}
+            onChangeText={(text) => {
+              this.setState({ mainSpots: Number(text) });
+            }}
+            onEndEditing={() => {
+              this.setState({
+                mainPrice: this.state.postingPrice / this.state.mainSpots,
+              });
+            }}
+          />
+        </View>
+        <View style={styles.secondaryView}>
+          <Text style={styles.textStyle}>Main Price:</Text>
+          <Text style={styles.changingText}>{this.state.mainPrice}</Text>
+        </View>
+        <Button style={styles.waffleButton} onPress={this.waffleUpload}>
+          <Text style={styles.waffleText}>Waffle</Text>
+        </Button>
+      </KeyboardAwareScrollView>
+    );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+    post: state.post.post,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     newPost: (post) => dispatch(newPost(post)),
+    updateUser: (user) => dispatch(updateUser(user)),
   };
 };
-export default connect(null, mapDispatchToProps)(SellScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SellScreen);
 
 const styles = StyleSheet.create({
   view: {

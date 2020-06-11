@@ -107,6 +107,7 @@ export const deleteUser = (id) => {
 export const updateUser = (id, user) => {
   return (dispatch) => {
     dispatch(updateUserPending());
+    console.log("INFO", user);
     return axios
       .put(root + "api/users/" + id, { ...user })
       .then(({ data }) => {

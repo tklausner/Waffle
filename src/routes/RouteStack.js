@@ -132,7 +132,14 @@ function ProfileStackScreen() {
 
 const BottomTab = createBottomTabNavigator();
 export default function RouteStack() {
-  return true ? (
+  const user = useSelector((state) => state.user.user);
+
+  function _loadUser() {
+    console.log("LOADING RS");
+    return user._id != null;
+  }
+
+  return _loadUser() ? (
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({ route }) => ({

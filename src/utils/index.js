@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
 
 export const storageRef = firebase.storage().ref();
 
-const _processImage = (url) => {
+export const _processImage = (url) => {
   const imageName = url.substring(
     url.lastIndexOf("/") + 1,
     url.lastIndexOf(".")
