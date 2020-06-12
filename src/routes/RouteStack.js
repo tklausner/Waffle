@@ -23,10 +23,6 @@ import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
 
-import { useSelector, useDispatch } from "react-redux";
-import { getUserFB } from "../api/user";
-import { AuthContext } from "./AuthNavigator";
-
 // helper function for  getting associated header
 function GetHeader(route) {
   switch (route) {
@@ -132,14 +128,7 @@ function ProfileStackScreen() {
 
 const BottomTab = createBottomTabNavigator();
 export default function RouteStack() {
-  const user = useSelector((state) => state.user.user);
-
-  function _loadUser() {
-    console.log("LOADING RS");
-    return user._id != null;
-  }
-
-  return _loadUser() ? (
+  return (
     <NavigationContainer>
       <BottomTab.Navigator
         screenOptions={({ route }) => ({
@@ -180,6 +169,6 @@ export default function RouteStack() {
         <BottomTab.Screen name="Profile" component={ProfileStackScreen} />
       </BottomTab.Navigator>
     </NavigationContainer>
-  ) : null;
+  );
 }
 module.export = RouteStack;

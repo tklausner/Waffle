@@ -19,7 +19,6 @@ import { logout } from "../../api/user";
 export function ProfileHeader() {
   const dispatch = useDispatch();
   function _logout() {
-    console.log("LOGGING OUT");
     dispatch(logout());
   }
 
