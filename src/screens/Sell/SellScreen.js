@@ -115,13 +115,12 @@ class SellScreen extends Component {
 
   updateStore = () => {
     let updatedStore = this.props.user.store.slice();
-    console.log("STORE PRE", updatedStore);
     updatedStore.splice(updatedStore.length - 1, 0, this.props.post._id);
-    console.log("STORE POST", updatedStore);
-    this.props.updateUser(this.props.user._id, {
+    const { _id } = this.props.user;
+    this.props.updateUser({
       store: updatedStore,
+      _id: _id,
     });
-    console.log("STORE NOT UPDATING");
   };
 
   render() {

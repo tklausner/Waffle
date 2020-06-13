@@ -17,7 +17,7 @@ class ExploreList extends Component {
     this._isMounted = true;
     const { category_list } = this.props;
     for (let i = 0; i < category_list.length; i += 1) {
-      this.loadPosts(category_list[i], i + 1);
+      this.loadPosts(category_list[i], i);
     }
   }
 
@@ -32,7 +32,7 @@ class ExploreList extends Component {
       this.setState((state) => ({
         feed: [
           ...state.feed,
-          { id: id.toString(), category: category, posts: posts },
+          { key: id.toString(), category: category, posts: posts },
         ],
       }));
     }
@@ -43,7 +43,7 @@ class ExploreList extends Component {
       <ProductList
         products={item.posts}
         category={item.category}
-        key={item.id}
+        key={item.key}
       />
     );
   };
@@ -54,7 +54,7 @@ class ExploreList extends Component {
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.key}
             ListEmptyComponent={() => <Text>There are no categories?</Text>}
           />
         ) : (

@@ -1,29 +1,40 @@
-import React, { Component } from "react";
-import { Post } from "./Post";
+import React, { PureComponent } from "react";
+import Post from "./Post";
 import { Container } from "native-base";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
 
 import { connect } from "react-redux";
-import { getPost } from "../../api/post";
+import { getPost, readPosts } from "../../api/post";
 
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
-class PostList extends Component {
+class PostList extends PureComponent {
   _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
       feed: [],
+      isRefreshing: false,
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
+    this.props.readPosts();
+    /** FOR PERSONALIZED FEEDS
     const { posts } = this.props;
     for (id of posts) {
       this.loadPost(id);
     }
+    */
   }
+
+  async onRefresh() {
+    this.setState({ isRefreshing: true });
+    await this.props.readPosts();
+    this.setState({ isRefreshing: false });
+  }
+
   loadPost = async (id) => {
     await this.props.getPost(id);
     const { post } = this.props;
@@ -42,12 +53,21 @@ class PostList extends Component {
   render() {
     return (
       <Container>
-        {this.state.feed.length === this.props.posts.length ? (
+        {true || this.state.feed.length === this.props.posts.length ? (
           <FlatList
-            data={this.state.feed}
+            data={this.props.posts}
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
-            ListEmptyComponent={() => <Text>Ethan's a Bitch</Text>}
+            ListEmptyComponent={() => <Text>You have no posts!</Text>}
+            windowSize={10}
+            removeClippedSubviews={true}
+            initialNumToRender={2}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isRefreshing}
+                onRefresh={this.onRefresh.bind(this)}
+              />
+            }
           />
         ) : (
           <LoadingScreen />
@@ -60,12 +80,14 @@ class PostList extends Component {
 const mapStateToProps = (state) => {
   return {
     post: state.post.post,
+    posts: state.post.posts,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getPost: (post_id) => dispatch(getPost(post_id)),
+    readPosts: () => dispatch(readPosts()),
   };
 };
 
