@@ -10,8 +10,7 @@ import { LoadingScreen } from "../loading/LoadingScreen";
 
 class ProfileFeed extends Component {
   state = {
-    feed: [],
-    isRefreshing: false,
+    feed: []
   };
   componentDidMount() {
     const { posts } = this.props;
