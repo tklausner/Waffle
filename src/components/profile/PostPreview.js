@@ -7,9 +7,12 @@ import AsyncImage from "../images/AsyncImage";
 const dim = Dimensions.get("window").width / 2.5;
 
 export function PostPreview({ post }) {
-  const navigation = useNavigation();
   return post ? (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        console.log("PROFILE POST", post._id);
+      }}
+    >
       <View style={styles.view}>
         <AsyncImage image={post.image} style={styles.image} />
       </View>

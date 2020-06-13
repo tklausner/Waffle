@@ -104,12 +104,11 @@ export const deleteUser = (id) => {
 };
 
 // UPDATE USER
-export const updateUser = (id, user) => {
+export const updateUser = (user) => {
   return (dispatch) => {
     dispatch(updateUserPending());
-    console.log("INFO", user);
     return axios
-      .put(root + "api/users/" + id, { ...user })
+      .put(root + "api/users/" + user._id, { ...user })
       .then(({ data }) => {
         dispatch(updateUserSuccess(data));
       })

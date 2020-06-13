@@ -10,7 +10,7 @@ import { LoadingScreen } from "../loading/LoadingScreen";
 
 class ProfileFeed extends Component {
   state = {
-    feed: [],
+    feed: []
   };
   componentDidMount() {
     const { posts } = this.props;
@@ -18,6 +18,7 @@ class ProfileFeed extends Component {
       this.loadPost(id);
     }
   }
+
   loadPost = async (id) => {
     await this.props.getPost(id);
     const { post } = this.props;
@@ -39,6 +40,8 @@ class ProfileFeed extends Component {
             ListEmptyComponent={() => null}
             numColumns={2}
             style={{ flex: 1, marginLeft: 20 }}
+            windowSize={6}
+            initialNumToRender={6}
           />
         ) : null}
       </Container>

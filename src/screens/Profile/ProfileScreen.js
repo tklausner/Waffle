@@ -14,7 +14,7 @@ import {
   List,
   ListItem,
 } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
 import AsyncImage from "../../components/images/AsyncImage";
@@ -41,10 +41,18 @@ class ProfileScreen extends Component {
         <Card transparent style={styles.profTop}>
           <CardItem>
             <Left>
-              <AsyncImage
-                image={this.props.user.profile}
+              <TouchableOpacity
                 style={styles.profImage}
-              />
+                transparent
+                onPress={() => {
+                  console.log("PROFILE IMAGE CLICKED");
+                }}
+              >
+                <AsyncImage
+                  image={this.props.user.profile}
+                  style={styles.profImage}
+                />
+              </TouchableOpacity>
               <Body>
                 <Text style={styles.profName}>
                   {this.props.user.first_name} {this.props.user.last_name}
