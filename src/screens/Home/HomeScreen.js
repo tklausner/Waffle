@@ -19,7 +19,7 @@ class HomeScreen extends Component {
     const { posts } = this.props.feed;
     return (
       <Container>
-        {posts ? <PostList posts={posts} /> : <LoadingScreen />}
+        {true ? <PostList posts={posts} /> : <LoadingScreen />}
       </Container>
     );
   }
