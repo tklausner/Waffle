@@ -18,7 +18,7 @@ import globalStyles from "../../styles";
 
 import { connect } from "react-redux";
 import { deletePost, readPosts } from "../../api/post";
-import { updateUser, getUser } from "../../api/user";
+import { updateUser } from "../../api/user";
 
 import { NavigationContext } from "@react-navigation/native";
 

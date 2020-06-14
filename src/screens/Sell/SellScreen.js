@@ -105,6 +105,7 @@ class SellScreen extends Component {
         username: this.props.user.username,
         category: this.state.category,
         image: "test/" + _processImage(this.state.image),
+        profile: this.props.user.profile,
         description: this.state.description,
         value: this.state.postingPrice,
         waffles_remaining: this.state.mainSpots,

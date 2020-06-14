@@ -22,9 +22,11 @@ class ProfileFeed extends Component {
   loadPost = async (id) => {
     await this.props.getPost(id);
     const { post } = this.props;
-    this.setState((state) => ({
-      feed: [...state.feed, { image: post.image, _id: post._id }],
-    }));
+    if (post) {
+      this.setState((state) => ({
+        feed: [...state.feed, { image: post.image, _id: post._id }],
+      }));
+    }
   };
   _renderItem = ({ item }) => {
     return <PostPreview post={item} key={item._id} />;
