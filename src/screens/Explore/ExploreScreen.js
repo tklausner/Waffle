@@ -2,16 +2,21 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import ExploreList from "../../components/explore/ExploreList";
-import { getExploreByUser } from "../../api/explore";
+import { getExploreByUser, getExplore } from "../../api/explore";
 
 import { Container } from "native-base";
 
 class ExploreScreen extends Component {
   componentDidMount() {
+    /**
     const { _id } = this.props.user;
     if (_id) {
       this.props.getExploreByUser(_id);
     }
+    */
+
+    //* SET GET EXPLORE FEED TO SINGLE ACCOUNT  */
+    this.props.getExplore("5ee57ff51555a90004d75811");
   }
 
   render() {
@@ -32,6 +37,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getExploreByUser: (id) => dispatch(getExploreByUser(id)),
+    getExplore: (id) => dispatch(getExplore(id)),
   };
 };
 
