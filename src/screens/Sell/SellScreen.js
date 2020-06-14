@@ -28,7 +28,11 @@ import { connect } from "react-redux";
 class SellScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.getInitialState();
+  }
+
+  getInitialState = () => {
+    return {
       image: Asset.fromModule(
         require("../../../assets/images/CameraRollLight.png")
       ).uri,
@@ -40,7 +44,7 @@ class SellScreen extends Component {
       mainPrice: 0,
       minis: false,
     };
-  }
+  };
 
   pickImage = async () => {
     Keyboard.dismiss();
@@ -75,9 +79,6 @@ class SellScreen extends Component {
         aspect: [4, 3],
         quality: 1,
       });
-
-      console.log(result);
-
       if (!result.cancelled) {
         this.setState({ image: result.uri });
       }
@@ -109,8 +110,16 @@ class SellScreen extends Component {
         waffles_remaining: this.state.mainSpots,
       };
       await this.props.newPost(newPost);
+      Alert.alert("Waffle Posted!");
+      this._reset();
       this.updateStore();
     }
+  };
+
+  _reset = () => {
+    this.postingPrice_input.clear();
+    this.mainSpots_input.clear();
+    this.setState(this.getInitialState());
   };
 
   updateStore = () => {
@@ -173,6 +182,9 @@ class SellScreen extends Component {
         <View style={styles.secondaryView}>
           <Text style={styles.textStyle}>Posting Price:</Text>
           <TextInput
+            ref={(input) => {
+              this.postingPrice_input = input;
+            }}
             style={styles.secondaryInput}
             placeholder=""
             keyboardAppearance={"dark"}
@@ -200,13 +212,17 @@ class SellScreen extends Component {
         <View style={styles.secondaryView}>
           <Text style={styles.textStyle}>Main Spots:</Text>
           <TextInput
+            ref={(input) => {
+              this.mainSpots_input = input;
+            }}
             style={styles.secondaryInput}
             placeholder="10"
             keyboardAppearance={"dark"}
             keyboardType={"number-pad"}
             placeholderTextColor={"grey"}
+            keyboardType={"numeric"}
             value={this.state.mainSpots}
-            maxLength={2}
+            maxLength={30}
             onChangeText={(text) => {
               this.setState({ mainSpots: Number(text) });
             }}

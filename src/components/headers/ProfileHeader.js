@@ -12,7 +12,6 @@ import { StyleSheet } from "react-native";
 import globalStyles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import { AuthContext } from "../../routes/AuthNavigator";
 import { useDispatch } from "react-redux";
 import { logout } from "../../api/user";
 
