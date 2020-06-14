@@ -55,19 +55,19 @@ export function fetchPostFailure(error) {
   return { type: FETCH_POST_FAILURE, error: error };
 }
 
-export function fetchProductsPending() {
+export function fetchPostPreviewsPending() {
   return { type: FETCH_POSTS_BY_CATEGORY_PENDING };
 }
 
-export function fetchProductsSuccess(posts) {
+export function fetchPostPreviewsSuccess(previews) {
   return {
     type: FETCH_POSTS_BY_CATEGORY_SUCCESS,
-    payload: posts,
+    payload: previews,
   };
 }
 
-export function fetchProductsFailure(error) {
-  console.log("[POST] Fetch Products Failed, ERROR: ", error);
+export function fetchPostPreviewsFailure(error) {
+  console.log("[POST] Fetch Post Previews Failed, ERROR: ", error);
   return { type: FETCH_POSTS_BY_CATEGORY_FAILURE, error: error };
 }
 

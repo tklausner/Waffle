@@ -126,6 +126,9 @@ class Post extends PureComponent {
             </Right>
           </CardItem>
           <CardItem>
+            <Text style={styles.category}>#{post.category}</Text>
+          </CardItem>
+          <CardItem>
             <AsyncImage image={post.image} style={styles.image}></AsyncImage>
           </CardItem>
           <CardItem>
@@ -259,5 +262,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: "0%",
     resizeMode: "contain",
+  },
+  category: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#00B8FA",
   },
 });

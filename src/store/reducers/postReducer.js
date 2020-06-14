@@ -22,6 +22,7 @@ import {
 const initialState = {
   post: null,
   posts: [],
+  previews: [],
   pending: false,
   error: null,
 };
@@ -46,7 +47,7 @@ export function postReducer(state = initialState, action) {
       return {
         ...state,
         pending: false,
-        posts: action.payload,
+        previews: action.payload,
       };
     case FETCH_POSTS_BY_CATEGORY_FAILURE:
       return { ...state, pending: false, error: action.error };
@@ -74,6 +75,7 @@ export function postReducer(state = initialState, action) {
 }
 
 export const getPosts = (state) => state.posts;
+export const getPreviews = (state) => state.previews;
 export const getPostsPending = (state) => state.pending;
 export const getPostsError = (state) => state.error;
 export const getPost = (state) => state.post;

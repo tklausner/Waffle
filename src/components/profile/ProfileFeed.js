@@ -10,7 +10,7 @@ import { LoadingScreen } from "../loading/LoadingScreen";
 
 class ProfileFeed extends Component {
   state = {
-    feed: []
+    feed: [],
   };
   componentDidMount() {
     const { posts } = this.props;
@@ -23,7 +23,7 @@ class ProfileFeed extends Component {
     await this.props.getPost(id);
     const { post } = this.props;
     this.setState((state) => ({
-      feed: [...state.feed, post],
+      feed: [...state.feed, { image: post.image, _id: post._id }],
     }));
   };
   _renderItem = ({ item }) => {

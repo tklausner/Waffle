@@ -180,6 +180,19 @@ class SellScreen extends Component {
           />
         </View>
         <View style={styles.secondaryView}>
+          <Text style={styles.textStyle}>Category:</Text>
+          <TextInput
+            style={styles.tertiaryInput}
+            keyboardAppearance={"dark"}
+            placeholderTextColor={"grey"}
+            value={this.state.category}
+            maxLength={15}
+            onChangeText={(text) => {
+              this.setState({ category: text });
+            }}
+          />
+        </View>
+        <View style={styles.secondaryView}>
           <Text style={styles.textStyle}>Posting Price:</Text>
           <TextInput
             ref={(input) => {
@@ -345,6 +358,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 18,
     width: 50,
+    paddingLeft: 3,
+  },
+  tertiaryInput: {
+    borderRadius: 4,
+    borderWidth: 1,
+    justifyContent: "center",
+    fontSize: 18,
+    width: 100,
     paddingLeft: 3,
   },
   changingText: {

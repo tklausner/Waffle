@@ -113,7 +113,7 @@ class ProfileScreen extends Component {
                         : "#000",
                   }}
                 >
-                  Market
+                  Listed
                 </Text>
               </Button>
             </Body>
