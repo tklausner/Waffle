@@ -25,12 +25,12 @@ class ExploreList extends Component {
 
   loadPosts = async (category, id) => {
     await this.props.readPostsByCategory(category);
-    const { posts } = this.props;
+    const { previews } = this.props;
     if (this._isMounted) {
       this.setState((state) => ({
         feed: [
           ...state.feed,
-          { key: id.toString(), category: category, posts: posts },
+          { key: id.toString(), category: category, previews: previews },
         ],
       }));
     }
@@ -39,7 +39,7 @@ class ExploreList extends Component {
   _renderItem = ({ item, index }) => {
     return (
       <ProductList
-        products={item.posts}
+        products={item.previews}
         category={item.category}
         key={item.key}
       />
@@ -84,7 +84,7 @@ class ExploreList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.post.posts,
+    previews: state.post.previews,
   };
 };
 

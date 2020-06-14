@@ -18,7 +18,7 @@ import globalStyles from "../../styles";
 
 import { connect } from "react-redux";
 import { deletePost, readPosts } from "../../api/post";
-import { updateUser, getUser } from "../../api/user";
+import { updateUser } from "../../api/user";
 
 import { NavigationContext } from "@react-navigation/native";
 
@@ -35,6 +35,7 @@ const _renderItem = ({ item }) => {
 
 class Post extends PureComponent {
   static contextType = NavigationContext;
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -42,42 +43,56 @@ class Post extends PureComponent {
     };
   }
   componentDidMount() {
-    this.setState({
-      saved: this.getSavedState(),
-    });
+    this._isMounted = true;
+    if (this._isMounted) {
+      this.setState({
+        saved: this.getSavedState(),
+      });
+    }
   }
-  addToSaved() {
-    let saved = this.props.user.saved.slice();
-    saved.splice(saved.length - 1, 0, this.props.post._id);
-    this.props.updateUser({
-      saved: saved,
-      _id: this.props.user._id,
-    });
 
-    this.setState({
-      saved: true,
-    });
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  addToSaved() {
+    if (this._isMounted) {
+      let saved = this.props.user.saved.slice();
+      saved.splice(saved.length - 1, 0, this.props.post._id);
+      this.props.updateUser({
+        saved: saved,
+        _id: this.props.user._id,
+      });
+
+      this.setState({
+        saved: true,
+      });
+    }
   }
 
   removeFromSaved() {
-    let saved = this.props.user.saved.slice();
-    console.log("PRE", saved);
-    if (!this.state.saved) {
-      return false;
+    if (this._isMounted) {
+      let saved = this.props.user.saved.slice();
+      console.log("PRE", saved);
+      if (!this.state.saved) {
+        return false;
+      }
+      saved.splice(saved.indexOf(this.props.post._id), 1);
+      console.log("POST", saved);
+      this.props.updateUser({
+        saved: saved,
+        _id: this.props.user._id,
+      });
+      this.setState({
+        saved: false,
+      });
     }
-    saved.splice(saved.indexOf(this.props.post._id), 1);
-    console.log("POST", saved);
-    this.props.updateUser({
-      saved: saved,
-      _id: this.props.user._id,
-    });
-    this.setState({
-      saved: false,
-    });
   }
 
   getSavedState() {
-    return this.props.user.saved.indexOf(this.props.post._id) > -1;
+    if (this._isMounted) {
+      return this.props.user.saved.indexOf(this.props.post._id) > -1;
+    }
   }
   render() {
     const { post } = this.props;
@@ -111,13 +126,13 @@ class Post extends PureComponent {
             </Right>
           </CardItem>
           <CardItem>
+            <Text style={styles.category}>#{post.category}</Text>
+          </CardItem>
+          <CardItem>
             <AsyncImage image={post.image} style={styles.image}></AsyncImage>
           </CardItem>
           <CardItem>
             <Left style={styles.bar}>
-              <Button transparent>
-                <MaterialIcons name="favorite-border" style={styles.bar} />
-              </Button>
               <Button
                 transparent
                 onPress={() => {
@@ -244,5 +259,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: "0%",
     resizeMode: "contain",
+  },
+  category: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "#00B8FA",
   },
 });
