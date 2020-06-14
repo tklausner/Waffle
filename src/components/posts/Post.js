@@ -133,9 +133,6 @@ class Post extends PureComponent {
           </CardItem>
           <CardItem>
             <Left style={styles.bar}>
-              <Button transparent>
-                <MaterialIcons name="favorite-border" style={styles.bar} />
-              </Button>
               <Button
                 transparent
                 onPress={() => {
