@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   NavigationContainer,
   createAppContainer,
@@ -22,6 +23,8 @@ import { ProfileHeader } from "../components/headers/ProfileHeader";
 import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
+
+import { Drawer } from "../screens/Profile/Drawer";
 
 // helper function for  getting associated header
 function GetHeader(route) {
@@ -117,11 +120,13 @@ const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
+      headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name),
+        header: () => GetHeader("Profile"),
       })}
+      initialRouteName = "Profile"
     >
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+        <ProfileStack.Screen name="Profile" component={Drawer} />
     </ProfileStack.Navigator>
   );
 }

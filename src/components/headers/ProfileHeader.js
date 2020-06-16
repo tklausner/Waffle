@@ -15,7 +15,11 @@ import * as firebase from "firebase";
 import { useDispatch } from "react-redux";
 import { logout } from "../../api/user";
 
+import { useNavigation, DrawerActions } from "@react-navigation/native";
+
+
 export function ProfileHeader() {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   function _logout() {
     dispatch(logout());
@@ -46,8 +50,7 @@ export function ProfileHeader() {
         <Button
           transparent
           onPress={() => {
-            _logout();
-            logOut();
+            navigation.dispatch(DrawerActions.toggleDrawer());
           }}
         >
           <MaterialIcons

@@ -12,7 +12,6 @@ import {
   Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
 import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
