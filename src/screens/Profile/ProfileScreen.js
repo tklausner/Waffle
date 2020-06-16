@@ -17,7 +17,7 @@ import {
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
-import AsyncImage from "../../components/images/AsyncImage";
+import CachedImage from "../../components/images/CachedImage";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class ProfileScreen extends Component {
                   console.log("PROFILE IMAGE CLICKED");
                 }}
               >
-                <AsyncImage
+                <CachedImage
                   image={this.props.user.profile}
                   style={styles.profImage}
                 />

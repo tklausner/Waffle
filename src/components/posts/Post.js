@@ -22,7 +22,7 @@ import { updateUser } from "../../api/user";
 
 import { NavigationContext } from "@react-navigation/native";
 
-import AsyncImage from "../images/AsyncImage";
+import CachedImage from "../images/CachedImage";
 
 const _renderItem = ({ item }) => {
   return (
@@ -102,10 +102,7 @@ class Post extends PureComponent {
         <Card>
           <CardItem>
             <Left>
-              <AsyncImage
-                image={post.profile}
-                style={styles.profile}
-              ></AsyncImage>
+              <CachedImage image={post.profile} style={styles.profile} />
               <Body>
                 <Text>{post.username}</Text>
               </Body>
@@ -129,7 +126,7 @@ class Post extends PureComponent {
             <Text style={styles.category}>#{post.category}</Text>
           </CardItem>
           <CardItem>
-            <AsyncImage image={post.image} style={styles.image}></AsyncImage>
+            <CachedImage image={post.image} style={styles.image}></CachedImage>
           </CardItem>
           <CardItem>
             <Left style={styles.bar}>

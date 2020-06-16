@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, Image, ActivityIndicator } from "react-native";
 import { storageRef } from "../../utils";
 
+import { incrementImageDownloads, getImageDownloads } from "../../../App";
+
 export default class AsyncImage extends Component {
   _isMounted = false;
   constructor(props) {
@@ -16,6 +18,7 @@ export default class AsyncImage extends Component {
   componentDidMount() {
     this._isMounted = true;
     if (this._isMounted) {
+      console.log("IMAGE DOWNLOAD", getImageDownloads());
       this.getAndLoadImage();
     }
   }
@@ -48,6 +51,7 @@ export default class AsyncImage extends Component {
   }
 
   async getAndLoadImage() {
+    incrementImageDownloads();
     const ref = storageRef.child("images/" + this.props.image);
     ref
       .getDownloadURL()

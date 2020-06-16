@@ -60,7 +60,7 @@ class PostList extends PureComponent {
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
             ListEmptyComponent={() => <Text>You have no posts!</Text>}
-            windowSize={3}
+            windowSize={8}
             removeClippedSubviews={true}
             initialNumToRender={2}
             refreshControl={
