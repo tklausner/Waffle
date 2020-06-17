@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Image, ActivityIndicator } from "react-native";
+import { View, Image } from "react-native";
 import { storageRef } from "../../utils";
 import * as FileSystem from "expo-file-system";
 
@@ -12,8 +12,6 @@ export default class CachedImage extends Component {
       loading: true,
       image: "../../../assets/images/CameraRoll.png",
       uri: "",
-      failed: false,
-      path: "",
     };
   }
   async componentDidMount() {
@@ -92,6 +90,7 @@ export default class CachedImage extends Component {
       })
       .catch((err) => {
         if (this._isMounted) {
+          console.log("QUOTA EXCEEDED");
           this.setState({ uri: "../../../assets/images/CameraRoll.png" });
           this.setState({ loading: false });
         }

@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 
-import AsyncImage from "../images/AsyncImage";
+import CachedImage from "../images/CachedImage";
 
 export function Waffle({ post }) {
   const navigation = useNavigation();
@@ -26,7 +26,7 @@ export function Waffle({ post }) {
       <Card>
         <CardItem>
           <Left>
-            <AsyncImage image={post.profile} style={styles.profile} />
+            <CachedImage image={post.profile} style={styles.profile} />
             <Body>
               <Text>{post.username}</Text>
             </Body>
