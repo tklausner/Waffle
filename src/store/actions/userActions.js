@@ -8,6 +8,10 @@ export const FETCH_USER_PENDING = "FETCH_USER_PENDING";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 
+export const FETCH_TEMP_USER_PENDING = "FETCH_TEMP_USER_PENDING";
+export const FETCH_TEMP_USER_SUCCESS = "FETCH_TEMP_USER_SUCCESS";
+export const FETCH_TEMP_USER_FAILURE = "FETCH_TEMP_USER_FAILURE";
+
 export const CREATE_USER_PENDING = "CREATE_USER_PENDING";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE";
@@ -47,6 +51,20 @@ export function fetchUserSuccess(user) {
 export function fetchUserFailure(error) {
   console.log("[USERS] Fetch User Failed, ERROR: ", error);
   return { type: FETCH_USER_FAILURE, error: error };
+}
+
+export function fetchTempUserPending() {
+  return { type: FETCH_TEMP_USER_PENDING };
+}
+
+export function fetchTempUserSuccess(temp_user) {
+  console.log(`[USERS] Fetched {TEMP} @${temp_user.username}`);
+  return { type: FETCH_TEMP_USER_SUCCESS, payload: temp_user };
+}
+
+export function fetchTempUserFailure(error) {
+  console.log("[USERS] Fetch Temp User Failed, ERROR: ", error);
+  return { type: FETCH_TEMP_USER_FAILURE, error: error };
 }
 
 export function createUserPending() {

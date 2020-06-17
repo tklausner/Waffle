@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Dimensions, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import AsyncImage from "../images/AsyncImage";
+import CachedImage from "../images/CachedImage";
 
 const dim = Dimensions.get("window").width / 2.5;
 
@@ -14,7 +14,7 @@ export function PostPreview({ post }) {
       }}
     >
       <View style={styles.view}>
-        <AsyncImage image={post.image} style={styles.image} />
+        <CachedImage image={post.image} style={styles.image} />
       </View>
     </TouchableOpacity>
   ) : null;

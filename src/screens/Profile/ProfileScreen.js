@@ -17,12 +17,14 @@ import {
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
-import AsyncImage from "../../components/images/AsyncImage";
+
+import CachedImage from "../../components/images/CachedImage";
 import * as ImagePicker from "expo-image-picker";
 import { Asset } from "expo-asset";
 
 import { updateUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
+
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -79,7 +81,7 @@ class ProfileScreen extends Component {
                 transparent
                 onPress={this.pickImage}
               >
-                <AsyncImage
+                <CachedImage
                   image={this.props.user.profile}
                   style={styles.profImage}
                 />

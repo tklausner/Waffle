@@ -11,11 +11,12 @@ import AuthNavigator from "./src/routes/AuthNavigator";
 import rootReducer from "./src/store/reducers/rootReducer";
 import { Provider } from "react-redux";
 import ApiKeys from "./src/constants/ApiKeys";
-
+import { loadCache } from "./src/utils/index";
 import thunk from "redux-thunk";
 
 // store containing redux state
 const store = createStore(rootReducer, applyMiddleware(thunk));
+loadCache();
 
 export default class App extends React.Component {
   constructor(props) {

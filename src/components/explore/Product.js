@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Dimensions, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import AsyncImage from "../images/AsyncImage";
+import CachedImage from "../images/CachedImage";
 
 const dim = Dimensions.get("window").width / 4;
 
@@ -11,7 +11,7 @@ export function Product({ product }) {
   return product ? (
     <TouchableOpacity>
       <View style={styles.view}>
-        <AsyncImage image={product.image} style={styles.image} />
+        <CachedImage image={product.image} style={styles.image} />
       </View>
     </TouchableOpacity>
   ) : null;

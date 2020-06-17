@@ -6,6 +6,9 @@ import {
   fetchUserPending,
   fetchUserSuccess,
   fetchUserFailure,
+  fetchTempUserPending,
+  fetchTempUserSuccess,
+  fetchTempUserFailure,
   createUserPending,
   createUserSuccess,
   createUserFailure,
@@ -69,6 +72,21 @@ export const getUser = (id) => {
       })
       .catch((error) => {
         dispatch(fetchUserFailure(error));
+      });
+  };
+};
+
+// GET TEMPORARY USER BY ID (users[id])
+export const getTempUser = (id) => {
+  return (dispatch) => {
+    dispatch(fetchTempUserPending());
+    return axios
+      .get(root + "api/users/" + id)
+      .then(({ data }) => {
+        dispatch(fetchTempUserSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchTempUserFailure(error));
       });
   };
 };

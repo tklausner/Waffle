@@ -5,6 +5,9 @@ import {
   FETCH_USER_PENDING,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
+  FETCH_TEMP_USER_PENDING,
+  FETCH_TEMP_USER_SUCCESS,
+  FETCH_TEMP_USER_FAILURE,
   CREATE_USER_PENDING,
   CREATE_USER_SUCCESS,
   CREATE_USER_FAILURE,
@@ -19,6 +22,7 @@ import {
 const initialState = {
   users: [],
   user: {},
+  temp_user: {},
   pending: false,
   error: null,
 };
@@ -36,6 +40,12 @@ export function userReducer(state = initialState, action) {
     case FETCH_USER_SUCCESS:
       return { ...state, pending: false, user: action.payload };
     case FETCH_USER_FAILURE:
+      return { ...state, pending: false, error: action.error };
+    case FETCH_TEMP_USER_PENDING:
+      return { ...state, pending: true };
+    case FETCH_TEMP_USER_SUCCESS:
+      return { ...state, pending: false, temp_user: action.payload };
+    case FETCH_TEMP_USER_FAILURE:
       return { ...state, pending: false, error: action.error };
     case CREATE_USER_PENDING:
       return { ...state, pending: true };
