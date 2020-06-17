@@ -3,27 +3,29 @@ import { View, Image, ActivityIndicator } from "react-native";
 import { storageRef } from "../../utils";
 
 export default class AsyncImage extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
-      mounted: true,
       image: "../../../assets/images/CameraRoll.png",
       url: "",
     };
   }
   componentDidMount() {
-    this.setState({ isMounted: true });
-    this.getAndLoadImage();
+    this._isMounted = true;
+    if (this._isMounted) {
+      this.getAndLoadImage();
+    }
   }
 
   componentWillUnmount() {
-    this.setState({ isMounted: false });
+    this._isMounted = false;
   }
 
   render() {
-    if (this.state.mounted === true) {
+    if (this._isMounted) {
       if (this.state.loading === true) {
         return (
           <View
@@ -46,18 +48,21 @@ export default class AsyncImage extends Component {
   }
 
   async getAndLoadImage() {
-    if (this.state.mounted) {
-      const ref = storageRef.child("images/" + this.props.image);
-      ref
-        .getDownloadURL()
-        .then((data) => {
+    const ref = storageRef.child("images/" + this.props.image);
+    ref
+      .getDownloadURL()
+      .then((data) => {
+        if (this._isMounted) {
           this.setState({ url: data });
           this.setState({ loading: false });
-        })
-        .catch((err) => {
+        }
+      })
+
+      .catch((err) => {
+        if (this._isMounted) {
           this.setState({ url: "../../../assets/images/CameraRoll.png" });
           this.setState({ loading: false });
-        });
-    }
+        }
+      });
   }
 }

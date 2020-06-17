@@ -6,9 +6,9 @@ import {
   fetchPostPending,
   fetchPostSuccess,
   fetchPostFailure,
-  fetchProductsPending,
-  fetchProductsSuccess,
-  fetchProductsFailure,
+  fetchPostPreviewsPending,
+  fetchPostPreviewsSuccess,
+  fetchPostPreviewsFailure,
   createPostPending,
   createPostSuccess,
   createPostFailure,
@@ -71,14 +71,14 @@ export const getPost = (id) => {
 // GET POSTS BY CATEGORY (posts[category])
 export const readPostsByCategory = (category) => {
   return (dispatch) => {
-    dispatch(fetchProductsPending());
+    dispatch(fetchPostPreviewsPending());
     return axios
       .get(root + "api/posts/category/" + category)
       .then(({ data }) => {
-        dispatch(fetchProductsSuccess(data));
+        dispatch(fetchPostPreviewsSuccess(data));
       })
       .catch((error) => {
-        dispatch(fetchProductsFailure(error));
+        dispatch(fetchPostPreviewsFailure(error));
       });
   };
 };

@@ -9,19 +9,19 @@ import { getFeedByUser } from "../../api/feed";
 
 class HomeScreen extends Component {
   componentDidMount() {
+    /** FOR INDIVIDUALIZED FEEDS
     const { _id } = this.props.user;
     if (_id) {
       this.props.getFeedByUser(_id);
     }
+    */
   }
 
   render() {
+    /** FOR INDIVIDUALIZED FEEDS
     const { posts } = this.props.feed;
-    return (
-      <Container>
-        {posts ? <PostList posts={posts} /> : <LoadingScreen />}
-      </Container>
-    );
+    */
+    return <Container>{true ? <PostList /> : <LoadingScreen />}</Container>;
   }
 }
 
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(null, null)(HomeScreen);

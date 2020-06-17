@@ -4,7 +4,7 @@ import { Text, Card } from "native-base";
 import { FlatList, StyleSheet } from "react-native";
 
 const renderItem = ({ item, index }) => {
-  return <Product product={item} key={item.id} />;
+  return <Product product={item} key={item._id} />;
 };
 
 export function ProductList({ products, category }) {
