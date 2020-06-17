@@ -35,8 +35,9 @@ export function Drawer() {
         <DrawerItemList {...props} />
         <DrawerItem
           label="Log Out"
+          labelStyle={{color: 'red'}}
           onPress={() => {
-            logout();
+            logOut();
             _logout();
           }}
         />
@@ -47,9 +48,11 @@ export function Drawer() {
   return (
     <ProfileDrawer.Navigator
       initialRouteName="Profile"
+      drawerType="slide"
+      drawerPosition="right"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <ProfileDrawer.Screen name="Profile" component={ProfileScreen} />
+      <ProfileDrawer.Screen name="Profile" component={ProfileScreen} options = {{ swipeEnabled: false }}/>
     </ProfileDrawer.Navigator>
   );
 }
