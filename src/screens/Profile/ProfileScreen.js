@@ -17,7 +17,14 @@ import {
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
+
 import CachedImage from "../../components/images/CachedImage";
+import * as ImagePicker from "expo-image-picker";
+import { Asset } from "expo-asset";
+
+import { updateUser } from "../../api/user";
+import { uploadImageToFireBase, _processImage } from "../../utils";
+
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -34,6 +41,34 @@ class ProfileScreen extends Component {
     this._renderFeed(this.props.user, "Waffles");
   }
 
+  pickImage = async () => {
+    const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+    if (status !== "granted") {
+      alert("Sorry, we need camera permissions to make this work!");
+    } else {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        this.props.updateUser({
+          profile: "test/" + _processImage(result.uri),
+          _id: this.props.user._id,
+        });
+        uploadImageToFireBase({
+          uri: result.uri,
+        });
+      }
+
+      console.log(this.props.user.profile);
+    }
+  };
+
   render() {
     const { user } = this.props;
     return (
@@ -44,9 +79,7 @@ class ProfileScreen extends Component {
               <TouchableOpacity
                 style={styles.profImage}
                 transparent
-                onPress={() => {
-                  console.log("PROFILE IMAGE CLICKED");
-                }}
+                onPress={this.pickImage}
               >
                 <CachedImage
                   image={this.props.user.profile}
@@ -180,7 +213,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(ProfileScreen);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(updateUser(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
   profName: {
@@ -199,7 +238,9 @@ const styles = StyleSheet.create({
   profImage: {
     height: 75,
     width: 75,
-    borderRadius: 200 / 2,
+    borderRadius: 100,
     marginLeft: "-10%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
