@@ -54,13 +54,14 @@ class PostList extends PureComponent {
   render() {
     return (
       <Container>
-        {true || this.state.feed.length === this.props.posts.length ? (
+        {this.props.posts ||
+        this.state.feed.length === this.props.posts.length ? (
           <FlatList
             data={this.props.posts}
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
             ListEmptyComponent={() => <Text>You have no posts!</Text>}
-            windowSize={3}
+            windowSize={8}
             removeClippedSubviews={true}
             initialNumToRender={2}
             refreshControl={

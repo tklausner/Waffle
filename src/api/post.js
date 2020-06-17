@@ -114,11 +114,12 @@ export const deletePost = (id) => {
 };
 
 // UPDATE POST
-export const updatePost = (id, post) => {
+export const updatePost = (post) => {
   return (dispatch) => {
     dispatch(updatePostPending());
+    console.log(post);
     return axios
-      .put(root + "api/posts/" + id, { ...post })
+      .put(root + "api/posts/" + post._id, { ...post })
       .then(({ data }) => {
         dispatch(updatePostSuccess(data));
       })

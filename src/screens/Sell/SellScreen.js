@@ -99,21 +99,25 @@ class SellScreen extends Component {
     } else {
       uploadImageToFireBase({
         uri: this.state.image,
+      }).then(async (res) => {
+        if (res) {
+          const newPost = {
+            user_id: this.props.user._id,
+            username: this.props.user.username,
+            category: this.state.category,
+            image: _processImage(this.state.image),
+            profile: this.props.user.profile,
+            description: this.state.description,
+            value: this.state.postingPrice,
+            waffles_remaining: this.state.mainSpots,
+          };
+          this._reset();
+          await this.props.newPost(newPost);
+          this.updateStore();
+        } else {
+          Alert.alert("Waffle Failed!");
+        }
       });
-      const newPost = {
-        user_id: this.props.user._id,
-        username: this.props.user.username,
-        category: this.state.category,
-        image: "test/" + _processImage(this.state.image),
-        profile: this.props.user.profile,
-        description: this.state.description,
-        value: this.state.postingPrice,
-        waffles_remaining: this.state.mainSpots,
-      };
-      await this.props.newPost(newPost);
-      Alert.alert("Waffle Posted!");
-      this._reset();
-      this.updateStore();
     }
   };
 
