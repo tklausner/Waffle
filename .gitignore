@@ -8,6 +8,10 @@
 ### NODE MODULES ###
 node_modules/
 
+### PACKAGES ###
+package-lock.json
+package.json
+
 ### NATIVE BASE ###
 
 native-base-theme/
