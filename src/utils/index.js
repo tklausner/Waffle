@@ -32,7 +32,7 @@ export const uploadImageToFireBase = async (res) => {
   const blob = await response.blob();
   const imageName = _processImage(res.uri);
   return storageRef
-    .child("images/test" + imageName)
+    .child("images/test2/" + imageName)
     .put(blob)
     .then(() => {
       console.log("Image Succesfully Uploaded");

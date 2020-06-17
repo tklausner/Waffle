@@ -52,9 +52,10 @@ export default class CachedImage extends Component {
     FileSystem.readDirectoryAsync(FileSystem.cacheDirectory + "test/")
       .then((res) => {
         if (this._isMounted) {
-          if (res.indexOf(this.props.image.substring(5)) > -1) {
+          if (res.indexOf(this.props.image + ".jpg") > -1) {
             this.setState({
-              uri: FileSystem.cacheDirectory + this.props.image + ".jpg",
+              uri:
+                FileSystem.cacheDirectory + "test/" + this.props.image + ".jpg",
             });
             this.setState({
               loading: false,
@@ -70,13 +71,14 @@ export default class CachedImage extends Component {
   }
 
   async getAndLoadImage() {
-    const ref = storageRef.child("images/" + this.props.image);
+    console.log("DOWNLOADING");
+    const ref = storageRef.child("images/test2/" + this.props.image);
     ref
       .getDownloadURL()
       .then((data) => {
         FileSystem.downloadAsync(
           data,
-          FileSystem.cacheDirectory + this.props.image + ".jpg"
+          FileSystem.cacheDirectory + "test/" + this.props.image + ".jpg"
         )
           .then(({ uri }) => {
             if (this._isMounted) {

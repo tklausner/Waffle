@@ -105,19 +105,18 @@ class SellScreen extends Component {
             user_id: this.props.user._id,
             username: this.props.user.username,
             category: this.state.category,
-            image: "test/" + _processImage(this.state.image),
+            image: _processImage(this.state.image),
             profile: this.props.user.profile,
             description: this.state.description,
             value: this.state.postingPrice,
             waffles_remaining: this.state.mainSpots,
           };
+          this._reset();
           await this.props.newPost(newPost);
-          Alert.alert("Waffle Uploaded!");
           this.updateStore();
         } else {
           Alert.alert("Waffle Failed!");
         }
-        this._reset();
       });
     }
   };

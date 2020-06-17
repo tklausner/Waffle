@@ -54,7 +54,8 @@ class PostList extends PureComponent {
   render() {
     return (
       <Container>
-        {true || this.state.feed.length === this.props.posts.length ? (
+        {this.props.posts ||
+        this.state.feed.length === this.props.posts.length ? (
           <FlatList
             data={this.props.posts}
             renderItem={this._renderItem}
