@@ -70,12 +70,14 @@ class Post extends PureComponent {
   }
 
   async fetchPostUser() {
-    await this.props.getTempUser(this.props.post.user_id);
-    this.setState({
-      username: this.props.temp_user.username,
-      profile: this.props.temp_user.profile,
-      tempUser: this.props.temp_user,
-    });
+    if (this._isMounted) {
+      await this.props.getTempUser(this.props.post.user_id);
+      this.setState({
+        username: this.props.temp_user.username,
+        profile: this.props.temp_user.profile,
+        tempUser: this.props.temp_user,
+      });
+    }
   }
 
   addToSaved() {
