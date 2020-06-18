@@ -52,6 +52,7 @@ class Post extends PureComponent {
       profile: "",
       comment: "",
       comments: [],
+      tempUser: null
     };
   }
   componentDidMount() {
@@ -73,6 +74,7 @@ class Post extends PureComponent {
     this.setState({
       username: this.props.temp_user.username,
       profile: this.props.temp_user.profile,
+      tempUser: this.props.temp_user
     });
   }
 
@@ -121,6 +123,8 @@ class Post extends PureComponent {
   render() {
     const { post } = this.props;
     const navigation = this.context;
+    const { tempUser }  = this.state;
+    console.log(tempUser);
     return (
       <Card style={styles.content}>
         <CardItem>
