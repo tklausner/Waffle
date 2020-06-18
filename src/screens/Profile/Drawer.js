@@ -7,7 +7,6 @@ import {
 } from "@react-navigation/drawer";
 
 import ProfileScreen from "./ProfileScreen";
-import ExploreScreen from "../Explore/ExploreScreen";
 
 import * as firebase from "firebase";
 import { useDispatch } from "react-redux";

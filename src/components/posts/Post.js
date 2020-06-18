@@ -49,6 +49,7 @@ class Post extends PureComponent {
       profile: "",
       comment: "",
       comments: [],
+      tempUser: null
     };
   }
   componentDidMount() {
@@ -77,6 +78,7 @@ class Post extends PureComponent {
     this.setState({
       username: this.props.temp_user.username,
       profile: this.props.temp_user.profile,
+      tempUser: this.props.temp_user
     });
   }
 
@@ -152,6 +154,8 @@ class Post extends PureComponent {
   render() {
     const { post } = this.props;
     const navigation = this.context;
+    const { tempUser }  = this.state;
+    console.log(tempUser);
     return (
       <Content style={styles.content}>
         <Card>
@@ -178,7 +182,7 @@ class Post extends PureComponent {
             </Right>
           </CardItem>
           <CardItem>
-            <Text style={styles.category}>#{post.category}</Text>
+            <Text style={styles.category} onPress = {() => navigation.navigate("UserProfile", { tempUser } )}>#{post.category}</Text>
           </CardItem>
           <CardItem>
             <CachedImage image={post.image} style={styles.image}></CachedImage>

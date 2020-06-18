@@ -12,6 +12,7 @@ import HomeScreen from "../screens/Home/HomeScreen";
 import ExploreScreen from "../screens/Explore/ExploreScreen";
 import SellScreen from "../screens/Sell/SellScreen";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
+import UserProfileScreen from "../screens/Profile/UserProfileScreen";
 import MessagingPreviewScreen from "../screens/Messaging/MessagingPreviewScreen";
 import MessagingScreen from "../screens/Messaging/MessagingScreen";
 import WaffleScreen from "../screens/Waffle/WaffleScreen";
@@ -34,6 +35,9 @@ function GetHeader(route) {
       break;
     case "Waffle":
     case "Messaging":
+      return <MessagesHeader />;
+      break;
+    case "UserProfile":
       return <MessagesHeader />;
       break;
     case "Profile":
@@ -79,6 +83,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Waffle" component={WaffleScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
+      <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
     </HomeStack.Navigator>
   );
 }
@@ -124,9 +129,9 @@ function ProfileStackScreen() {
       screenOptions={({ route }) => ({
         header: () => GetHeader("Profile"),
       })}
-      initialRouteName = "Profile"
+      initialRouteName="Profile"
     >
-        <ProfileStack.Screen name="Profile" component={Drawer} />
+      <ProfileStack.Screen name="Profile" component={Drawer} />
     </ProfileStack.Navigator>
   );
 }
