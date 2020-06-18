@@ -39,7 +39,6 @@ class PostList extends PureComponent {
     if (this._isMounted) {
       await this.props.getPost(id);
       const { post } = this.props;
-
       this.setState((state) => ({
         feed: [...state.feed, post],
       }));

@@ -16,6 +16,8 @@ import UserProfileScreen from "../screens/Profile/UserProfileScreen";
 import MessagingPreviewScreen from "../screens/Messaging/MessagingPreviewScreen";
 import MessagingScreen from "../screens/Messaging/MessagingScreen";
 import WaffleScreen from "../screens/Waffle/WaffleScreen";
+import ProductScreen from "../screens/Waffle/ProductScreen";
+import CommentScreen from "../screens/Home/CommentScreen";
 
 import { DefaultHeader } from "../components/headers/DefaultHeader";
 import { HomeHeader } from "../components/headers/HomeHeader";
@@ -35,6 +37,8 @@ function GetHeader(route) {
       break;
     case "Waffle":
     case "Messaging":
+    case "Comments":
+    case "Product":
       return <MessagesHeader />;
       break;
     case "UserProfile":
@@ -82,6 +86,8 @@ function HomeStackScreen() {
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Waffle" component={WaffleScreen} />
+      <HomeStack.Screen name="Product" component={ProductScreen} />
+      <HomeStack.Screen name="Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
     </HomeStack.Navigator>

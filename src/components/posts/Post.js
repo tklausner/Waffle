@@ -6,6 +6,7 @@ import {
   TextInput,
 } from "react-native";
 import {
+  Container,
   Content,
   Card,
   CardItem,
@@ -28,6 +29,8 @@ import { updateUser, getTempUser } from "../../api/user";
 import { NavigationContext } from "@react-navigation/native";
 
 import CachedImage from "../images/CachedImage";
+import { PostComments } from "./PostComments";
+import AddComment from "./AddComment";
 
 const _renderItem = ({ item }) => {
   return (
@@ -59,18 +62,11 @@ class Post extends PureComponent {
         saved: this.getSavedState(),
       });
       this.fetchPostUser();
-      this.fetchComments();
     }
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-  }
-
-  async fetchComments() {
-    this.setState({
-      comments: this.props.post.comments.slice(-3),
-    });
   }
 
   async fetchPostUser() {
@@ -120,35 +116,8 @@ class Post extends PureComponent {
     }
   }
 
-  reset() {
-    this.comment_input.clear();
-    this.setState({
-      comment: "",
-    });
-  }
-
   refresh() {
     this.props.readPosts();
-  }
-
-  async uploadComment() {
-    const { post } = this.props;
-    if (this.state.comment) {
-      let comments = post.comments.slice();
-      comments.splice(comments.length - 1, 0, {
-        user_id: this.props.user._id,
-        username: this.props.user.username,
-        content: this.state.comment,
-      });
-      const { _id } = post;
-      await this.props.updatePost({
-        comments: comments,
-        _id: _id,
-      });
-      this.fetchComments();
-      this.reset();
-      this.refresh();
-    }
   }
 
   render() {
@@ -157,129 +126,106 @@ class Post extends PureComponent {
     const { tempUser }  = this.state;
     console.log(tempUser);
     return (
-      <Content style={styles.content}>
-        <Card>
-          <CardItem>
-            <Left>
-              <CachedImage image={this.state.profile} style={styles.profile} />
-              <Body>
-                <Text>{this.state.username}</Text>
-              </Body>
-            </Left>
-            <Right>
-              <Button
-                transparent
-                onPress={() => {
-                  this.props.deletePost(post._id);
-                  this.refresh();
-                }}
-              >
-                <MaterialIcons
-                  name="more-horiz"
-                  style={[{ fontSize: 40 }, globalStyles.wGray]}
-                />
-              </Button>
-            </Right>
-          </CardItem>
-          <CardItem>
-            <Text style={styles.category} onPress = {() => navigation.navigate("UserProfile", { tempUser } )}>#{post.category}</Text>
-          </CardItem>
-          <CardItem>
-            <CachedImage image={post.image} style={styles.image}></CachedImage>
-          </CardItem>
-          <CardItem>
-            <Left style={styles.bar}>
-              <Button
-                transparent
-                onPress={() => {
-                  if (this.state.saved) {
-                    this.removeFromSaved();
-                  } else {
-                    this.addToSaved();
-                  }
-                }}
-              >
-                <MaterialIcons
-                  name={this.state.saved ? "bookmark" : "bookmark-border"}
-                  style={styles.bar}
-                />
-              </Button>
-              <Button transparent>
-                <MaterialIcons name="send" style={styles.bar} />
-              </Button>
-            </Left>
-            <Body></Body>
-            <Right
-              style={[
-                { flexDirection: "row", justifyContent: "space-around" },
-                styles.bar,
-              ]}
-            >
-              <Text style={styles.bar}>
-                <MaterialIcons name="pie-chart" style={styles.bar} />
-                {post.waffles_remaining}
-              </Text>
-              <Text style={styles.bar}>
-                <MaterialIcons name="monetization-on" style={styles.bar} />
-                {post.value}
-              </Text>
-            </Right>
-          </CardItem>
-          <CardItem>
-            <Text>{post.description}</Text>
-          </CardItem>
-          <CardItem
-            button
-            style={styles.waffleButton}
-            onPress={() => {
-              navigation.navigate("Waffle", {
-                post: post,
-              });
-            }}
-          >
-            <Text style={styles.waffleButton}>WaffleButton</Text>
-          </CardItem>
-          <CardItem style={styles.commentsContainer}>
-            <FlatList
-              data={this.state.comments}
-              renderItem={_renderItem}
-              keyExtractor={(item) => item.id}
-              ListEmptyComponent={() => null}
-              initialNumToRender={3}
-            />
-          </CardItem>
-          <CardItem style={styles.commentContainer}>
-            <TextInput
-              ref={(input) => {
-                this.comment_input = input;
-              }}
-              style={styles.comment}
-              placeholder="Write a comment ..."
-              autoCorrect={true}
-              keyboardAppearance={"light"}
-              placeholderTextColor={"#DDD"}
-              multiline={true}
-              textAlignVertical={"top"}
-              value={this.state.comment}
-              onChangeText={(text) => {
-                this.setState({ comment: text });
-              }}
-            />
+      <Card style={styles.content}>
+        <CardItem>
+          <Left>
+            <CachedImage image={this.state.profile} style={styles.profile} />
+            <Body>
+              <Text>{this.state.username}</Text>
+            </Body>
+          </Left>
+          <Right>
             <Button
               transparent
-              style={styles.submitComment}
               onPress={() => {
-                this.uploadComment();
+                this.props.deletePost(post._id);
+                this.refresh();
               }}
             >
+              <MaterialIcons
+                name="more-horiz"
+                style={[{ fontSize: 40 }, globalStyles.wGray]}
+              />
+            </Button>
+          </Right>
+        </CardItem>
+        <CardItem>
+          <Text style={styles.category}>#{post.category}</Text>
+        </CardItem>
+        <CardItem>
+          <CachedImage image={post.image} style={styles.image}></CachedImage>
+        </CardItem>
+        <CardItem>
+          <Left style={styles.bar}>
+            <Button
+              transparent
+              onPress={() => {
+                if (this.state.saved) {
+                  this.removeFromSaved();
+                } else {
+                  this.addToSaved();
+                }
+              }}
+            >
+              <MaterialIcons
+                name={this.state.saved ? "bookmark" : "bookmark-border"}
+                style={styles.bar}
+              />
+            </Button>
+            <Button transparent>
               <MaterialIcons name="send" style={styles.bar} />
             </Button>
-          </CardItem>
-          <CardItem button style={styles.viewMore}>
-            <Text style={styles.viewMore}>View more comments</Text>
-          </CardItem>
-        </Card>
-      </Content>
+          </Left>
+          <Body></Body>
+          <Right
+            style={[
+              { flexDirection: "row", justifyContent: "space-around" },
+              styles.bar,
+            ]}
+          >
+            <Text style={styles.bar}>
+              <MaterialIcons name="pie-chart" style={styles.bar} />
+              {post.waffles_remaining}
+            </Text>
+            <Text style={styles.bar}>
+              <MaterialIcons name="monetization-on" style={styles.bar} />
+              {post.value}
+            </Text>
+          </Right>
+        </CardItem>
+        <CardItem>
+          <Text>{post.description}</Text>
+        </CardItem>
+        <CardItem
+          button
+          style={styles.waffleButton}
+          onPress={() => {
+            navigation.navigate("Waffle", {
+              post: post,
+            });
+          }}
+        >
+          <Text style={styles.waffleButton}>WaffleButton</Text>
+        </CardItem>
+        <CardItem style={styles.commentsContainer}>
+          <PostComments comments={post.comments.slice(-3)} />
+        </CardItem>
+        <CardItem style={styles.commentContainer}>
+          <AddComment comments={post.comments} post_id={post._id} />
+        </CardItem>
+        <CardItem
+          button
+          style={styles.viewMore}
+          onPress={() => {
+            navigation.navigate("Comments", {
+              comments: post.comments,
+              post_id: post._id,
+            });
+          }}
+        >
+          <Text style={styles.viewMore}>View more comments</Text>
+        </CardItem>
+      </Card>
     );
   }
 }
@@ -290,7 +236,6 @@ const mapDispatchToProps = (dispatch) => {
     deletePost: (id) => dispatch(deletePost(id)),
     readPosts: () => dispatch(readPosts()),
     getTempUser: (id) => dispatch(getTempUser(id)),
-    updatePost: (id) => dispatch(updatePost(id)),
   };
 };
 
@@ -304,10 +249,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Post);
 
 const styles = StyleSheet.create({
   content: {
-    marginTop: "-2%",
-    marginBottom: "0%",
-    flex: 0,
-    borderTopWidth: 0,
+    flex: 1,
+    marginTop: "-1%",
   },
   bar: {
     fontSize: 20,
@@ -316,13 +259,6 @@ const styles = StyleSheet.create({
   barRight: {
     flexDirection: "row",
     justifyContent: "space-around",
-  },
-  comments: {
-    marginLeft: "0%",
-    paddingBottom: "1%",
-    paddingTop: "1%",
-    paddingRight: "5%",
-    fontSize: 15,
   },
   viewMore: {
     fontSize: 15,
@@ -338,7 +274,7 @@ const styles = StyleSheet.create({
   profile: {
     width: 50,
     height: 50,
-    borderRadius: 400 / 2,
+    borderRadius: 200,
   },
   image: {
     height: 345,
@@ -352,22 +288,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#00B8FA",
   },
-
-  comment: {
-    width: "70%",
-    borderRadius: 5,
-    height: 32,
-    justifyContent: "center",
-    backgroundColor: "#EEE",
-    color: "black",
-    fontSize: 16,
-    paddingLeft: 8,
-  },
-  submitComment: {
-    marginLeft: "2%",
-  },
   commentContainer: {
-    alignItems: "center",
     justifyContent: "center",
   },
 });
