@@ -9,7 +9,14 @@ const dim = Dimensions.get("window").width / 4;
 export function Product({ product }) {
   const navigation = useNavigation();
   return product ? (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("Home", {
+          screen: "Product",
+          params: { post: product },
+        });
+      }}
+    >
       <View style={styles.view}>
         <CachedImage image={product.image} style={styles.image} />
       </View>

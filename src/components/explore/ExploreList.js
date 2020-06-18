@@ -10,7 +10,7 @@ import { readPostsByCategory } from "../../api/post";
 class ExploreList extends Component {
   _isMounted = false;
   state = {
-    feed: [[]],
+    feed: [],
     isRefreshing: false,
   };
 
@@ -47,7 +47,7 @@ class ExploreList extends Component {
   };
 
   async onRefresh() {
-    this.setState({ isRefreshing: true, feed: [[]] });
+    this.setState({ isRefreshing: true, feed: [] });
     const { category_list } = this.props;
     for (let i = 0; i < category_list.length; i += 1) {
       this.loadPosts(category_list[i], i);
@@ -56,6 +56,7 @@ class ExploreList extends Component {
   }
 
   render() {
+    console.log("FEED", this.state.feed);
     return (
       <Container>
         {this.state.feed.length >= this.props.category_list.length ? (

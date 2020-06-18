@@ -7,10 +7,14 @@ import CachedImage from "../images/CachedImage";
 const dim = Dimensions.get("window").width / 2.5;
 
 export function PostPreview({ post }) {
+  const navigation = useNavigation();
   return post ? (
     <TouchableOpacity
       onPress={() => {
-        console.log("PROFILE POST", post._id);
+        navigation.navigate("Home", {
+          screen: "Product",
+          params: { post: post },
+        });
       }}
     >
       <View style={styles.view}>
