@@ -56,7 +56,6 @@ class ExploreList extends Component {
   }
 
   render() {
-    console.log("FEED", this.state.feed);
     return (
       <Container>
         {this.state.feed.length >= this.props.category_list.length ? (
