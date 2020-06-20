@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Image } from "react-native";
 import { storageRef } from "../../utils";
 import * as FileSystem from "expo-file-system";
+import { Asset } from "expo-asset";
 
 export default class CachedImage extends Component {
   _isMounted = false;
@@ -10,7 +11,9 @@ export default class CachedImage extends Component {
 
     this.state = {
       loading: true,
-      image: "../../../assets/images/CameraRoll.png",
+      image: Asset.fromModule(
+        require("../../../assets/images/CameraRollLight.png")
+      ).uri,
       uri: "",
     };
   }
@@ -52,10 +55,9 @@ export default class CachedImage extends Component {
     FileSystem.readDirectoryAsync(FileSystem.cacheDirectory + "test/")
       .then((res) => {
         if (this._isMounted) {
-          if (res.indexOf(this.props.image + ".jpg") > -1) {
+          if (res.indexOf(this.props.image) > -1) {
             this.setState({
-              uri:
-                FileSystem.cacheDirectory + "test/" + this.props.image + ".jpg",
+              uri: FileSystem.cacheDirectory + "test/" + this.props.image,
             });
             this.setState({
               loading: false,
@@ -78,7 +80,7 @@ export default class CachedImage extends Component {
       .then((data) => {
         FileSystem.downloadAsync(
           data,
-          FileSystem.cacheDirectory + "test/" + this.props.image + ".jpg"
+          FileSystem.cacheDirectory + "test/" + this.props.image
         )
           .then(({ uri }) => {
             if (this._isMounted) {
@@ -93,7 +95,11 @@ export default class CachedImage extends Component {
       .catch((err) => {
         if (this._isMounted) {
           console.log("QUOTA EXCEEDED");
-          this.setState({ uri: "../../../assets/images/CameraRoll.png" });
+          this.setState({
+            uri: Asset.fromModule(
+              require("../../../assets/images/OnlineLogo.png")
+            ).uri,
+          });
           this.setState({ loading: false });
         }
       });

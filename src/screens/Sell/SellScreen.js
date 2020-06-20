@@ -41,6 +41,8 @@ class SellScreen extends Component {
       yourProfit: 0,
       mainSpots: 10,
       mainPrice: 0,
+      miniSpots: 0,
+      miniPrice: 0,
       minis: false,
     };
   };
@@ -109,6 +111,10 @@ class SellScreen extends Component {
             description: this.state.description,
             value: this.state.postingPrice,
             waffles_remaining: this.state.mainSpots,
+            main_spots: this.state.mainSpots,
+            mini_spots: this.state.miniSpots,
+            main_price: this.state.mainPrice,
+            mini_price: this.state.miniPrice,
           };
           this._reset();
           await this.props.newPost(newPost);
