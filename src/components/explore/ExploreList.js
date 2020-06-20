@@ -1,20 +1,38 @@
 import React, { Component } from "react";
 import { ProductList } from "./ProductList";
-import { Content, Container, Text, View, Header, Card } from "native-base";
-import { FlatList, StyleSheet, RefreshControl } from "react-native";
+import {
+  Content,
+  Container,
+  Text,
+  View,
+  Header,
+  Card,
+  Item,
+  Icon,
+  Input,
+} from "native-base";
+import { FlatList, StyleSheet, RefreshControl, Image } from "react-native";
 import { LoadingScreen } from "../loading/LoadingScreen";
+
+import { MaterialIcons } from "@expo/vector-icons";
+import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 import { connect } from "react-redux";
 import { readPostsByCategory } from "../../api/post";
 
 class ExploreList extends Component {
-  _isMounted = false;
-  state = {
-    feed: [],
-    isRefreshing: false,
-  };
+  constructor(props) {
+    super(props);
+    this._isMounted = false;
+    this.state = {
+      feed: [],
+      isRefreshing: false,
+      data: this.props.category_list,
+    };
+  }
 
   componentDidMount() {
+    console.log("mounting");
     this._isMounted = true;
     this.onRefresh();
   }
@@ -47,18 +65,64 @@ class ExploreList extends Component {
   };
 
   async onRefresh() {
-    this.setState({ isRefreshing: true, feed: [] });
-    const { category_list } = this.props;
-    for (let i = 0; i < category_list.length; i += 1) {
-      this.loadPosts(category_list[i], i);
+    await this.setState({ isRefreshing: true, feed: [] });
+    for (let i = 0; i < this.state.data.length; i += 1) {
+      this.loadPosts(this.state.data[i], i);
     }
-    this.setState({ isRefreshing: false });
+    await this.setState({ isRefreshing: false });
   }
+
+  searchFilterFunction = async (text) => {
+    console.log(text);
+    if (text == "") {
+      console.log("we in here")
+      await this.setState({ data: this.props.category_list });
+    } else {
+      const newData = this.props.category_list.filter((item) => {
+        const itemData = `${item.toUpperCase()}`;
+
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) == 0;
+      });
+
+      this.setState({ data: newData });
+    }
+    this.onRefresh();
+
+  };
 
   render() {
     return (
       <Container>
-        {this.state.feed.length >= this.props.category_list.length ? (
+        <Header searchBar rounded>
+          <Item
+            regular
+            style={{
+              borderRadius: 50,
+              marginLeft: 10,
+              marginBottom: 5,
+              height: 35,
+            }}
+          >
+            <Icon name="ios-search" />
+            <Input
+              onChangeText={ (text) => this.searchFilterFunction(text) }
+              autoCorrect={false}
+              placeholder="Search"
+            />
+          </Item>
+          <Image
+            source={WaffleIcon}
+            style={{
+              height: "80%",
+              width: "10%",
+              flex: 0,
+              marginLeft: "2%",
+            }}
+          />
+        </Header>
+        {console.log(this.state.feed, this.state.data)}
+        {this.state.feed.length >= this.state.data.length ? (
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}

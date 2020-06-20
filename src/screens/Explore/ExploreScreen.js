@@ -1,10 +1,18 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
+import { Header, Item, Icon, Input, Container } from "native-base";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { connect } from "react-redux";
 import ExploreList from "../../components/explore/ExploreList";
 import { getExploreByUser, getExplore } from "../../api/explore";
-
-import { Container } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
+import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 class ExploreScreen extends Component {
   componentDidMount() {
@@ -20,8 +28,15 @@ class ExploreScreen extends Component {
   }
 
   render() {
-    const { category_list } = this.props.explore;
-    return category_list ? <ExploreList category_list={category_list} /> : null;
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={{ flex: 1 }}>
+          {this.props.explore.category_list ? (
+            <ExploreList category_list={this.props.explore.category_list} />
+          ) : null}
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 }
 
