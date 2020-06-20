@@ -24,7 +24,13 @@ import { updateUser } from "../../api/user";
 
 import { connect } from "react-redux";
 
+import { NavigationContext } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
+
+const contextType = NavigationContext
+
 class SellScreen extends Component {
+  static contextType = NavigationContext;
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -37,9 +43,9 @@ class SellScreen extends Component {
       ).uri,
       category: "",
       description: "",
-      postingPrice: 0,
+      postingPrice: "",
       yourProfit: 0,
-      mainSpots: 10,
+      mainSpots: "",
       mainPrice: 0,
       miniSpots: 0,
       miniPrice: 0,
@@ -87,6 +93,7 @@ class SellScreen extends Component {
   };
 
   waffleUpload = async () => {
+    const navigation = this.context;
     if (
       this.state.image ==
       Asset.fromModule(require("../../../assets/images/CameraRollLight.png"))
@@ -95,7 +102,7 @@ class SellScreen extends Component {
       Alert.alert("You must upload an image before posting");
     } else if (this.state.postingPrice <= 0) {
       Alert.alert("Posting price must be greater than $0");
-    } else if (this.state.mainSpots <= 0) {
+    } else if (this.state.mainSpots <= 0 && this.state.mainSpots != "") {
       Alert.alert("You must have at least one spot in your main");
     } else {
       uploadImageToFireBase({
@@ -119,6 +126,7 @@ class SellScreen extends Component {
           this._reset();
           await this.props.newPost(newPost);
           this.updateStore();
+          navigation.navigate("Home")
         } else {
           Alert.alert("Waffle Failed!");
         }
@@ -140,6 +148,18 @@ class SellScreen extends Component {
       store: updatedStore,
       _id: _id,
     });
+  };
+
+  updateMainPrice = () => {
+    console.log("inmethod")
+    if (this.state.postingPrice == "")
+      this.setState({ mainPrice: 0 });
+    else if (this.state.mainSpots == "")
+      this.setState({ mainPrice: this.state.postingPrice / 10 });
+    else
+      this.setState({
+        mainPrice: this.state.postingPrice / this.state.mainSpots,
+      });
   };
 
   render() {
@@ -213,19 +233,17 @@ class SellScreen extends Component {
             keyboardAppearance={"dark"}
             keyboardType={"number-pad"}
             placeholderTextColor={"black"}
-            value={this.state.postingPrice}
+            value={this.state.postingPrice.toString()}
             maxLength={4}
             onChangeText={(text) => {
-              this.setState({ postingPrice: Number(text) });
+              if (text == "") this.setState({ postingPrice: "" });
+              else this.setState({ postingPrice: Number(text) });
             }}
             onEndEditing={() => {
               this.setState({
                 yourProfit: this.state.postingPrice * 0.99,
               });
-              this.setState({
-                mainPrice: this.state.postingPrice / this.state.mainSpots,
-              });
-            }}
+            }, this.updateMainPrice}
           />
         </View>
         <View style={styles.secondaryView}>
@@ -244,16 +262,13 @@ class SellScreen extends Component {
             keyboardType={"number-pad"}
             placeholderTextColor={"grey"}
             keyboardType={"numeric"}
-            value={this.state.mainSpots}
+            value={this.state.mainSpots.toString()}
             maxLength={30}
             onChangeText={(text) => {
-              this.setState({ mainSpots: Number(text) });
+              if (text == "") this.setState({ mainSpots: "" });
+              else this.setState({ mainSpots: Number(text) });
             }}
-            onEndEditing={() => {
-              this.setState({
-                mainPrice: this.state.postingPrice / this.state.mainSpots,
-              });
-            }}
+            onEndEditing={this.updateMainPrice}
           />
         </View>
         <View style={styles.secondaryView}>
