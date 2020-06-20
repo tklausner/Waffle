@@ -99,10 +99,7 @@ const ExploreStack = createStackNavigator();
 function ExploreStackScreen() {
   return (
     <ExploreStack.Navigator
-      headerMode="float"
-      screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name),
-      })}
+      headerMode="none"
     >
       <ExploreStack.Screen name="Explore" component={ExploreScreen} />
       <ExploreStack.Screen name="Search" component={ExploreScreen} />
