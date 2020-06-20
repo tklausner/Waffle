@@ -174,6 +174,13 @@ class Post extends PureComponent {
           <CachedImage image={post.image} style={styles.image}></CachedImage>
         </CardItem>
         <CardItem>
+          <PostWaffle
+            handleState={this.passProps.bind(this)}
+            post={post}
+            navigation={navigation}
+          />
+        </CardItem>
+        <CardItem>
           <Left style={[styles.barLeft]}>
             <Button
               transparent
@@ -226,15 +233,18 @@ class Post extends PureComponent {
         <CardItem>
           <Text>{post.description}</Text>
         </CardItem>
-        <CardItem>
-          <PostWaffle
-            handleState={this.passProps.bind(this)}
-            post={post}
-            navigation={navigation}
-          />
-        </CardItem>
-        <CardItem style={styles.commentContainer}>
-          <AddComment comments={post.comments} post_id={post._id} />
+
+        <CardItem
+          button
+          style={styles.viewMore}
+          onPress={() => {
+            navigation.navigate("Comments", {
+              comments: post.comments,
+              post_id: post._id,
+            });
+          }}
+        >
+          <Text style={styles.viewMore}>View comments</Text>
         </CardItem>
       </Card>
     ) : null;

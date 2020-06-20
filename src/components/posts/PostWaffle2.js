@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Image,
-  Alert,
-  Animated,
-} from "react-native";
+import { StyleSheet, View, TextInput, Image, Picker } from "react-native";
 import { Button, Text, Container } from "native-base";
 import { connect } from "react-redux";
 import WaffleIcon from "../../../assets/images/OnlineLogo.png";
@@ -26,6 +19,7 @@ class PostWaffle extends Component {
       waffleType: "Main",
       number_of_spots: 0,
       price: 0,
+      hidePrice: true,
       showWaffle: false,
     };
   }
@@ -37,6 +31,7 @@ class PostWaffle extends Component {
         placeholder="1"
         keyboardAppearance={"dark"}
         keyboardType={"number-pad"}
+        placeholderTextColor={styles.buttonText}
         value={this.state.number_of_spots}
         maxLength={2}
         onChangeText={(text) => {
@@ -112,10 +107,9 @@ class PostWaffle extends Component {
             {this.picker_number()}
             <Swipeable
               renderLeftActions={LeftAction}
-              friction={2}
               style={styles.priceContainer}
             >
-              <View style={styles.priceContainer}>
+              <View style={[styles.waffleStyle, styles.priceContainer]}>
                 <Text style={styles.price}>${this.state.price}</Text>
               </View>
             </Swipeable>
@@ -140,7 +134,7 @@ const styles = StyleSheet.create({
     borderColor: "#DDD",
   },
   miniSelected: {
-    backgroundColor: "#FFF",
+    backgroundColor: "transparent",
     borderColor: "#00B8FA",
     marginRight: "5%",
   },
@@ -148,13 +142,11 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "contain",
     height: "120%",
-    backgroundColor: "transparent",
   },
   waffleContainer: {
     width: 50,
     marginRight: "5%",
     paddingTop: 0,
-    backgroundColor: "transparent",
   },
   container: {
     flexDirection: "row",
@@ -170,26 +162,25 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     width: "100%",
-    marginTop: "2%",
     paddingLeft: "5%",
-    paddingRight: "22%",
-    borderColor: "#EACD2E",
+    paddingRight: "5%",
+    borderColor: "#00B8FA",
     backgroundColor: "#FFF",
-    borderRadius: 10,
-    borderWidth: 1,
   },
   price: {
     fontSize: 32,
-    color: "#222",
-    opacity: 0.8,
-    textAlign: "left",
+    color: "#999999",
+    textAlign: "center",
   },
   swiped: {
-    backgroundColor: "#EACD2E",
+    backgroundColor: "#FF0000",
     width: "100%",
     borderColor: "#FFF",
-    borderRadius: 10,
-    borderWidth: 2,
+    borderRadius: 90,
+    borderTopWidth: 0,
+    borderBottomWidth: 3,
+    borderLeftWidth: 0.4,
+    borderRightWidth: 0.4,
   },
 });
 
