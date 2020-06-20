@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   FlatList,
   TextInput,
+  Dimensions,
+  View,
 } from "react-native";
 import {
   Container,
@@ -29,7 +31,7 @@ import { updateUser, getTempUser } from "../../api/user";
 import { NavigationContext } from "@react-navigation/native";
 
 import CachedImage from "../images/CachedImage";
-import { PostComments } from "./PostComments";
+import PostWaffle from "./PostWaffle";
 import AddComment from "./AddComment";
 
 const _renderItem = ({ item }) => {
@@ -53,20 +55,29 @@ class Post extends PureComponent {
       comment: "",
       comments: [],
       tempUser: null,
+      waffleType: "Main",
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     this._isMounted = true;
     if (this._isMounted) {
       this.setState({
         saved: this.getSavedState(),
       });
-      this.fetchPostUser();
+      await this.fetchPostUser();
     }
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  passProps(waffleState) {
+    if (this.state.waffleType !== waffleState.waffleType) {
+      this.setState({
+        waffleType: waffleState.waffleType,
+      });
+    }
   }
 
   async fetchPostUser() {
@@ -124,22 +135,23 @@ class Post extends PureComponent {
 
   render() {
     const { post } = this.props;
+    console.log(post);
     const navigation = this.context;
     const { tempUser } = this.state;
-    return (
+    return tempUser ? (
       <Card style={styles.content}>
         <CardItem>
           <Left>
             <CachedImage image={this.state.profile} style={styles.profile} />
             <Body>
-              <Text>{this.state.username}</Text>
+              <Text style={styles.username}>{this.state.username}</Text>
             </Body>
           </Left>
           <Right>
             <Button
               transparent
               onPress={() => {
-                this.props.deletePost(post._id);
+                //this.props.deletePost(post._id);
                 this.refresh();
               }}
             >
@@ -162,7 +174,7 @@ class Post extends PureComponent {
           <CachedImage image={post.image} style={styles.image}></CachedImage>
         </CardItem>
         <CardItem>
-          <Left style={styles.bar}>
+          <Left style={[styles.barLeft]}>
             <Button
               transparent
               onPress={() => {
@@ -175,64 +187,57 @@ class Post extends PureComponent {
             >
               <MaterialIcons
                 name={this.state.saved ? "bookmark" : "bookmark-border"}
-                style={styles.bar}
+                style={{ fontSize: 32 }}
               />
             </Button>
             <Button transparent>
-              <MaterialIcons name="send" style={styles.bar} />
+              <MaterialIcons name="send" style={{ fontSize: 32 }} />
             </Button>
           </Left>
-          <Body></Body>
-          <Right
-            style={[
-              { flexDirection: "row", justifyContent: "space-around" },
-              styles.bar,
-            ]}
+          <TouchableOpacity
+            style={styles.barRightTouchable}
+            onPress={() => {
+              navigation.navigate("Waffle", { post: post });
+            }}
           >
-            <Text style={styles.bar}>
-              <MaterialIcons name="pie-chart" style={styles.bar} />
-              {post.waffles_remaining}
-            </Text>
-            <Text style={styles.bar}>
-              <MaterialIcons name="monetization-on" style={styles.bar} />
-              {post.value}
-            </Text>
-          </Right>
+            <Right style={[styles.barRight, styles.barStyle]}>
+              <View style={styles.wafflesRemainingView}>
+                <MaterialIcons name="pie-chart" style={styles.barRightIcon} />
+                <Text style={styles.barRightText}>
+                  {this.state.waffleType === "Main"
+                    ? post.main_spots
+                    : post.mini_spots}
+                </Text>
+              </View>
+              <View style={styles.wafflesRemainingView}>
+                <MaterialIcons
+                  name="monetization-on"
+                  style={styles.barRightIcon}
+                />
+                <Text style={styles.barRightText}>
+                  {this.state.waffleType === "Main"
+                    ? post.main_price
+                    : post.mini_price}
+                </Text>
+              </View>
+            </Right>
+          </TouchableOpacity>
         </CardItem>
         <CardItem>
           <Text>{post.description}</Text>
         </CardItem>
-        <CardItem
-          button
-          style={styles.waffleButton}
-          onPress={() => {
-            navigation.navigate("Waffle", {
-              post: post,
-            });
-          }}
-        >
-          <Text style={styles.waffleButton}>WaffleButton</Text>
-        </CardItem>
-        <CardItem style={styles.commentsContainer}>
-          <PostComments comments={post.comments.slice(-3)} />
+        <CardItem>
+          <PostWaffle
+            handleState={this.passProps.bind(this)}
+            post={post}
+            navigation={navigation}
+          />
         </CardItem>
         <CardItem style={styles.commentContainer}>
           <AddComment comments={post.comments} post_id={post._id} />
         </CardItem>
-        <CardItem
-          button
-          style={styles.viewMore}
-          onPress={() => {
-            navigation.navigate("Comments", {
-              comments: post.comments,
-              post_id: post._id,
-            });
-          }}
-        >
-          <Text style={styles.viewMore}>View more comments</Text>
-        </CardItem>
       </Card>
-    );
+    ) : null;
   }
 }
 
@@ -258,13 +263,37 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: "-1%",
   },
-  bar: {
-    fontSize: 20,
-    marginTop: "-2%",
+  wafflesRemainingView: {
+    flex: 0,
+    flexDirection: "row",
+    paddingRight: 15,
+    paddingLeft: 15,
+  },
+  barStyle: {
+    borderWidth: 3,
+    borderColor: "#00B8FA",
+    borderRadius: 90,
+    borderTopWidth: 0,
+    borderLeftWidth: 0.3,
+    borderRightWidth: 0.3,
+  },
+  barLeft: {
+    paddingLeft: "2%",
   },
   barRight: {
     flexDirection: "row",
     justifyContent: "space-around",
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  barRightText: {
+    paddingLeft: "5%",
+    fontSize: 25,
+    fontWeight: "600",
+  },
+  barRightIcon: {
+    fontSize: 25,
+    marginTop: "5%",
   },
   viewMore: {
     fontSize: 15,
@@ -283,11 +312,13 @@ const styles = StyleSheet.create({
     borderRadius: 200,
   },
   image: {
-    height: 345,
-    width: "110%",
+    height: Dimensions.get("window").width,
     flex: 1,
     marginLeft: "0%",
+    marginTop: "-5%",
     resizeMode: "contain",
+    borderRadius: 70,
+    marginBottom: "-10%",
   },
   category: {
     fontWeight: "bold",
@@ -296,5 +327,9 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     justifyContent: "center",
+  },
+  username: {
+    fontSize: 20,
+    fontWeight: "300",
   },
 });
