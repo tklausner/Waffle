@@ -25,9 +25,9 @@ import { updateUser } from "../../api/user";
 import { connect } from "react-redux";
 
 import { NavigationContext } from "@react-navigation/native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
-const contextType = NavigationContext
+const contextType = NavigationContext;
 
 class SellScreen extends Component {
   static contextType = NavigationContext;
@@ -126,7 +126,7 @@ class SellScreen extends Component {
           this._reset();
           await this.props.newPost(newPost);
           this.updateStore();
-          navigation.navigate("Home")
+          navigation.navigate("Home");
         } else {
           Alert.alert("Waffle Failed!");
         }
@@ -150,10 +150,11 @@ class SellScreen extends Component {
     });
   };
 
-  updateMainPrice = () => {
-    console.log("inmethod")
-    if (this.state.postingPrice == "")
-      this.setState({ mainPrice: 0 });
+  updatePrice = () => {
+    this.setState({
+      yourProfit: this.state.postingPrice * 0.99,
+    });
+    if (this.state.postingPrice == "") this.setState({ mainPrice: 0 });
     else if (this.state.mainSpots == "")
       this.setState({ mainPrice: this.state.postingPrice / 10 });
     else
@@ -239,11 +240,7 @@ class SellScreen extends Component {
               if (text == "") this.setState({ postingPrice: "" });
               else this.setState({ postingPrice: Number(text) });
             }}
-            onEndEditing={() => {
-              this.setState({
-                yourProfit: this.state.postingPrice * 0.99,
-              });
-            }, this.updateMainPrice}
+            onEndEditing={this.updatePrice}
           />
         </View>
         <View style={styles.secondaryView}>
@@ -268,7 +265,7 @@ class SellScreen extends Component {
               if (text == "") this.setState({ mainSpots: "" });
               else this.setState({ mainSpots: Number(text) });
             }}
-            onEndEditing={this.updateMainPrice}
+            onEndEditing={this.updatePrice}
           />
         </View>
         <View style={styles.secondaryView}>
