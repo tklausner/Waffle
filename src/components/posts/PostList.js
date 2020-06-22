@@ -15,12 +15,14 @@ class PostList extends PureComponent {
     this.state = {
       feed: [],
       isRefreshing: false,
+      posts: []
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this._isMounted = true;
-    this.props.readPosts();
+    await this.props.readPosts();
+    this.setState({posts:this.props.posts.reverse()})
     /** FOR PERSONALIZED FEEDS
     const { posts } = this.props;
     for (id of posts) {
@@ -32,6 +34,7 @@ class PostList extends PureComponent {
   async onRefresh() {
     this.setState({ isRefreshing: true });
     await this.props.readPosts();
+    await this.setState({posts: this.props.posts.reverse()})
     this.setState({ isRefreshing: false });
   }
 
@@ -56,7 +59,7 @@ class PostList extends PureComponent {
         {this.props.posts ||
         this.state.feed.length === this.props.posts.length ? (
           <FlatList
-            data={this.props.posts}
+            data={this.state.posts}
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
             ListEmptyComponent={() => <Text>You have no posts!</Text>}

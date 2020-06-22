@@ -135,7 +135,6 @@ class Post extends PureComponent {
 
   render() {
     const { post } = this.props;
-    console.log(post);
     const navigation = this.context;
     const { tempUser } = this.state;
     return tempUser ? (
