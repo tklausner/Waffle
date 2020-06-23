@@ -1,20 +1,9 @@
 import React, { Component } from "react";
 import { ProductList } from "./ProductList";
-import {
-  Content,
-  Container,
-  Text,
-  View,
-  Header,
-  Card,
-  Item,
-  Icon,
-  Input,
-} from "native-base";
+import { Container, Text, Header, Item, Icon, Input } from "native-base";
 import { FlatList, StyleSheet, RefreshControl, Image } from "react-native";
 import { LoadingScreen } from "../loading/LoadingScreen";
 
-import { MaterialIcons } from "@expo/vector-icons";
 import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 import { connect } from "react-redux";
@@ -32,7 +21,6 @@ class ExploreList extends Component {
   }
 
   componentDidMount() {
-    console.log("mounting");
     this._isMounted = true;
     this.onRefresh();
   }
@@ -73,9 +61,7 @@ class ExploreList extends Component {
   }
 
   searchFilterFunction = async (text) => {
-    console.log(text);
     if (text == "") {
-      console.log("we in here")
       await this.setState({ data: this.props.category_list });
     } else {
       const newData = this.props.category_list.filter((item) => {
@@ -88,7 +74,6 @@ class ExploreList extends Component {
       this.setState({ data: newData });
     }
     this.onRefresh();
-
   };
 
   render() {
@@ -106,7 +91,7 @@ class ExploreList extends Component {
           >
             <Icon name="ios-search" />
             <Input
-              onChangeText={ (text) => this.searchFilterFunction(text) }
+              onChangeText={(text) => this.searchFilterFunction(text)}
               autoCorrect={false}
               placeholder="Search"
             />
@@ -121,7 +106,6 @@ class ExploreList extends Component {
             }}
           />
         </Header>
-        {console.log(this.state.feed, this.state.data)}
         {this.state.feed.length >= this.state.data.length ? (
           <FlatList
             data={this.state.feed}

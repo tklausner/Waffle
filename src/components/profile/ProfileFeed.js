@@ -14,8 +14,10 @@ class ProfileFeed extends Component {
   };
   componentDidMount() {
     const { posts } = this.props;
-    for (id of posts) {
-      this.loadPost(id);
+    if (posts) {
+      for (id of posts) {
+        this.loadPost(id);
+      }
     }
   }
 
@@ -34,7 +36,8 @@ class ProfileFeed extends Component {
   render() {
     return (
       <Container>
-        {this.state.feed.length === this.props.posts.length ? (
+        {this.props.posts &&
+        this.state.feed.length === this.props.posts.length ? (
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}

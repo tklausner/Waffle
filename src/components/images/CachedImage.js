@@ -94,7 +94,7 @@ export default class CachedImage extends Component {
       })
       .catch((err) => {
         if (this._isMounted) {
-          console.log("QUOTA EXCEEDED");
+          console.log("[ERROR 3]", err);
           this.setState({
             uri: Asset.fromModule(
               require("../../../assets/images/OnlineLogo.png")

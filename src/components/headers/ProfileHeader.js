@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Title,
-  Button,
-} from "native-base";
+import { Header, Left, Body, Right, Title, Button } from "native-base";
 import { StyleSheet } from "react-native";
 import globalStyles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -16,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../api/user";
 
 import { useNavigation, DrawerActions } from "@react-navigation/native";
-
 
 export function ProfileHeader() {
   const navigation = useNavigation();

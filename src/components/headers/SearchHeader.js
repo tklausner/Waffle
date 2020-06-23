@@ -5,16 +5,12 @@ import {
   Item,
   Input,
   Icon,
-  Left,
-  Body,
-  Right,
   Button,
   Text,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import styles from "../../styles";
-import { MaterialIcons } from "@expo/vector-icons";
 
 export function SearchHeader() {
   const navigation = useNavigation();

@@ -1,24 +1,10 @@
 import React from "react";
-import {
-  Container,
-  Header,
-  Item,
-  Icon,
-  Input,
-  Left,
-  Body,
-  Right,
-  Button,
-  Text,
-} from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { Header, Item, Icon, Input } from "native-base";
 import { Image } from "react-native";
-import styles from "../../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 export function ExploreHeader() {
-  const navigation = useNavigation();
   return (
     <Header searchBar rounded>
       <Item

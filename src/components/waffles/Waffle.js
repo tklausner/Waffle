@@ -18,15 +18,16 @@ import { MaterialIcons } from "@expo/vector-icons";
 import globalStyles from "../../styles";
 
 import CachedImage from "../images/CachedImage";
+import { LoadingScreen } from "../loading/LoadingScreen";
 
-export function Waffle({ post }) {
+export function Waffle({ profile, post }) {
   const navigation = useNavigation();
-  return (
+  return profile ? (
     <Content style={styles.content}>
       <Card>
         <CardItem>
           <Left>
-            <CachedImage image={post.profile} style={styles.profile} />
+            <CachedImage image={profile} style={styles.profile} />
             <Body>
               <Text>{post.username}</Text>
             </Body>
@@ -41,14 +42,16 @@ export function Waffle({ post }) {
           </Right>
         </CardItem>
         <CardItem>
-          <Image
-            source={require("../../../assets/images/WaffleIcon.png")}
-            style={styles.image}
-          />
+          <View style={styles.waffleStyle}>
+            <Image
+              source={require("../../../assets/images/WaffleIcon.png")}
+              style={styles.image}
+            />
+          </View>
         </CardItem>
       </Card>
     </Content>
-  );
+  ) : null;
 }
 
 module.export = Waffle;
@@ -60,31 +63,6 @@ const styles = StyleSheet.create({
     flex: 0,
     borderTopWidth: 0,
   },
-  bar: {
-    fontSize: 20,
-    marginTop: "-2%",
-  },
-  barRight: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  comments: {
-    marginLeft: "0%",
-    paddingBottom: "1%",
-    paddingTop: "1%",
-    paddingRight: "5%",
-    fontSize: 15,
-  },
-  viewMore: {
-    fontSize: 15,
-    color: "lightgray",
-    justifyContent: "space-around",
-    paddingTop: "1%",
-  },
-  waffleButton: {
-    color: "red",
-    justifyContent: "space-around",
-  },
   image: {
     height: 345,
     width: "110%",
@@ -94,6 +72,13 @@ const styles = StyleSheet.create({
   profile: {
     width: 50,
     height: 50,
-    borderRadius: 400 / 2,
+    borderRadius: 90,
+  },
+  waffleStyle: {
+    borderRadius: 90,
+    borderTopWidth: 0,
+    borderBottomWidth: 3,
+    borderLeftWidth: 0.4,
+    borderRightWidth: 0.4,
   },
 });
