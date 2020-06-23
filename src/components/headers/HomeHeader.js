@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Title,
-} from "native-base";
+import { Header, Left, Body, Right, Button, Title } from "native-base";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 

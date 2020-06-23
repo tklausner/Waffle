@@ -19,7 +19,6 @@ class ProductScreen extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    console.log(this);
     const { _id } = this.props.route.params.post;
     if (_id && this._isMounted) {
       this.setState({

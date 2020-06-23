@@ -96,11 +96,11 @@ export const deleteExplore = (id) => {
 };
 
 // UPDATE EXPLORE
-export const updateExplore = (id, explore) => {
+export const updateExplore = (explore) => {
   return (dispatch) => {
     dispatch(updateExplorePending());
     return axios
-      .put(root + "api/explore/" + id, { ...explore })
+      .put(root + "api/explore/" + explore._id, { ...explore })
       .then(({ data }) => {
         dispatch(updateExploreSuccess(data));
       })

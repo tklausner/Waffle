@@ -22,9 +22,8 @@ import CachedImage from "../../components/images/CachedImage";
 import * as ImagePicker from "expo-image-picker";
 import { Asset } from "expo-asset";
 
-import { updateUser } from "../../api/user";
+import { updateUser, getUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
-
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -34,11 +33,19 @@ class ProfileScreen extends Component {
       feed: [],
       isRendering: true,
       selectedColor: "#00B8FA",
+      profile: "",
+      newProfile: false,
     };
   }
 
   componentDidMount() {
     this._renderFeed(this.props.user, "Waffles");
+    console.log(this.props.user);
+    const { profile } = this.props.user;
+    if (profile)
+      this.setState({
+        profile: profile,
+      });
   }
 
   pickImage = async () => {
@@ -53,19 +60,21 @@ class ProfileScreen extends Component {
         quality: 1,
       });
 
-      console.log(result);
+      //console.log(result);
 
       if (!result.cancelled) {
-        this.props.updateUser({
-          profile: "test/" + _processImage(result.uri),
+        await this.props.updateUser({
+          profile: _processImage(result.uri),
           _id: this.props.user._id,
         });
-        uploadImageToFireBase({
+        await uploadImageToFireBase({
           uri: result.uri,
         });
+        this.setState({
+          profile: _processImage(result.uri),
+        });
+        console.log(this.props.user.profile);
       }
-
-      console.log(this.props.user.profile);
     }
   };
 
@@ -81,10 +90,12 @@ class ProfileScreen extends Component {
                 transparent
                 onPress={this.pickImage}
               >
-                <CachedImage
-                  image={this.props.user.profile}
-                  style={styles.profImage}
-                />
+                {this.state.profile === this.props.user.profile ? (
+                  <CachedImage
+                    image={this.state.profile}
+                    style={styles.profImage}
+                  />
+                ) : null}
               </TouchableOpacity>
               <Body>
                 <Text style={styles.profName}>
@@ -216,6 +227,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUser(user)),
+    getUser: (id) => dispatch(getUser(id)),
   };
 };
 

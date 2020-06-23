@@ -25,7 +25,6 @@ import { Asset } from "expo-asset";
 import { updateUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
 
-
 class UserProfileScreen extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +41,6 @@ class UserProfileScreen extends Component {
   }
 
   render() {
-    console.log(this.props)
     const user = this.props.route.params.tempUser;
     return user ? (
       <Container>
@@ -54,18 +52,13 @@ class UserProfileScreen extends Component {
                 transparent
                 onPress={this.pickImage}
               >
-                <CachedImage
-                  image={user.profile}
-                  style={styles.profImage}
-                />
+                <CachedImage image={user.profile} style={styles.profImage} />
               </TouchableOpacity>
               <Body>
                 <Text style={styles.profName}>
                   {user.first_name} {user.last_name}
                 </Text>
-                <Text style={styles.profUsername}>
-                  @{user.username}
-                </Text>
+                <Text style={styles.profUsername}>@{user.username}</Text>
               </Body>
             </Left>
           </CardItem>
@@ -131,8 +124,7 @@ class UserProfileScreen extends Component {
           <Text>You have no posts</Text>
         )}
       </Container>
-    ): null
-
+    ) : null;
   }
   _renderFeed = (user, val) => {
     this.setState({

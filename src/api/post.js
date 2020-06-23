@@ -117,7 +117,6 @@ export const deletePost = (id) => {
 export const updatePost = (post) => {
   return (dispatch) => {
     dispatch(updatePostPending());
-    console.log(post);
     return axios
       .put(root + "api/posts/" + post._id, { ...post })
       .then(({ data }) => {

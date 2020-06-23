@@ -96,11 +96,11 @@ export const deleteFeed = (id) => {
 };
 
 // UPDATE FEED
-export const updateFeed = (id, feed) => {
+export const updateFeed = (feed) => {
   return (dispatch) => {
     dispatch(updateFeedPending());
     return axios
-      .put(root + "api/feed/" + id, { ...feed })
+      .put(root + "api/feed/" + feed._id, { ...feed })
       .then(({ data }) => {
         dispatch(updateFeedSuccess(data));
       })
