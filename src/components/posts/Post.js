@@ -141,9 +141,17 @@ class Post extends PureComponent {
       <Card style={styles.content}>
         <CardItem>
           <Left>
-            <CachedImage image={this.state.profile} style={styles.profile} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate("UserProfile", { tempUser })}
+            >
+              <CachedImage image={this.state.profile} style={styles.profile} />
+            </TouchableOpacity>
             <Body>
-              <Text style={styles.username}>{this.state.username}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("UserProfile", { tempUser })}
+              >
+                <Text style={styles.username}>{this.state.username}</Text>
+              </TouchableOpacity>
             </Body>
           </Left>
           <Right>
@@ -162,12 +170,7 @@ class Post extends PureComponent {
           </Right>
         </CardItem>
         <CardItem>
-          <Text
-            style={styles.category}
-            onPress={() => navigation.navigate("UserProfile", { tempUser })}
-          >
-            #{post.category}
-          </Text>
+          <Text style={styles.category}>#{post.category}</Text>
         </CardItem>
         <CardItem>
           <CachedImage image={post.image} style={styles.image}></CachedImage>

@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { Container, Content, Button } from "native-base";
+import { Container, Content, Button, Spinner } from "native-base";
 import {
   Image,
   View,
@@ -50,6 +50,7 @@ class SellScreen extends Component {
       miniSpots: 0,
       miniPrice: 0,
       minis: false,
+      uploading: false,
     };
   };
 
@@ -105,6 +106,7 @@ class SellScreen extends Component {
     } else if (this.state.mainSpots <= 0 && this.state.mainSpots != "") {
       Alert.alert("You must have at least one spot in your main");
     } else {
+      this.setState({ uploading: true });
       uploadImageToFireBase({
         uri: this.state.image,
       }).then(async (res) => {
@@ -123,13 +125,14 @@ class SellScreen extends Component {
             main_price: this.state.mainPrice,
             mini_price: this.state.miniPrice,
           };
-          this._reset();
           await this.props.newPost(newPost);
           this.updateStore();
-          navigation.navigate("Home");
+          await this.setState({ uploading: false });
+          this._reset();
         } else {
           Alert.alert("Waffle Failed!");
         }
+        navigation.navigate("Home");
       });
     }
   };
@@ -164,7 +167,7 @@ class SellScreen extends Component {
   };
 
   render() {
-    return (
+    return !this.state.uploading ? (
       <KeyboardAwareScrollView
         style={{ backgroundColor: "white", flexGrow: 1 }}
         contentContainerStyle={styles.view}
@@ -276,6 +279,10 @@ class SellScreen extends Component {
           <Text style={styles.waffleText}>Waffle</Text>
         </Button>
       </KeyboardAwareScrollView>
+    ) : (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'white' }}>
+        <Spinner color='grey' />
+      </View>
     );
   }
 }
