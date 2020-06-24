@@ -37,7 +37,7 @@ class PostWaffle extends Component {
         placeholder="1"
         keyboardAppearance={"dark"}
         keyboardType={"number-pad"}
-        value={this.state.number_of_spots}
+        value={this.state.number_of_spots.toString()}
         maxLength={2}
         onChangeText={(text) => {
           this.setState({ number_of_spots: Number(text) });

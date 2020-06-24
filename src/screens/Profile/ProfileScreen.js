@@ -209,12 +209,12 @@ class ProfileScreen extends Component {
       {
         feed: feed,
       },
-      () => {
+       () => {
         this.setState({
           isRendering: false,
         });
       }
-    );
+    ); console.log(this.state.feed, this.state.isRendering)
   };
 }
 

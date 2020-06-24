@@ -147,7 +147,11 @@ class Post extends PureComponent {
               <CachedImage image={this.state.profile} style={styles.profile} />
             </TouchableOpacity>
             <Body>
-              <Text style={styles.username}>{this.state.username}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("UserProfile", { tempUser })}
+              >
+                <Text style={styles.username}>{this.state.username}</Text>
+              </TouchableOpacity>
             </Body>
           </Left>
           <Right>
