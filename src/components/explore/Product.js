@@ -11,10 +11,7 @@ export function Product({ product }) {
   return product ? (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Home", {
-          screen: "Product",
-          params: { post: product },
-        });
+        navigation.navigate("Explore_Product", { post: product });
       }}
     >
       <View style={styles.view}>

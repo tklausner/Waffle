@@ -11,9 +11,8 @@ export function PostPreview({ post }) {
   return post ? (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Home", {
-          screen: "Product",
-          params: { post: post },
+        navigation.navigate("Profile_Product", {
+          post: post,
         });
       }}
     >
