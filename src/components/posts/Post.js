@@ -240,7 +240,8 @@ class Post extends PureComponent {
           button
           style={styles.viewMore}
           onPress={() => {
-            navigation.navigate("Comments", {
+            console.log(this);
+            navigation.navigate("Home_Comments", {
               comments: post.comments,
               post_id: post._id,
             });
