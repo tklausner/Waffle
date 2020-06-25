@@ -25,6 +25,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
 import { connect } from "react-redux";
 import { newUser } from "../../api/user";
+import pushnot from "../../notifications/pushNotifications"
 
 class SignUpScreen extends Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class SignUpScreen extends Component {
           Alert.alert(error.message);
         }
       );
+    pushnot.registerForPushNotificationsAsync()
   };
 
   render() {
