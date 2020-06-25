@@ -9,6 +9,7 @@ import {
 import ProfileScreen from "./ProfileScreen";
 import ReceiptScreen from "./ReceiptScreen";
 import ReviewScreen from "./ReviewScreen";
+import SettingsScreen from "./SettingsScreen";
 
 import * as firebase from "firebase";
 import { useDispatch } from "react-redux";
@@ -61,12 +62,17 @@ export function Drawer() {
       <ProfileDrawer.Screen
         name="Receipts"
         component={ReceiptScreen}
-        options={{ swipeEnabled: false }}
+        options={{ swipeEnabled: true }}
       />
       <ProfileDrawer.Screen
         name="Reviews"
         component={ReviewScreen}
-        options={{ swipeEnabled: false }}
+        options={{ swipeEnabled: true }}
+      />
+      <ProfileDrawer.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ swipeEnabled: true }}
       />
     </ProfileDrawer.Navigator>
   );
