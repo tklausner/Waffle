@@ -37,7 +37,9 @@ function GetHeader(route) {
       break;
     case "Waffle":
     case "Messaging":
-    case "Comments":
+    case "Explore_Comments":
+    case "Profile_Comments":
+    case "Home_Comments":
     case "Profile_Product":
     case "Explore_Product":
       return <MessagesHeader />;

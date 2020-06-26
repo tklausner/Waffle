@@ -9,7 +9,7 @@ import { LoadingScreen } from "../loading/LoadingScreen";
 const _renderItem = ({ item }) => {
   return (
     <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
-      <Text style={[styles.comments, { color: "gray" }]}>{item.username}</Text>
+      <Text style={[styles.comments, { color: "gray" }]}>@{item.username}</Text>
       <Text style={[styles.comments]}>{item.content}</Text>
     </ListItem>
   );
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     paddingBottom: "1%",
     paddingTop: "1%",
     paddingRight: "5%",
-    fontSize: 15,
+    fontSize: 18,
   },
 });

@@ -99,19 +99,16 @@ class Post extends PureComponent {
       switch (type) {
         case "Home":
           navigation.navigate("Home_Comments", {
-            comments: post.comments,
             post_id: post._id,
           });
           return;
         case "Explore_Product":
           navigation.navigate("Explore_Comments", {
-            comments: post.comments,
             post_id: post._id,
           });
           return;
         case "Profile_Product":
           navigation.navigate("Profile_Comments", {
-            comments: post.comments,
             post_id: post._id,
           });
           return;

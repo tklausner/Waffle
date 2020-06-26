@@ -3,51 +3,67 @@ import { Container, Content } from "native-base";
 import { connect } from "react-redux";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
+import { EmptyScreen } from "../../components/loading/EmptyScreen";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 import { CommentList } from "../../components/posts/CommentList";
 import AddComment from "../../components/posts/AddComment";
+import { getCommentsByPost } from "../../api/comment";
 
 class CommentScreen extends Component {
   _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
-      comments: [],
+      comments: null,
+      loading: false,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this._isMounted = true;
+    this.setState({
+      loading: true,
+    });
+    const { post_id } = this.props.route.params;
+    await this.props.getCommentsByPost(post_id);
     if (this._isMounted) {
       this.setState({
-        comments: this.props.route.params.comments,
+        comments: this.props.comments,
       });
     }
+    this.setState({
+      loading: false,
+    });
   }
 
-  async refresh(_id) {
-    //await this.props.getPost(_id);
-    if (this.state.comments === this.props.post.comments) {
-      return false;
-    }
-    if (this._isMounted) {
+  async refresh() {
+    const { post_id } = this.props.route.params;
+    await this.props.getCommentsByPost(post_id);
+    if (this.props.comments && this._isMounted) {
       this.setState({
-        comments: this.props.post.comments,
+        comments: this.props.comments,
       });
     }
-    return true;
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
+  passProps() {
+    this.refresh();
+  }
+
   render() {
     const { post_id } = this.props.route.params;
-    return this.state.comments ? (
+    return !this.state.loading ? (
       <Container>
-        <CommentList comments={this.state.comments} />
-        <AddComment comments={this.state.comments} post_id={post_id} />
+        {this.state.comments && this.state.comments.length > 0 ? (
+          <CommentList comments={this.state.comments} />
+        ) : (
+          <EmptyScreen content={"Be the first to comment!"} />
+        )}
+        <AddComment post_id={post_id} handleState={this.passProps.bind(this)} />
       </Container>
     ) : (
       <LoadingScreen />
@@ -57,13 +73,13 @@ class CommentScreen extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    post: state.post.post,
+    comments: state.comment.comments,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (id) => dispatch(getPost(id)),
+    getCommentsByPost: (id) => dispatch(getCommentsByPost(id)),
   };
 };
 
