@@ -8,9 +8,11 @@ import { LoadingScreen } from "../loading/LoadingScreen";
 
 const _renderItem = ({ item }) => {
   return (
-    <ListItem style={[{ borderBottomWidth: 0 }, styles.comments]}>
-      <Text style={[styles.comments, { color: "gray" }]}>@{item.username}</Text>
-      <Text style={[styles.comments]}>{item.content}</Text>
+    <ListItem style={styles.container}>
+      <Text style={[styles.comment, { color: "gray" }]}>@{item.username}</Text>
+      <View style={styles.commentContainer}>
+        <Text style={[styles.commentContent]}>{item.content}</Text>
+      </View>
     </ListItem>
   );
 };
@@ -36,11 +38,32 @@ export function CommentList({ comments }) {
 module.export = CommentList;
 
 const styles = StyleSheet.create({
-  comments: {
-    marginLeft: "0%",
-    paddingBottom: "1%",
-    paddingTop: "1%",
-    paddingRight: "5%",
+  container: {
+    marginTop: "5%",
+    flexDirection: "row",
+    borderBottomWidth: 0,
+    marginBottom: "-5%",
+  },
+  comment: {
+    marginLeft: "2%",
     fontSize: 18,
+  },
+  commentContainer: {
+    borderColor:
+      Math.random() * 10 + 1 < 3
+        ? "#FFBBBB"
+        : Math.random() * 10 + 1 < 6
+        ? "#BBFFBB"
+        : "#BBBBFF",
+    marginTop: "3%",
+    marginLeft: "5%",
+    borderRadius: 90,
+    borderTopWidth: 0,
+    borderBottomWidth: 3,
+    borderLeftWidth: 0.4,
+    borderRightWidth: 0.4,
+    padding: "2%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
 });

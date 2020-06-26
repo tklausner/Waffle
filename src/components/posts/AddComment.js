@@ -36,6 +36,9 @@ class AddComment extends Component {
 
   componentDidUpdate() {
     if (this.state.newComment && this.props.handleState) {
+      this.setState({
+        newComment: false,
+      });
       this.props.handleState();
     }
   }

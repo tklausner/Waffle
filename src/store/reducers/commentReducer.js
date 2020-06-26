@@ -28,7 +28,6 @@ export function commentReducer(state = initialState, action) {
     case FETCH_COMMENTS_PENDING:
       return { ...state, pending: true };
     case FETCH_COMMENTS_SUCCESS:
-      console.log("CO@#", action.payload);
       return { ...state, pending: false, comments: action.payload };
     case FETCH_COMMENTS_FAILURE:
       return { ...state, pending: false, error: action.error };

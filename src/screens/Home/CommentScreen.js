@@ -24,9 +24,10 @@ class CommentScreen extends Component {
     this.setState({
       loading: true,
     });
-    const { post_id } = this.props.route.params;
-    await this.props.getCommentsByPost(post_id);
+
     if (this._isMounted) {
+      const { post_id } = this.props.route.params;
+      await this.props.getCommentsByPost(post_id);
       this.setState({
         comments: this.props.comments,
       });
@@ -38,12 +39,15 @@ class CommentScreen extends Component {
 
   async refresh() {
     const { post_id } = this.props.route.params;
-    await this.props.getCommentsByPost(post_id);
-    if (this.props.comments && this._isMounted) {
+    if (this._isMounted) {
+      await this.props.getCommentsByPost(post_id);
       this.setState({
         comments: this.props.comments,
       });
     }
+    this.setState({
+      loading: false,
+    });
   }
 
   componentWillUnmount() {
@@ -52,6 +56,7 @@ class CommentScreen extends Component {
 
   passProps() {
     this.refresh();
+    console.log("DANGEROUS REFRESH");
   }
 
   render() {
