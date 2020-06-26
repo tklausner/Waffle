@@ -7,6 +7,9 @@ import {
 } from "@react-navigation/drawer";
 
 import ProfileScreen from "./ProfileScreen";
+import ReceiptScreen from "./ReceiptScreen";
+import ReviewScreen from "./ReviewScreen";
+import SettingsScreen from "./SettingsScreen";
 
 import * as firebase from "firebase";
 import { useDispatch } from "react-redux";
@@ -34,7 +37,7 @@ export function Drawer() {
         <DrawerItemList {...props} />
         <DrawerItem
           label="Log Out"
-          labelStyle={{color: 'red'}}
+          labelStyle={{ color: "red" }}
           onPress={() => {
             logOut();
             _logout();
@@ -51,7 +54,26 @@ export function Drawer() {
       drawerPosition="right"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <ProfileDrawer.Screen name="Profile" component={ProfileScreen} options = {{ swipeEnabled: false }}/>
+      <ProfileDrawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ swipeEnabled: false }}
+      />
+      <ProfileDrawer.Screen
+        name="Receipts"
+        component={ReceiptScreen}
+        options={{ swipeEnabled: true }}
+      />
+      <ProfileDrawer.Screen
+        name="Reviews"
+        component={ReviewScreen}
+        options={{ swipeEnabled: true }}
+      />
+      <ProfileDrawer.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ swipeEnabled: true }}
+      />
     </ProfileDrawer.Navigator>
   );
 }

@@ -40,7 +40,6 @@ class ProfileScreen extends Component {
 
   componentDidMount() {
     this._renderFeed(this.props.user, "Waffles");
-    console.log(this.props.user);
     const { profile } = this.props.user;
     if (profile)
       this.setState({
@@ -60,8 +59,6 @@ class ProfileScreen extends Component {
         quality: 1,
       });
 
-      //console.log(result);
-
       if (!result.cancelled) {
         await this.props.updateUser({
           profile: _processImage(result.uri),
@@ -73,7 +70,6 @@ class ProfileScreen extends Component {
         this.setState({
           profile: _processImage(result.uri),
         });
-        console.log(this.props.user.profile);
       }
     }
   };
@@ -193,6 +189,7 @@ class ProfileScreen extends Component {
     );
   }
   _renderFeed = (user, val) => {
+    console.log(val, user);
     this.setState({
       isRendering: true,
       selected: val,
@@ -209,12 +206,12 @@ class ProfileScreen extends Component {
       {
         feed: feed,
       },
-       () => {
+      () => {
         this.setState({
           isRendering: false,
         });
       }
-    ); console.log(this.state.feed, this.state.isRendering)
+    );
   };
 }
 

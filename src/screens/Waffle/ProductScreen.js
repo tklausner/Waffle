@@ -37,7 +37,7 @@ class ProductScreen extends Component {
   render() {
     return !this.state.loading ? (
       <Content>
-        <Post post={this.props.post} />
+        <Post post={this.props.post} type={this.props.route.name} />
       </Content>
     ) : null;
   }

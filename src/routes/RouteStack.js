@@ -38,7 +38,8 @@ function GetHeader(route) {
     case "Waffle":
     case "Messaging":
     case "Comments":
-    case "Product":
+    case "Profile_Product":
+    case "Explore_Product":
       return <MessagesHeader />;
       break;
     case "UserProfile":
@@ -86,7 +87,7 @@ function HomeStackScreen() {
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Waffle" component={WaffleScreen} />
-      <HomeStack.Screen name="Comments" component={CommentScreen} />
+      <HomeStack.Screen name="Home_Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
     </HomeStack.Navigator>
@@ -101,6 +102,7 @@ function ExploreStackScreen() {
       <ExploreStack.Screen name="Explore" component={ExploreScreen} />
       <ExploreStack.Screen name="Search" component={ExploreScreen} />
       <ExploreStack.Screen name="Explore_Product" component={ProductScreen} />
+      <ExploreStack.Screen name="Explore_Comments" component={CommentScreen} />
     </ExploreStack.Navigator>
   );
 }
@@ -129,12 +131,13 @@ function ProfileStackScreen() {
       name="Profile"
       headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader("Profile"),
+        header: () => GetHeader(route.name),
       })}
       initialRouteName="Profile"
     >
       <ProfileStack.Screen name="Profile" component={Drawer} />
       <ProfileStack.Screen name="Profile_Product" component={ProductScreen} />
+      <ProfileStack.Screen name="Profile_Comments" component={CommentScreen} />
     </ProfileStack.Navigator>
   );
 }
