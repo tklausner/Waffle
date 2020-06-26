@@ -91,6 +91,36 @@ class Post extends PureComponent {
     }
   }
 
+  navigateComments() {
+    const navigation = this.context;
+    const { post } = this.props;
+    const { type } = this.props;
+    if (type && this._isMounted) {
+      switch (type) {
+        case "Home":
+          navigation.navigate("Home_Comments", {
+            comments: post.comments,
+            post_id: post._id,
+          });
+          return;
+        case "Explore_Product":
+          navigation.navigate("Explore_Comments", {
+            comments: post.comments,
+            post_id: post._id,
+          });
+          return;
+        case "Profile_Product":
+          navigation.navigate("Profile_Comments", {
+            comments: post.comments,
+            post_id: post._id,
+          });
+          return;
+        default:
+          return;
+      }
+    }
+  }
+
   addToSaved() {
     if (this._isMounted) {
       let saved = this.props.user.saved.slice();
@@ -240,11 +270,7 @@ class Post extends PureComponent {
           button
           style={styles.viewMore}
           onPress={() => {
-            console.log(this);
-            navigation.navigate("Home_Comments", {
-              comments: post.comments,
-              post_id: post._id,
-            });
+            this.navigateComments();
           }}
         >
           <Text style={styles.viewMore}>View comments</Text>

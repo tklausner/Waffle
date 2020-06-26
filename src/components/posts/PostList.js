@@ -15,14 +15,14 @@ class PostList extends PureComponent {
     this.state = {
       feed: [],
       isRefreshing: false,
-      posts: []
+      posts: [],
     };
   }
 
   async componentDidMount() {
     this._isMounted = true;
     await this.props.readPosts();
-    this.setState({posts:this.props.posts.reverse()})
+    this.setState({ posts: this.props.posts.reverse() });
     /** FOR PERSONALIZED FEEDS
     const { posts } = this.props;
     for (id of posts) {
@@ -34,7 +34,7 @@ class PostList extends PureComponent {
   async onRefresh() {
     this.setState({ isRefreshing: true });
     await this.props.readPosts();
-    await this.setState({posts: this.props.posts.reverse()})
+    await this.setState({ posts: this.props.posts.reverse() });
     this.setState({ isRefreshing: false });
   }
 
@@ -48,7 +48,7 @@ class PostList extends PureComponent {
     }
   };
   _renderItem = ({ item }) => {
-    return <Post post={item} key={item._id} />;
+    return <Post post={item} key={item._id} type={"Home"} />;
   };
   componentWillUnmount() {
     this._isMounted = false;
