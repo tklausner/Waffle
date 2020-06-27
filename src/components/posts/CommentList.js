@@ -5,12 +5,18 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
 import { LoadingScreen } from "../loading/LoadingScreen";
+import globalStyles from "../../styles";
 
-const _renderItem = ({ item }) => {
+const _renderItem = ({ item, index }) => {
   return (
     <ListItem style={styles.container}>
       <Text style={[styles.comment, { color: "gray" }]}>@{item.username}</Text>
-      <View style={styles.commentContainer}>
+      <View
+        style={[
+          styles.commentContainer,
+          { borderColor: index % 2 == 0 ? "#00B8FA" : "#EACD2E" },
+        ]}
+      >
         <Text style={[styles.commentContent]}>{item.content}</Text>
       </View>
     </ListItem>
@@ -49,12 +55,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   commentContainer: {
-    borderColor:
-      Math.random() * 10 + 1 < 3
-        ? "#FFBBBB"
-        : Math.random() * 10 + 1 < 6
-        ? "#BBFFBB"
-        : "#BBBBFF",
     marginTop: "3%",
     marginLeft: "5%",
     borderRadius: 90,
