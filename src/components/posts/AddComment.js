@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { connect } from "react-redux";
 
-import { updatePost, readPosts } from "../../api/post";
+import { newComment, getCommentsByPost } from "../../api/comment";
 import { LoadingScreen } from "../loading/LoadingScreen";
 
 class AddComment extends Component {
@@ -13,28 +13,36 @@ class AddComment extends Component {
     super(props);
     this.state = {
       comment: "",
+      newComment: false,
     };
   }
 
   async uploadComment() {
-    const { comments } = this.props;
-    const { user } = this.props;
+    if (this.state.comment.length > 1) {
+      const { user } = this.props;
 
-    if (this.state.comment.length > 0 && comments) {
-      let commentsUpdated = comments.slice();
-      commentsUpdated.splice(commentsUpdated.length - 1, 0, {
+      await this.props.newComment({
+        post_id: this.props.post_id,
         user_id: user._id,
         username: user.username,
         content: this.state.comment,
       });
-      await this.props.updatePost({
-        comments: commentsUpdated,
-        _id: this.props.post_id,
-      });
       this.comment_input.clear();
-      this.props.readPosts();
+      this.setState({
+        newComment: true,
+      });
     }
   }
+
+  componentDidUpdate() {
+    if (this.state.newComment && this.props.handleState) {
+      this.setState({
+        newComment: false,
+      });
+      this.props.handleState();
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -58,6 +66,9 @@ class AddComment extends Component {
           transparent
           style={styles.submitComment}
           onPress={() => {
+            this.setState({
+              newComment: false,
+            });
             this.uploadComment();
           }}
         >
@@ -69,8 +80,8 @@ class AddComment extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    updatePost: (id) => dispatch(updatePost(id)),
-    readPosts: () => dispatch(readPosts()),
+    newComment: (id) => dispatch(newComment(id)),
+    getCommentsByPost: (id) => dispatch(getCommentsByPost(id)),
   };
 };
 
@@ -104,5 +115,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: "3%",
   },
 });

@@ -4,6 +4,7 @@ import { postReducer } from "./postReducer";
 import { feedReducer } from "./feedReducer";
 import { exploreReducer } from "./exploreReducer";
 import { messageReducer } from "./messageReducer";
+import { commentReducer } from "./commentReducer";
 import { authReducer } from "./authReducer";
 
 const appReducer = combineReducers({
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
   user: userReducer,
   post: postReducer,
   feed: feedReducer,
+  comment: commentReducer,
   explore: exploreReducer,
   message: messageReducer,
 });
