@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Container, Text, ListItem } from "native-base";
+import { Container, Text, ListItem, Button } from "native-base";
 import { FlatList, StyleSheet, View } from "react-native";
-
-import { connect } from "react-redux";
 
 import { LoadingScreen } from "../loading/LoadingScreen";
 import globalStyles from "../../styles";
 
+import { useDispatch } from "react-redux";
+import { deleteComment } from "../../api/comment";
+
 const _renderItem = ({ item, index }) => {
   return (
     <ListItem style={styles.container}>
-      <Text style={[styles.comment, { color: "gray" }]}>@{item.username}</Text>
+      <Text style={styles.comment}>@{item.username}</Text>
       <View
         style={[
           styles.commentContainer,
@@ -24,8 +25,15 @@ const _renderItem = ({ item, index }) => {
 };
 
 export function CommentList({ comments }) {
+  const dispatch = useDispatch();
+
+  function _deleteComment(id) {
+    console.log("DEL", id);
+    dispatch(deleteComment(id));
+  }
+
   return (
-    <Container>
+    <Container style={{ marginTop: "5%", marginBottom: "2%" }}>
       {comments ? (
         <FlatList
           data={comments}
@@ -45,25 +53,27 @@ module.export = CommentList;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: "5%",
     flexDirection: "row",
     borderBottomWidth: 0,
-    marginBottom: "-5%",
+    marginBottom: "0%",
   },
   comment: {
-    marginLeft: "2%",
     fontSize: 18,
+    color: "#999",
   },
   commentContainer: {
-    marginTop: "3%",
+    marginTop: "0%",
     marginLeft: "5%",
     borderRadius: 90,
-    borderTopWidth: 0,
-    borderBottomWidth: 3,
+    borderTopWidth: 0.4,
+    borderBottomWidth: 2,
     borderLeftWidth: 0.4,
     borderRightWidth: 0.4,
     padding: "2%",
     paddingLeft: "5%",
     paddingRight: "5%",
+  },
+  commentContent: {
+    color: "#555",
   },
 });
