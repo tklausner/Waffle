@@ -55,7 +55,7 @@ class AddComment extends Component {
           autoCorrect={true}
           keyboardAppearance={"light"}
           placeholderTextColor={"#DDD"}
-          multiline={true}
+          multiline={false}
           textAlignVertical={"top"}
           value={this.state.comment}
           onChangeText={(text) => {
@@ -94,11 +94,17 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, mapDispatchToProps)(AddComment);
 
 const styles = StyleSheet.create({
+  view: {
+    alignItems: "center",
+    backgroundColor: "white",
+  },
   bar: {
     fontSize: 20,
     marginTop: "-2%",
   },
   comment: {
+    borderColor: "#CCC",
+    borderWidth: 0.3,
     width: "70%",
     borderRadius: 5,
     height: 32,
