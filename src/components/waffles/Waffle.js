@@ -90,7 +90,6 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   const previousTimeRef = React.useRef();
 
   const animate = (time) => {
-    console.log(spots);
     if (
       spots == post.main_spots &&
       previousTimeRef.current != undefined &&
@@ -100,8 +99,8 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
       netTime += time - previousTimeRef.current;
       // Pass on a function to the setter of the state
       // to make sure we always have the latest state
-      if (deltaTime >= 100) {
-        deltaTime = deltaTime % 100;
+      if (deltaTime >= 100 + netTime/50) {
+        deltaTime = deltaTime % (100 + netTime/50);
         setCount((prevCount) => (prevCount + 1) % 10);
         selectedID = (selectedID + 1) % 10;
         winnerSelect(selectedID);
@@ -114,7 +113,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   React.useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, []); // Make sure the effect runs only once
+  }, [spots]); // Make sure the effect runs only once
 
   function purchase() {
     for (const key of selected) {
