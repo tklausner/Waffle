@@ -69,10 +69,10 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
 
   const winnerSelect = React.useCallback(
     (id) => {
-        const newSelected = new Map(selected);
-        newSelected.set(id, !selected.get(id));
+      const newSelected = new Map(selected);
+      newSelected.set(id, !selected.get(id));
 
-        setSelected(newSelected);
+      setSelected(newSelected);
     },
     [selected]
   );
@@ -99,8 +99,8 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
       netTime += time - previousTimeRef.current;
       // Pass on a function to the setter of the state
       // to make sure we always have the latest state
-      if (deltaTime >= 100 + netTime/50) {
-        deltaTime = deltaTime % (100 + netTime/50);
+      if (deltaTime >= 100 + netTime / 50) {
+        deltaTime = deltaTime % (100 + netTime / 50);
         setCount((prevCount) => (prevCount + 1) % 10);
         selectedID = (selectedID + 1) % 10;
         winnerSelect(selectedID);
@@ -118,7 +118,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   function purchase() {
     for (const key of selected) {
       if (key[1] == true) {
-        tempData[key[0]] = { id: key[0], title: "yooo" };
+        tempData[key[0]] = { id: key[0], title: "waffle" };
         setData(tempData);
       }
     }
