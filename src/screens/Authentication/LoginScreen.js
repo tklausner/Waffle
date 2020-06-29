@@ -23,6 +23,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import stylesPage from "../../styles";
 import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
+import { LoadingScreen } from "../../components/loading/LoadingScreen";
 
 import { connect } from "react-redux";
 
@@ -34,6 +35,7 @@ class LoginScreen extends Component {
     this.state = {
       email: "",
       password: "",
+      loading: false,
     };
   }
 
@@ -43,6 +45,9 @@ class LoginScreen extends Component {
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(
         (res) => {
+          this.setState({
+            loading: true,
+          });
           this.props.getUserFB(res.user.uid);
         },
         (error) => {
@@ -52,7 +57,7 @@ class LoginScreen extends Component {
   };
 
   render() {
-    return (
+    return !this.state.loading ? (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <Container style={{ backgroundColor: "white" }}>
           <Header
@@ -125,6 +130,8 @@ class LoginScreen extends Component {
           </View>
         </Container>
       </TouchableWithoutFeedback>
+    ) : (
+      <LoadingScreen />
     );
   }
 }

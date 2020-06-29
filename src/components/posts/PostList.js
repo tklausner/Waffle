@@ -23,12 +23,6 @@ class PostList extends PureComponent {
     this._isMounted = true;
     await this.props.readPosts();
     this.setState({ posts: this.props.posts.reverse() });
-    /** FOR PERSONALIZED FEEDS
-    const { posts } = this.props;
-    for (id of posts) {
-      this.loadPost(id);
-    }
-    */
   }
 
   async onRefresh() {
@@ -63,8 +57,8 @@ class PostList extends PureComponent {
             renderItem={this._renderItem}
             keyExtractor={(item) => item._id}
             ListEmptyComponent={() => <Text>You have no posts!</Text>}
-            windowSize={8}
-            removeClippedSubviews={true}
+            windowSize={4}
+            removeClippedSubviews={false}
             initialNumToRender={2}
             refreshControl={
               <RefreshControl

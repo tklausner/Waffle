@@ -56,7 +56,6 @@ class CommentScreen extends Component {
 
   passProps() {
     this.refresh();
-    console.log("DANGEROUS REFRESH");
   }
 
   render() {

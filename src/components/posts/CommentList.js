@@ -27,11 +27,6 @@ const _renderItem = ({ item, index }) => {
 export function CommentList({ comments }) {
   const dispatch = useDispatch();
 
-  function _deleteComment(id) {
-    console.log("DEL", id);
-    dispatch(deleteComment(id));
-  }
-
   return (
     <Container style={{ marginTop: "5%", marginBottom: "2%" }}>
       {comments ? (

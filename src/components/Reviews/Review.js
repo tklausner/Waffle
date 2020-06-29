@@ -46,10 +46,8 @@ class Review extends Component {
         });
       }
     }
-    console.log(this.state);
   }
   render() {
-    console.log(this.state.profile);
     return this.state.profile ? (
       <Card>
         <CardItem header>
