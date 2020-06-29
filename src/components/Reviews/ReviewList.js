@@ -6,13 +6,13 @@ import { EmptyScreen } from "../loading/EmptyScreen";
 
 const renderItem = ({ item }) => <Review review={item} key={item._id} />;
 
-export function ReviewList({ reviews }) {
+export function ReviewList({ reviews, empty }) {
   return (
     <FlatList
       data={reviews}
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
-      ListEmptyComponent={() => <EmptyScreen content="You have no reviews" />}
+      ListEmptyComponent={() => <EmptyScreen content={empty} />}
     />
   );
 }

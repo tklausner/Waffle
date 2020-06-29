@@ -181,7 +181,7 @@ class ProfileScreen extends Component {
           </CardItem>
         </Card>
         {!this.state.isRendering ? (
-          <ProfileFeed posts={this.state.feed} />
+          <ProfileFeed posts={this.state.feed} route={"Profile_Product"} />
         ) : (
           <Text>You have no posts</Text>
         )}
@@ -189,7 +189,6 @@ class ProfileScreen extends Component {
     );
   }
   _renderFeed = (user, val) => {
-    console.log(val, user);
     this.setState({
       isRendering: true,
       selected: val,

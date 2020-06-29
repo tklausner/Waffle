@@ -42,8 +42,7 @@ function GetHeader(route) {
     case "Home_Comments":
     case "Profile_Product":
     case "Explore_Product":
-      return <MessagesHeader />;
-      break;
+    case "Home_Product":
     case "UserProfile":
       return <MessagesHeader />;
       break;
@@ -92,6 +91,7 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home_Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
+      <HomeStack.Screen name="Home_Product" component={ProductScreen} />
     </HomeStack.Navigator>
   );
 }

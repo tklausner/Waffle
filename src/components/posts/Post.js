@@ -98,6 +98,7 @@ class Post extends PureComponent {
     if (type && this._isMounted) {
       switch (type) {
         case "Home":
+        case "Home_Product":
           navigation.navigate("Home_Comments", {
             post_id: post._id,
           });
@@ -157,7 +158,9 @@ class Post extends PureComponent {
   }
 
   refresh() {
-    this.props.readPosts();
+    if (this._isMounted) {
+      this.props.readPosts();
+    }
   }
 
   render() {

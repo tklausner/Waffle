@@ -24,20 +24,16 @@ import { Asset } from "expo-asset";
 
 import { updateUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
+import { ReviewList } from "../../components/Reviews/ReviewList";
 
 class UserProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: "",
       feed: [],
-      isRendering: true,
       selectedColor: "#00B8FA",
+      storeSelected: true,
     };
-  }
-
-  componentDidMount() {
-    this._renderFeed(this.props.user, "Waffles");
   }
 
   render() {
@@ -78,20 +74,21 @@ class UserProfileScreen extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this._renderFeed(user, "Store");
+                  this.setState({
+                    storeSelected: true,
+                  });
                 }}
               >
                 <Text
                   style={{
                     fontSize: 20,
                     paddingLeft: "30%",
-                    color:
-                      this.state.selected === "Store"
-                        ? this.state.selectedColor
-                        : "#000",
+                    color: this.state.storeSelected
+                      ? this.state.selectedColor
+                      : "#000",
                   }}
                 >
-                  Listed
+                  Store
                 </Text>
               </Button>
             </Left>
@@ -99,17 +96,18 @@ class UserProfileScreen extends Component {
               <Button
                 transparent
                 onPress={() => {
-                  this._renderFeed(user, "Saved");
+                  this.setState({
+                    storeSelected: false,
+                  });
                 }}
               >
                 <Text
                   style={{
                     fontSize: 20,
                     paddingRight: "30%",
-                    color:
-                      this.state.selected === "Saved"
-                        ? this.state.selectedColor
-                        : "#000",
+                    color: !this.state.storeSelected
+                      ? this.state.selectedColor
+                      : "#000",
                   }}
                 >
                   Reviews
@@ -118,38 +116,19 @@ class UserProfileScreen extends Component {
             </Right>
           </CardItem>
         </Card>
-        {!this.state.isRendering ? (
-          <ProfileFeed posts={this.state.feed} />
+        {this.state.storeSelected ? (
+          <ProfileFeed posts={user.store} route={"Home_Product"} />
+        ) : !this.state.storeSelected ? (
+          <ReviewList
+            reviews={user.reviews}
+            empty={`@${user.username} has no reviews`}
+          />
         ) : (
           <Text>You have no posts</Text>
         )}
       </Container>
     ) : null;
   }
-  _renderFeed = (user, val) => {
-    this.setState({
-      isRendering: true,
-      selected: val,
-    });
-    var feed =
-      val === "Store"
-        ? user.store
-        : val === "Saved"
-        ? user.saved
-        : val === "Waffles"
-        ? user.waffles
-        : null;
-    this.setState(
-      {
-        feed: feed,
-      },
-      () => {
-        this.setState({
-          isRendering: false,
-        });
-      }
-    );
-  };
 }
 
 const mapStateToProps = (state) => {

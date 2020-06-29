@@ -9,7 +9,7 @@ class ReviewScreen extends Component {
     const { reviews } = this.props.user;
     return (
       <Container>
-        <ReviewList reviews={reviews} />
+        <ReviewList reviews={reviews} empty="You have no reviews" />
       </Container>
     );
   }
