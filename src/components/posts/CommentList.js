@@ -3,7 +3,6 @@ import { Container, Text, ListItem, Button } from "native-base";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import { LoadingScreen } from "../loading/LoadingScreen";
-import globalStyles from "../../styles";
 
 import { useDispatch } from "react-redux";
 import { deleteComment } from "../../api/comment";

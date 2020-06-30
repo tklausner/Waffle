@@ -10,9 +10,9 @@ import { connect } from "react-redux";
 import { readPostsByCategory } from "../../api/post";
 
 class ExploreList extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
-    this._isMounted = false;
     this.state = {
       feed: [],
       isRefreshing: false,

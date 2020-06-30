@@ -6,7 +6,6 @@ import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { getPost } from "../../api/post";
 
-import { LoadingScreen } from "../loading/LoadingScreen";
 import { EmptyScreen } from "../loading/EmptyScreen";
 
 class ProfileFeed extends Component {
