@@ -57,6 +57,9 @@ class ExploreList extends Component {
     for (let i = 0; i < this.state.data.length; i += 1) {
       this.loadPosts(this.state.data[i], i);
     }
+    this.setState({
+      feed: new Set(this.state.feed),
+    });
     await this.setState({ isRefreshing: false });
   }
 
@@ -106,7 +109,7 @@ class ExploreList extends Component {
             }}
           />
         </Header>
-        {this.state.feed.length >= this.state.data.length ? (
+        {this.state.feed.length == this.state.data.length ? (
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}

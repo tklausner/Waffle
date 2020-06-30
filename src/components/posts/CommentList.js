@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     padding: "2%",
     paddingLeft: "5%",
     paddingRight: "5%",
+    flexShrink: 1,
   },
   commentContent: {
     color: "#555",
