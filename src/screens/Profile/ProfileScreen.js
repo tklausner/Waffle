@@ -76,6 +76,8 @@ class ProfileScreen extends Component {
 
   render() {
     const { user } = this.props;
+    // (user.waffles);
+    // (this.state.feed);
     return (
       <Container>
         <Card transparent style={styles.profTop}>

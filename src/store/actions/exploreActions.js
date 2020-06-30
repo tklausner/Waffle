@@ -31,7 +31,7 @@ export function fetchExploresSuccess(explores) {
 }
 
 export function fetchExploresFailure(error) {
-  console.log("[EXPLORE] Fetch Explores Failed, ERROR: ", error);
+  // ("[EXPLORE] Fetch Explores Failed, ERROR: ", error);
   return { type: FETCH_EXPLORES_FAILURE, error: error };
 }
 
@@ -40,12 +40,12 @@ export function fetchExplorePending() {
 }
 
 export function fetchExploreSuccess(explore) {
-  console.log(`[EXPLORE] @${explore.user_id} Fetched Explore`);
+  // (`[EXPLORE] @${explore.user_id} Fetched Explore`);
   return { type: FETCH_EXPLORE_SUCCESS, payload: explore };
 }
 
 export function fetchExploreFailure(error) {
-  console.log("[EXPLORE] Fetch Explore Failed, ERROR: ", error);
+  // ("[EXPLORE] Fetch Explore Failed, ERROR: ", error);
   return { type: FETCH_EXPLORE_FAILURE, error: error };
 }
 
@@ -54,12 +54,12 @@ export function createExplorePending() {
 }
 
 export function createExploreSuccess(explore) {
-  console.log(`[EXPLORE] @${explore.user_id} New Explore`);
+  // (`[EXPLORE] @${explore.user_id} New Explore`);
   return { type: CREATE_EXPLORE_SUCCESS, payload: explore };
 }
 
 export function createExploreFailure(error) {
-  console.log("[EXPLORE] Upload Failed, ERROR: ", error);
+  // ("[EXPLORE] Upload Failed, ERROR: ", error);
   return { type: CREATE_EXPLORE_FAILURE, error: error };
 }
 
@@ -68,12 +68,12 @@ export function deleteExplorePending() {
 }
 
 export function deleteExploreSuccess(explore) {
-  console.log(`[EXPLORE] @${explore.user_id} Deleted Explore`);
+  // (`[EXPLORE] @${explore.user_id} Deleted Explore`);
   return { type: DELETE_EXPLORE_SUCCESS, payload: explore };
 }
 
 export function deleteExploreFailure(error) {
-  console.log("[EXPLORE] Delete Failed, ERROR: ", error);
+  // ("[EXPLORE] Delete Failed, ERROR: ", error);
   return { type: DELETE_EXPLORE_FAILURE, error: error };
 }
 
@@ -82,11 +82,11 @@ export function updateExplorePending() {
 }
 
 export function updateExploreSuccess(explore) {
-  console.log(`[EXPLORE] @${explore.user_id} Updated`);
+  // (`[EXPLORE] @${explore.user_id} Updated`);
   return { type: UPDATE_EXPLORE_SUCCESS, payload: explore };
 }
 
 export function updateExploreFailure(error) {
-  console.log("[EXPLORE] Update Failed, ERROR: ", error);
+  // ("[EXPLORE] Update Failed, ERROR: ", error);
   return { type: UPDATE_EXPLORE_FAILURE, error: error };
 }

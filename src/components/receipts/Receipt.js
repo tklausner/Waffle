@@ -66,7 +66,7 @@ class Receipt extends Component {
         });
       }
     }
-    console.log();
+    // ();
   }
 
   render() {

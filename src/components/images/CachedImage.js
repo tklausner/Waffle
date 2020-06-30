@@ -68,12 +68,12 @@ export default class CachedImage extends Component {
         }
       })
       .catch((err) => {
-        console.log("[ERROR 1] CachedImage.js", err);
+        // ("[ERROR 1] CachedImage.js", err);
       });
   }
 
   async getAndLoadImage() {
-    console.log("DOWNLOADING");
+    // ("DOWNLOADING");
     const ref = storageRef.child("images/test2/" + this.props.image);
     ref
       .getDownloadURL()
@@ -89,12 +89,12 @@ export default class CachedImage extends Component {
             }
           })
           .catch((err) => {
-            console.log("[ERROR 2] CachedImage.js", err);
+            // ("[ERROR 2] CachedImage.js", err);
           });
       })
       .catch((err) => {
         if (this._isMounted) {
-          console.log("[ERROR 3]", err);
+          // ("[ERROR 3]", err);
           this.setState({
             uri: Asset.fromModule(
               require("../../../assets/images/OnlineLogo.png")

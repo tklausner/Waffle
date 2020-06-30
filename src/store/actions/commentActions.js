@@ -31,7 +31,7 @@ export function fetchCommentsSuccess(comments) {
 }
 
 export function fetchCommentsFailure(error) {
-  console.log("[COMMENT] Fetch Comments Failed, ERROR: ", error);
+  // ("[COMMENT] Fetch Comments Failed, ERROR: ", error);
   return { type: FETCH_COMMENTS_FAILURE, error: error };
 }
 
@@ -40,12 +40,12 @@ export function fetchCommentPending() {
 }
 
 export function fetchCommentSuccess(comment) {
-  console.log(`[COMMENT] @${comment.user_id} Fetched`);
+  // (`[COMMENT] @${comment.user_id} Fetched`);
   return { type: FETCH_COMMENT_SUCCESS, payload: comment };
 }
 
 export function fetchCommentFailure(error) {
-  console.log("[COMMENT] Fetch Comment Failed, ERROR: ", error);
+  // ("[COMMENT] Fetch Comment Failed, ERROR: ", error);
   return { type: FETCH_COMMENT_FAILURE, error: error };
 }
 
@@ -54,12 +54,12 @@ export function createCommentPending() {
 }
 
 export function createCommentSuccess(comment) {
-  console.log(`[COMMENT] @${comment.user_id} New Comment`);
+  // (`[COMMENT] @${comment.user_id} New Comment`);
   return { type: CREATE_COMMENT_SUCCESS, payload: comment };
 }
 
 export function createCommentFailure(error) {
-  console.log("[COMMENT] Upload Failed, ERROR: ", error);
+  // ("[COMMENT] Upload Failed, ERROR: ", error);
   return { type: CREATE_COMMENT_FAILURE, error: error };
 }
 
@@ -68,12 +68,12 @@ export function deleteCommentPending() {
 }
 
 export function deleteCommentSuccess(comment) {
-  console.log(`[COMMENT] @${comment.user_id} Deleted Comment`);
+  // (`[COMMENT] @${comment.user_id} Deleted Comment`);
   return { type: DELETE_COMMENT_SUCCESS, payload: comment };
 }
 
 export function deleteCommentFailure(error) {
-  console.log("[COMMENT] Delete Failed, ERROR: ", error);
+  // ("[COMMENT] Delete Failed, ERROR: ", error);
   return { type: DELETE_COMMENT_FAILURE, error: error };
 }
 
@@ -82,11 +82,11 @@ export function updateCommentPending() {
 }
 
 export function updateCommentSuccess(comment) {
-  console.log(`[COMMENT] @${comment.user_id} Updated Comment`);
+  // (`[COMMENT] @${comment.user_id} Updated Comment`);
   return { type: UPDATE_COMMENT_SUCCESS, payload: comment };
 }
 
 export function updateCommentFailure(error) {
-  console.log("Update Failed, ERROR: ", error);
+  // ("Update Failed, ERROR: ", error);
   return { type: UPDATE_COMMENT_FAILURE, error: error };
 }

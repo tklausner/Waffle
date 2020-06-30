@@ -35,11 +35,11 @@ export const uploadImageToFireBase = async (res) => {
     .child("images/test2/" + imageName)
     .put(blob)
     .then(() => {
-      console.log("Image Succesfully Uploaded");
+      // ("Image Succesfully Uploaded");
       return true;
     })
     .catch((err) => {
-      console.log("ERROR UPLOADING IMAGE", err);
+      // ("ERROR UPLOADING IMAGE", err);
       return false;
     });
 };

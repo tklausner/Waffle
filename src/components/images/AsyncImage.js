@@ -18,7 +18,7 @@ export default class AsyncImage extends Component {
   componentDidMount() {
     this._isMounted = true;
     if (this._isMounted) {
-      console.log("IMAGE DOWNLOAD", getImageDownloads());
+      // ("IMAGE DOWNLOAD", getImageDownloads());
       this.getAndLoadImage();
     }
   }

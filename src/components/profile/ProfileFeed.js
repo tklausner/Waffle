@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getPost } from "../../api/post";
 
 import { LoadingScreen } from "../loading/LoadingScreen";
+import { EmptyScreen } from "../loading/EmptyScreen";
 
 class ProfileFeed extends Component {
   state = {
@@ -37,7 +38,8 @@ class ProfileFeed extends Component {
     return (
       <Container>
         {this.props.posts &&
-        this.state.feed.length === this.props.posts.length ? (
+        this.state.feed.length === this.props.posts.length &&
+        this.state.feed.length > 0 ? (
           <FlatList
             data={this.state.feed}
             renderItem={this._renderItem}
@@ -48,7 +50,9 @@ class ProfileFeed extends Component {
             windowSize={6}
             initialNumToRender={6}
           />
-        ) : null}
+        ) : (
+          <EmptyScreen content="You have no posts" />
+        )}
       </Container>
     );
   }

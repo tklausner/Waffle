@@ -67,7 +67,7 @@ class SellScreen extends Component {
         quality: 1,
       });
 
-      console.log(result);
+      // (result);
 
       if (!result.cancelled) {
         this.setState({ image: result.uri });

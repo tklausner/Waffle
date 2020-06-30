@@ -31,7 +31,7 @@ export function fetchFeedsSuccess(feeds) {
 }
 
 export function fetchFeedsFailure(error) {
-  console.log("[FEED] Fetch Feeds Failed, ERROR: ", error);
+  // ("[FEED] Fetch Feeds Failed, ERROR: ", error);
   return { type: FETCH_FEEDS_FAILURE, error: error };
 }
 
@@ -40,12 +40,12 @@ export function fetchFeedPending() {
 }
 
 export function fetchFeedSuccess(feed) {
-  console.log(`[FEED] @${feed.user_id} Fetched`);
+  // (`[FEED] @${feed.user_id} Fetched`);
   return { type: FETCH_FEED_SUCCESS, payload: feed };
 }
 
 export function fetchFeedFailure(error) {
-  console.log("[FEED] Fetch Feed Failed, ERROR: ", error);
+  // ("[FEED] Fetch Feed Failed, ERROR: ", error);
   return { type: FETCH_FEED_FAILURE, error: error };
 }
 
@@ -54,12 +54,12 @@ export function createFeedPending() {
 }
 
 export function createFeedSuccess(feed) {
-  console.log(`[FEED] @${feed.user_id} New Feed`);
+  // (`[FEED] @${feed.user_id} New Feed`);
   return { type: CREATE_FEED_SUCCESS, payload: feed };
 }
 
 export function createFeedFailure(error) {
-  console.log("[FEED] Upload Failed, ERROR: ", error);
+  // ("[FEED] Upload Failed, ERROR: ", error);
   return { type: CREATE_FEED_FAILURE, error: error };
 }
 
@@ -68,12 +68,12 @@ export function deleteFeedPending() {
 }
 
 export function deleteFeedSuccess(feed) {
-  console.log(`[FEED] @${feed.user_id} Deleted Feed`);
+  // (`[FEED] @${feed.user_id} Deleted Feed`);
   return { type: DELETE_FEED_SUCCESS, payload: feed };
 }
 
 export function deleteFeedFailure(error) {
-  console.log("[FEED] Delete Failed, ERROR: ", error);
+  // ("[FEED] Delete Failed, ERROR: ", error);
   return { type: DELETE_FEED_FAILURE, error: error };
 }
 
@@ -82,11 +82,11 @@ export function updateFeedPending() {
 }
 
 export function updateFeedSuccess(feed) {
-  console.log(`[FEED] @${feed.user_id} Updated Feed`);
+  // (`[FEED] @${feed.user_id} Updated Feed`);
   return { type: UPDATE_FEED_SUCCESS, payload: feed };
 }
 
 export function updateFeedFailure(error) {
-  console.log("Update Failed, ERROR: ", error);
+  // ("Update Failed, ERROR: ", error);
   return { type: UPDATE_FEED_FAILURE, error: error };
 }
