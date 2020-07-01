@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 0,
     marginBottom: "0%",
+    justifyContent: 'center'
   },
   comment: {
     fontSize: 18,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Content } from "native-base";
 import { connect } from "react-redux";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 
 import { EmptyScreen } from "../../components/loading/EmptyScreen";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
@@ -61,14 +61,14 @@ class CommentScreen extends Component {
   render() {
     const { post_id } = this.props.route.params;
     return !this.state.loading ? (
-      <Container>
+      <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style = {styles.keyboardView} keyboardVerticalOffset = {100}>
         {this.state.comments && this.state.comments.length > 0 ? (
-          <CommentList comments={this.state.comments} />
+          <CommentList comments={this.state.comments} style = {{marginRight: 10}}/>
         ) : (
           <EmptyScreen content={"Be the first to comment!"} />
         )}
         <AddComment post_id={post_id} handleState={this.passProps.bind(this)} />
-      </Container>
+      </KeyboardAvoidingView >
     ) : (
       <LoadingScreen />
     );
@@ -89,4 +89,12 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentScreen);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create(
+  {
+  keyboardView:{
+    backgroundColor: 'white',
+    justifyContent: 'flex-end',
+    flex: 1,
+  }
+}
+);
