@@ -9,10 +9,13 @@ import {
   TextInput,
   Keyboard,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { updateUser, getUser } from "../../api/user";
 
 import { connect } from "react-redux";
+import { NavigationContext } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const dim_width = Dimensions.get("window").width;
 const dim_height = Dimensions.get("window").height;
@@ -189,7 +192,9 @@ class SettingsScreen extends Component {
 
           {/**this.state.show_otherSetting ? this.editProfile() : null*/}
         </View>
-        <View style={styles.rightBar}></View>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+          <View style={styles.rightBar}></View>
+        </TouchableOpacity>
       </View>
     );
   }

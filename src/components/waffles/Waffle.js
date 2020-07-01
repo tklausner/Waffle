@@ -77,12 +77,11 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
     [selected]
   );
 
-  const [count, setCount] = React.useState(0);
   var deltaTime = 0;
   var netTime = 0;
   var selectedID = 0;
   const minimumTime = 5000;
-  const winner = 3;
+  const winner = Math.floor(Math.random() * post.main_spots); 
 
   // Use useRef for mutable variables that we want to persist
   // without triggering a re-render on their change
@@ -101,7 +100,6 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
       // to make sure we always have the latest state
       if (deltaTime >= 100 + netTime / 50) {
         deltaTime = deltaTime % (100 + netTime / 50);
-        setCount((prevCount) => (prevCount + 1) % 10);
         selectedID = (selectedID + 1) % 10;
         winnerSelect(selectedID);
       }
@@ -133,9 +131,17 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
       <Card>
         <CardItem>
           <Left>
-            <CachedImage image={tempUser.profile} style={styles.profile} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate("UserProfile", { tempUser })}
+            >
+              <CachedImage image={tempUser.profile} style={styles.profile} />
+            </TouchableOpacity>
             <Body>
-              <Text style={styles.username}>{post.username}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("UserProfile", { tempUser })}
+              >
+                <Text style={styles.username}>{post.username}</Text>
+              </TouchableOpacity>
             </Body>
           </Left>
           <Right>
@@ -186,15 +192,10 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
             />
           </View>
         </CardItem>
-        <CardItem style={{ justifyContent: "center" }}>
+        <CardItem style={{ justifyContent: "center", width: "100%" }}>
           <Button onPress={purchase} style={styles.button}>
             <Text style={styles.buttonText}>${mainPrice}</Text>
           </Button>
-        </CardItem>
-        <CardItem style={{ justifyContent: "center" }}>
-          <View>
-            <Text>{Math.round(count)}</Text>
-          </View>
         </CardItem>
       </Card>
     </Content>
