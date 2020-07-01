@@ -116,7 +116,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   function purchase() {
     for (const key of selected) {
       if (key[1] == true) {
-        tempData[key[0]] = { id: key[0], title: "yooo" };
+        tempData[key[0]] = { id: key[0], title: "waffle" };
         setData(tempData);
       }
     }
