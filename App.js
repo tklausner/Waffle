@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { AppLoading } from "expo";
 import { Container } from "native-base";
 import * as Font from "expo-font";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { createStore, applyMiddleware } from "redux";
 import * as firebase from "firebase";
 

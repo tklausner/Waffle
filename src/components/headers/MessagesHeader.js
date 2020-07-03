@@ -1,7 +1,7 @@
 import React from "react";
 import { Header, Body, Title, Left, Button, Right } from "native-base";
 import { StyleSheet } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
 import globalStyles from "../../styles";

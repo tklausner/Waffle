@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import globalStyles from "../../styles";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export function HomeHeader() {
   const navigation = useNavigation();

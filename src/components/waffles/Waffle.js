@@ -20,7 +20,7 @@ import {
   ListItem,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import globalStyles from "../../styles";
 

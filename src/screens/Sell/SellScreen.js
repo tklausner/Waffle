@@ -12,8 +12,8 @@ import {
   Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Asset } from "expo-asset";
-import { Ionicons } from "@expo/vector-icons";
+import { Asset } from "react-native-unimodules";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import globalStyles from "../../styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -280,8 +280,15 @@ class SellScreen extends Component {
         </Button>
       </KeyboardAwareScrollView>
     ) : (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'white' }}>
-        <Spinner color='grey' />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <Spinner color="grey" />
       </View>
     );
   }

@@ -11,7 +11,7 @@ import {
 import { connect } from "react-redux";
 import ExploreList from "../../components/explore/ExploreList";
 import { getExploreByUser, getExplore } from "../../api/explore";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 class ExploreScreen extends Component {
