@@ -19,7 +19,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import stylesPage from "../../styles";
 import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";

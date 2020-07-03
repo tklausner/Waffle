@@ -19,8 +19,7 @@ import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
 
 import CachedImage from "../../components/images/CachedImage";
-import * as ImagePicker from "expo-image-picker";
-import { Asset } from "expo-asset";
+import { Asset } from "react-native-unimodules";
 
 import { updateUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";

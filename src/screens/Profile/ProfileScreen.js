@@ -19,8 +19,7 @@ import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
 
 import CachedImage from "../../components/images/CachedImage";
-import * as ImagePicker from "expo-image-picker";
-import { Asset } from "expo-asset";
+import { Asset } from "react-native-unimodules";
 
 import { updateUser, getUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
@@ -47,6 +46,7 @@ class ProfileScreen extends Component {
       });
   }
 
+  /*
   pickImage = async () => {
     const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
     if (status !== "granted") {
@@ -73,6 +73,7 @@ class ProfileScreen extends Component {
       }
     }
   };
+  */
 
   render() {
     const { user } = this.props;
@@ -81,11 +82,7 @@ class ProfileScreen extends Component {
         <Card transparent style={styles.profTop}>
           <CardItem>
             <Left>
-              <TouchableOpacity
-                style={styles.profImage}
-                transparent
-                onPress={this.pickImage}
-              >
+              <TouchableOpacity style={styles.profImage} transparent>
                 {this.state.profile === this.props.user.profile ? (
                   <CachedImage
                     image={this.state.profile}

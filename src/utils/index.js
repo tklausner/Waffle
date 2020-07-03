@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 import * as firebase from "firebase";
-import * as FileSystem from "expo-file-system";
+import { FileSystem } from "react-native-unimodules";
 
 import ApiKeys from "../constants/ApiKeys";
 

@@ -1,9 +1,8 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Waffle",
     "slug": "Waffle",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +17,12 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "Waffle"
+    },
+    "android": {
+      "package": "Waffle"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

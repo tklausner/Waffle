@@ -1,7 +1,6 @@
 import React from "react";
 import { Header, Item, Icon, Input } from "native-base";
 import { Image } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import WaffleIcon from "../../../assets/images/OnlineLogo.png";
 
 export function ExploreHeader() {

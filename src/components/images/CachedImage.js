@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { View, Image } from "react-native";
 import { storageRef } from "../../utils";
-import * as FileSystem from "expo-file-system";
-import { Asset } from "expo-asset";
+import { Asset, FileSystem } from "react-native-unimodules";
 
 export default class CachedImage extends Component {
   _isMounted = false;

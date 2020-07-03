@@ -6,7 +6,7 @@ import {
   NavigationContainer,
   createAppContainer,
 } from "@react-navigation/native";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "../screens/Home/HomeScreen";
 import ExploreScreen from "../screens/Explore/ExploreScreen";

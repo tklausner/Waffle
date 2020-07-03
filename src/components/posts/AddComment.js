@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Text, ListItem, Button } from "native-base";
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { connect } from "react-redux";
 
