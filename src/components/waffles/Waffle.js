@@ -81,7 +81,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   var netTime = 0;
   var selectedID = 0;
   const minimumTime = 5000;
-  const winner = Math.floor(Math.random() * post.main_spots); 
+  const winner = Math.floor(Math.random() * post.main_spots);
 
   // Use useRef for mutable variables that we want to persist
   // without triggering a re-render on their change
@@ -100,7 +100,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
       // to make sure we always have the latest state
       if (deltaTime >= 100 + netTime / 50) {
         deltaTime = deltaTime % (100 + netTime / 50);
-        selectedID = (selectedID + 1) % 10;
+        selectedID = (selectedID + 1) % post.main_spots;
         winnerSelect(selectedID);
       }
     }
@@ -127,78 +127,92 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   }
 
   return true ? (
-    <Content style={styles.content}>
-      <Card>
-        <CardItem>
-          <Left>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("UserProfile", { tempUser })}
-            >
-              <CachedImage image={tempUser.profile} style={styles.profile} />
-            </TouchableOpacity>
-            <Body>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("UserProfile", { tempUser })}
-              >
-                <Text style={styles.username}>{post.username}</Text>
-              </TouchableOpacity>
-            </Body>
-          </Left>
-          <Right>
-            <Button transparent>
-              <MaterialIcons
-                name="more-horiz"
-                style={[{ fontSize: 40 }, globalStyles.wGray]}
-              />
-            </Button>
-          </Right>
-        </CardItem>
-        <CardItem style={{ justifyContent: "center" }}>
-          <View style={styles.waffleStyle}>
-            <CachedImage image={post.image} style={styles.image} />
-          </View>
-        </CardItem>
-        <CardItem style={styles.iconCard}>
-          <View style={styles.textView}>
-            <MaterialIcons name="pie-chart" style={{ fontSize: 40 }} />
-            <View style={styles.fractionView}>
-              <Text>{spots}</Text>
-              <Text style={styles.underscore}>
-                {post.main_spots.length <= 2 ? "__" : "____"}
-              </Text>
-              <Text>{post.main_spots}</Text>
+    <View style={styles.content}>
+      <FlatList
+      ListHeaderComponentStyle={{marginBottom: 10}}
+        ListHeaderComponent={
+          <>
+            <Card transparent>
+              <CardItem>
+                <Left>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("UserProfile", { tempUser })
+                    }
+                  >
+                    <CachedImage
+                      image={tempUser.profile}
+                      style={styles.profile}
+                    />
+                  </TouchableOpacity>
+                  <Body>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("UserProfile", { tempUser })
+                      }
+                    >
+                      <Text style={styles.username}>{post.username}</Text>
+                    </TouchableOpacity>
+                  </Body>
+                </Left>
+                <Right>
+                  <Button transparent>
+                    <MaterialIcons
+                      name="more-horiz"
+                      style={[{ fontSize: 40 }, globalStyles.wGray]}
+                    />
+                  </Button>
+                </Right>
+              </CardItem>
+              <CardItem style={{ justifyContent: "center" }}>
+                <View style={styles.waffleStyle}>
+                  <CachedImage image={post.image} style={styles.image} />
+                </View>
+              </CardItem>
+              <CardItem style={styles.iconCard}>
+                <View style={styles.textView}>
+                  <MaterialIcons name="pie-chart" style={{ fontSize: 40 }} />
+                  <View style={styles.fractionView}>
+                    <Text>{spots}</Text>
+                    <Text style={styles.underscore}>
+                      {post.main_spots.length <= 2 ? "__" : "____"}
+                    </Text>
+                    <Text>{post.main_spots}</Text>
+                  </View>
+                </View>
+                <View style={styles.textView}>
+                  <MaterialIcons
+                    name="monetization-on"
+                    style={{ fontSize: 40 }}
+                  />
+                  <Text>{post.main_price}</Text>
+                </View>
+              </CardItem>
+            </Card>
+          </>
+        }
+        contentContainerStyle={{justifyContent: 'center', width: Dimensions.get("window").width}}
+        data={data}
+        renderItem={({ item }) => (
+          <Item
+            id={item.id}
+            title={item.title}
+            selected={!!selected.get(item.id)}
+            onSelect={onSelect}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        extraData={selected}
+        ListFooterComponentStyle={{marginTop: 10, marginBottom: 20}}
+        ListFooterComponent={
+            <View style={{ justifyContent: "center", width: "100%" }}>
+              <Button onPress={purchase} style={styles.button}>
+                <Text style={styles.buttonText}>${mainPrice}</Text>
+              </Button>
             </View>
-          </View>
-          <View style={styles.textView}>
-            <MaterialIcons name="monetization-on" style={{ fontSize: 40 }} />
-            <Text>{post.main_price}</Text>
-          </View>
-        </CardItem>
-        <CardItem style={{ justifyContent: "center" }}>
-          <View style={styles.flatListView}>
-            <FlatList
-              data={data}
-              renderItem={({ item }) => (
-                <Item
-                  id={item.id}
-                  title={item.title}
-                  selected={!!selected.get(item.id)}
-                  onSelect={onSelect}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-              extraData={selected}
-              scrollEnabled={false}
-            />
-          </View>
-        </CardItem>
-        <CardItem style={{ justifyContent: "center", width: "100%" }}>
-          <Button onPress={purchase} style={styles.button}>
-            <Text style={styles.buttonText}>${mainPrice}</Text>
-          </Button>
-        </CardItem>
-      </Card>
-    </Content>
+        }
+      />
+    </View>
   ) : null;
 }
 
@@ -210,6 +224,9 @@ const styles = StyleSheet.create({
     marginBottom: "0%",
     flex: 0,
     borderTopWidth: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
   },
   image: {
     height: "100%",
@@ -255,7 +272,9 @@ const styles = StyleSheet.create({
     padding: 6,
     height: 30,
     width: 250,
-    marginBottom: 2,
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderBottomWidth: 0
   },
   title: {
     fontSize: 12,
