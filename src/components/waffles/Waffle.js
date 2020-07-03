@@ -129,7 +129,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   return true ? (
     <View style={styles.content}>
       <FlatList
-      ListHeaderComponentStyle={{marginBottom: 10}}
+        ListHeaderComponentStyle={{ marginBottom: 10 }}
         ListHeaderComponent={
           <>
             <Card transparent>
@@ -191,7 +191,10 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
             </Card>
           </>
         }
-        contentContainerStyle={{justifyContent: 'center', width: Dimensions.get("window").width}}
+        contentContainerStyle={{
+          justifyContent: "center",
+          width: Dimensions.get("window").width,
+        }}
         data={data}
         renderItem={({ item }) => (
           <Item
@@ -203,13 +206,13 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
         )}
         keyExtractor={(item) => item.id.toString()}
         extraData={selected}
-        ListFooterComponentStyle={{marginTop: 10, marginBottom: 20}}
+        ListFooterComponentStyle={{ marginTop: 10, marginBottom: 20 }}
         ListFooterComponent={
-            <View style={{ justifyContent: "center", width: "100%" }}>
-              <Button onPress={purchase} style={styles.button}>
-                <Text style={styles.buttonText}>${mainPrice}</Text>
-              </Button>
-            </View>
+          <View style={{ justifyContent: "center", width: "100%" }}>
+            <Button onPress={purchase} style={styles.button}>
+              <Text style={styles.buttonText}>${mainPrice}</Text>
+            </Button>
+          </View>
         }
       />
     </View>
@@ -224,9 +227,9 @@ const styles = StyleSheet.create({
     marginBottom: "0%",
     flex: 0,
     borderTopWidth: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%'
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
   image: {
     height: "100%",
@@ -272,9 +275,9 @@ const styles = StyleSheet.create({
     padding: 6,
     height: 30,
     width: 250,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderWidth: 2,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   title: {
     fontSize: 12,
