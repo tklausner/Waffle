@@ -236,7 +236,11 @@ class Post extends PureComponent {
           <TouchableOpacity
             style={styles.barRightTouchable}
             onPress={() => {
-              navigation.navigate("Waffle", { tempUser: tempUser, post: post });
+              navigation.navigate("Waffle", {
+                tempUser: tempUser,
+                post: post,
+                user: this.props.user,
+              });
             }}
           >
             <Right style={[styles.barRight, styles.barStyle]}>

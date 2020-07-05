@@ -17,6 +17,9 @@ import {
   UPDATE_POST_PENDING,
   UPDATE_POST_SUCCESS,
   UPDATE_POST_FAILURE,
+  FETCH_WAFFLE_WINNER_PENDING,
+  FETCH_WAFFLE_WINNER_SUCCESS,
+  FETCH_WAFFLE_WINNER_FAILURE,
 } from "../actions/postActions";
 
 const initialState = {
@@ -25,6 +28,7 @@ const initialState = {
   previews: [],
   pending: false,
   error: null,
+  winner: null,
 };
 
 export function postReducer(state = initialState, action) {
@@ -69,6 +73,12 @@ export function postReducer(state = initialState, action) {
       return { ...state, pending: false, post: action.payload };
     case UPDATE_POST_FAILURE:
       return { ...state, pending: false, error: action.error };
+    case FETCH_WAFFLE_WINNER_PENDING:
+      return { ...state, pending: true };
+    case FETCH_WAFFLE_WINNER_SUCCESS:
+      return { ...state, pending: false, winner: action.payload };
+    case FETCH_WAFFLE_WINNER_FAILURE:
+      return { ...state, pending: false, error: action.error };
     default:
       return state;
   }
@@ -79,3 +89,4 @@ export const getPreviews = (state) => state.previews;
 export const getPostsPending = (state) => state.pending;
 export const getPostsError = (state) => state.error;
 export const getPost = (state) => state.post;
+export const getWinner = (state) => state.winner;
