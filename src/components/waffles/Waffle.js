@@ -27,6 +27,8 @@ import globalStyles from "../../styles";
 import CachedImage from "../images/CachedImage";
 import { LoadingScreen } from "../loading/LoadingScreen";
 import { Swipeable } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
+import { getWaffleWinner, updatePost } from "../../api/post";
 
 function Item({ id, title, selected, onSelect }) {
   return (
@@ -41,9 +43,12 @@ function Item({ id, title, selected, onSelect }) {
   );
 }
 
-export function Waffle({ tempUser, post, handler, dataPass }) {
+export function Waffle({ tempUser, post, handler, dataPass, user }) {
   const navigation = useNavigation();
-  var tempData = dataPass;
+  const dispatch = useDispatch();
+  const waf_winner = useSelector((state) => state.post.winner);
+
+  var tempData = dataPass.data;
   if (tempData.length == 0)
     for (var i = 0; i < post.main_spots; i++) {
       tempData.push({ id: i, title: "" });
@@ -67,11 +72,16 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
     [selected, mainPrice]
   );
 
+  const chooseWinner = async () => {
+    await dispatch(getWaffleWinner(post._id));
+    console.log(waf_winner);
+    return waf_winner;
+  };
+
   const winnerSelect = React.useCallback(
     (id) => {
       const newSelected = new Map(selected);
       newSelected.set(id, !selected.get(id));
-
       setSelected(newSelected);
     },
     [selected]
@@ -82,6 +92,9 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   var selectedID = 0;
   const minimumTime = 5000;
   const winner = Math.floor(Math.random() * post.main_spots);
+  if (spots == post.main_spots - 1) {
+    chooseWinner();
+  }
 
   // Use useRef for mutable variables that we want to persist
   // without triggering a re-render on their change
@@ -113,17 +126,27 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
     return () => cancelAnimationFrame(requestRef.current);
   }, [spots]); // Make sure the effect runs only once
 
-  function purchase() {
+  async function purchase() {
     for (const key of selected) {
       if (key[1] == true) {
-        tempData[key[0]] = { id: key[0], title: "waffle" };
+        tempData[key[0]] = {
+          id: key[0],
+          title: user.username,
+          user_id: user._id,
+        };
+        wafflers =
+          wafflers.length > 0
+            ? wafflers.splice(wafflers.length - 1, 0, user._id)
+            : wafflers.push(user._id);
         setData(tempData);
       }
     }
     setSelected(new Map());
     setSpots(spots + mainPrice / post.main_price);
     setMainPrice(0);
-    handler(tempData);
+    handler(tempData, wafflers);
+
+    console.log("W:", wafflers);
   }
 
   return true ? (
