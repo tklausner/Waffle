@@ -14,7 +14,7 @@ import {
   List,
   ListItem,
 } from "native-base";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import ProfileFeed from "../../components/profile/ProfileFeed";
 
@@ -23,6 +23,8 @@ import { Asset } from "react-native-unimodules";
 
 import { updateUser, getUser } from "../../api/user";
 import { uploadImageToFireBase, _processImage } from "../../utils";
+
+import ImagePicker from "react-native-image-picker";
 
 class ProfileScreen extends Component {
   constructor(props) {
@@ -46,34 +48,32 @@ class ProfileScreen extends Component {
       });
   }
 
-  /*
-  pickImage = async () => {
-    const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-    if (status !== "granted") {
-      alert("Sorry, we need camera permissions to make this work!");
+  onImagePick = async (res) => {
+    if (res.error) {
+      console.log("[ERROR]", res.error);
+    } else if (res.didCancel) {
+      console.log("User cancelled image picker");
     } else {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
+      console.log(res.uri);
+      await this.props.updateUser({
+        profile: _processImage(res.uri),
+        _id: this.props.user._id,
       });
-
-      if (!result.cancelled) {
-        await this.props.updateUser({
-          profile: _processImage(result.uri),
-          _id: this.props.user._id,
-        });
-        await uploadImageToFireBase({
-          uri: result.uri,
-        });
-        this.setState({
-          profile: _processImage(result.uri),
-        });
-      }
+      await uploadImageToFireBase({
+        uri: res.uri,
+      });
+      this.setState({
+        profile: _processImage(res.uri),
+      });
     }
   };
-  */
+
+  pickImage = async () => {
+    await ImagePicker.showImagePicker(
+      { mediaType: "photo", allowsEditing: true, quality: 1 },
+      (callback = this.onImagePick)
+    );
+  };
 
   render() {
     const { user } = this.props;
@@ -82,13 +82,19 @@ class ProfileScreen extends Component {
         <Card transparent style={styles.profTop}>
           <CardItem>
             <Left>
-              <TouchableOpacity style={styles.profImage} transparent>
+              <TouchableOpacity
+                style={styles.profImageContainer}
+                transparent
+                onPress={this.pickImage}
+              >
                 {this.state.profile === this.props.user.profile ? (
                   <CachedImage
                     image={this.state.profile}
                     style={styles.profImage}
                   />
-                ) : null}
+                ) : (
+                  <View style={[styles.profImage, { borderWidth: 2 }]}></View>
+                )}
               </TouchableOpacity>
               <Body>
                 <Text style={styles.profName}>
@@ -244,8 +250,11 @@ const styles = StyleSheet.create({
     height: 75,
     width: 75,
     borderRadius: 100,
+  },
+  profImageContainer: {
+    height: 75,
+    width: 75,
+    borderRadius: 100,
     marginLeft: "-10%",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

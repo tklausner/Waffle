@@ -27,6 +27,7 @@
     "react-native": "~0.62.2",
     "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-image-picker": "^2.3.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
@@ -42,9 +43,9 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "babel-jest": "~25.2.6",
+    "babel-preset-expo": "^8.2.3",
     "jest": "~25.2.6",
     "react-test-renderer": "~16.11.0",
-    "babel-preset-expo": "^8.2.3",
     "redux-devtools": "^3.5.0"
   },
   "private": true,
