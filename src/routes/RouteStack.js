@@ -15,7 +15,7 @@ import ProfileScreen from "../screens/Profile/ProfileScreen";
 import UserProfileScreen from "../screens/Profile/UserProfileScreen";
 import MessagingPreviewScreen from "../screens/Messaging/MessagingPreviewScreen";
 import MessagingScreen from "../screens/Messaging/MessagingScreen";
-import WaffleScreen from "../screens/Waffle/WaffleScreen";
+import WaffleScreenNew from "../screens/Waffle/WaffleScreenNew";
 import ProductScreen from "../screens/Waffle/ProductScreen";
 import CommentScreen from "../screens/Home/CommentScreen";
 
@@ -87,7 +87,7 @@ function HomeStackScreen() {
       initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Waffle" component={WaffleScreen} />
+      <HomeStack.Screen name="Waffle" component={WaffleScreenNew} />
       <HomeStack.Screen name="Home_Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />

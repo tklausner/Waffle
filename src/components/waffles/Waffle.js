@@ -111,7 +111,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
   React.useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [spots]); // Make sure the effect runs only once
+  }, [spots]) ; // Make sure the effect runs only once
 
   function purchase() {
     for (const key of selected) {
@@ -175,7 +175,7 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
                   <View style={styles.fractionView}>
                     <Text>{spots}</Text>
                     <Text style={styles.underscore}>
-                      {post.main_spots.length <= 2 ? "__" : "____"}
+                      {post.main_spots.toString().length <= 2 ? "__" : "____"}
                     </Text>
                     <Text>{post.main_spots}</Text>
                   </View>
@@ -205,8 +205,8 @@ export function Waffle({ tempUser, post, handler, dataPass }) {
         extraData={selected}
         ListFooterComponentStyle={{marginTop: 10, marginBottom: 20}}
         ListFooterComponent={
-            <View style={{ justifyContent: "center", width: "100%" }}>
-              <Button onPress={purchase} style={styles.button}>
+            <View style={{ justifyContent: "center", width: "100%", alignItems:'center' }}>
+              <Button onPress= {spots != post.main_spots ? purchase : null} style={styles.button}>
                 <Text style={styles.buttonText}>${mainPrice}</Text>
               </Button>
             </View>
@@ -274,7 +274,8 @@ const styles = StyleSheet.create({
     width: 250,
     alignSelf: 'center',
     borderWidth: 2,
-    borderBottomWidth: 0
+    borderColor: globalStyles.wBlue.color,
+    marginTop: -2
   },
   title: {
     fontSize: 12,
@@ -284,9 +285,9 @@ const styles = StyleSheet.create({
     height: 45,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 15,
     backgroundColor: globalStyles.wBlue.color,
-    marginTop: 5,
+    marginTop: 15,
   },
   buttonText: {
     fontSize: 26,
