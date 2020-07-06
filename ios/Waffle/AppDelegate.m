@@ -1,5 +1,7 @@
 #import "AppDelegate.h"
 
+#import <Firebase.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -40,6 +42,12 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // Added for firebase notifications --- \/
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
+  // Added for firebase notifications --- /\
+  
 #if DEBUG
   InitializeFlipper(application);
 #endif

@@ -25,7 +25,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
 import { connect } from "react-redux";
 import { newUser } from "../../api/user";
-import pushnot from "../../notifications/pushNotifications"
+import { requestUserPermission } from "../../utils/index";
 
 class SignUpScreen extends Component {
   constructor(props) {
@@ -52,12 +52,12 @@ class SignUpScreen extends Component {
             last_name: this.state.last_name,
           };
           this.props.newUser(newUser);
+          requestUserPermission();
         },
         (error) => {
           Alert.alert(error.message);
         }
       );
-    pushnot.registerForPushNotificationsAsync()
   };
 
   render() {

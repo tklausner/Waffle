@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import * as firebase from "firebase";
 import { FileSystem } from "react-native-unimodules";
+import messaging from "@react-native-firebase/messaging";
 
 import ApiKeys from "../constants/ApiKeys";
 
@@ -42,4 +43,26 @@ export const uploadImageToFireBase = async (res) => {
       console.log("ERROR UPLOADING IMAGE", err);
       return false;
     });
+};
+
+const getFcmToken = async () => {
+  const fcmToken = await messaging().getToken();
+  if (fcmToken) {
+    console.log(fcmToken);
+    console.log("Your Firebase Token is:", fcmToken);
+  } else {
+    console.log("Failed", "No token received");
+  }
+};
+
+export const requestUserPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    getFcmToken(); //<---- Add this
+    console.log("Authorization status:", authStatus);
+  }
 };
