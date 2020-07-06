@@ -1,4 +1,4 @@
-package Waffle;
+package org.reactjs.native.waffle;
 
 import android.os.Bundle;
 

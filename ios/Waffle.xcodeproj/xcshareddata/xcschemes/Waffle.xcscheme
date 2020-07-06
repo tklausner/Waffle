@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "Waffle.app"
-               BlueprintName = "BlankTemplate"
-               ReferencedContainer = "container:BlankTemplate.xcodeproj">
+               BlueprintName = "Waffle"
+               ReferencedContainer = "container:Waffle.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "BlankTemplateTests.xctest"
-               BlueprintName = "BlankTemplateTests"
-               ReferencedContainer = "container:BlankTemplate.xcodeproj">
+               BuildableName = "WaffleTests.xctest"
+               BlueprintName = "WaffleTests"
+               ReferencedContainer = "container:Waffle.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -56,8 +56,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Waffle.app"
-            BlueprintName = "BlankTemplate"
-            ReferencedContainer = "container:BlankTemplate.xcodeproj">
+            BlueprintName = "Waffle"
+            ReferencedContainer = "container:Waffle.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -73,8 +73,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "Waffle.app"
-            BlueprintName = "BlankTemplate"
-            ReferencedContainer = "container:BlankTemplate.xcodeproj">
+            BlueprintName = "Waffle"
+            ReferencedContainer = "container:Waffle.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
