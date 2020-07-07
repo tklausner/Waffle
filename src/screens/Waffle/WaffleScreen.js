@@ -35,7 +35,12 @@ import { Swipeable } from "react-native-gesture-handler";
 
 import { connect } from "react-redux";
 
-import { getWaffleWinner, updatePost } from "../../api/post";
+import {
+  getWaffleWinner,
+  updatePost,
+  getPost,
+  readPosts,
+} from "../../api/post";
 
 const contextType = NavigationContext;
 
@@ -60,22 +65,20 @@ class WaffleScreen extends Component {
   _isMounted = false;
   constructor(props) {
     super(props);
-    var { post } = this.props.route.params;
+    var { post } = this.props;
     var tempData = [];
     if (tempData.length == 0) {
       for (var i = 0, j = 0; i < post.main_spots; i++) {
-        if (post.wafflers[j] && post.wafflers[j]["spot_number"] === i) {
-          tempData.push({ id: i, title: post.wafflers[j++].username });
-        } else {
-          tempData.push({ id: i, title: "" });
-        }
+        tempData.push({ id: i, title: "" });
       }
     }
+
     this.state = {
       data: tempData,
       selected: new Map(),
       mainPrice: 0,
       spots: 0,
+      loading: false,
     };
   }
 
@@ -85,25 +88,33 @@ class WaffleScreen extends Component {
   }
 
   componentWillUnmount() {
+    console.log("unmounting");
+
     this._isMounted = false;
   }
 
-  loadWafflers() {
-    var { post } = this.props.route.params;
+  async loadWafflers() {
+    this.setState({
+      loading: true,
+    });
+    var { post } = this.props;
     var tempData = this.state.data.slice();
     if (tempData) {
       for (var j = 0; j < post.wafflers.length; j++) {
         tempData[post.wafflers[j]["spot_number"]]["title"] =
           post.wafflers[j].username;
       }
-      this.setState({
+      await this.setState({
         data: tempData,
+      });
+      this.setState({
+        loading: false,
       });
     }
   }
 
   async chooseWinner() {
-    const { post } = this.props.route.params;
+    const { post } = this.props;
     await this.props.getWaffleWinner(post._id);
     console.log(post.winner);
   }
@@ -116,13 +127,11 @@ class WaffleScreen extends Component {
       this.setState({ selected: newSelected });
       if (!this.state.selected.get(id))
         this.setState({
-          mainPrice:
-            this.state.mainPrice + this.props.route.params.post.main_price,
+          mainPrice: this.state.mainPrice + this.props.post.main_price,
         });
       else
         this.setState({
-          mainPrice:
-            this.state.mainPrice - this.props.route.params.post.main_price,
+          mainPrice: this.state.mainPrice - this.props.post.main_price,
         });
     }
   }
@@ -141,10 +150,10 @@ class WaffleScreen extends Component {
   }*/
 
   async purchase() {
-    const { post } = this.props.route.params;
+    const { post } = this.props;
     var tempData = this.state.data.slice();
     var tempWafflers = post.wafflers.slice();
-
+    var purchased_spots = 0;
     for (const key of this.state.selected) {
       if (key[1] == true) {
         tempData[key[0]] = {
@@ -157,16 +166,18 @@ class WaffleScreen extends Component {
           username: this.props.user.username,
           user_id: this.props.user._id,
         });
+        purchased_spots += 1;
       }
     }
     tempWafflers.sort((a, b) => (a.spot_number > b.spot_number ? 1 : -1));
     await this.props.updatePost({
       _id: post._id,
       wafflers: tempWafflers,
+      waffles_remaining: post.waffles_remaining - purchased_spots,
     });
     this.setState({ selected: new Map() });
     this.setState({
-      spots: this.state.spots + this.state.mainPrice / post.main_price,
+      spots: post.waffles_remaining,
     });
     this.setState({ mainPrice: 0 });
   }
@@ -181,9 +192,9 @@ class WaffleScreen extends Component {
   }*/
 
   render() {
-    const { post } = this.props.route.params;
+    const { post } = this.props;
     const { tempUser } = this.props.route.params;
-    return true ? (
+    return !this.state.loading ? (
       <View style={styles.content}>
         <FlatList
           ListHeaderComponentStyle={{ marginBottom: 10 }}
@@ -230,7 +241,7 @@ class WaffleScreen extends Component {
                   <View style={styles.textView}>
                     <MaterialIcons name="pie-chart" style={{ fontSize: 40 }} />
                     <View style={styles.fractionView}>
-                      <Text>{this.state.spots}</Text>
+                      <Text>{post.waffles_remaining}</Text>
                       <Text style={styles.underscore}>
                         {post.main_spots.toString().length <= 2 ? "__" : "____"}
                       </Text>
@@ -287,13 +298,16 @@ class WaffleScreen extends Component {
           }
         />
       </View>
-    ) : null;
+    ) : (
+      <LoadingScreen />
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     user: state.user.user,
+    post: state.post.post,
   };
 };
 
@@ -301,6 +315,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updatePost: (post) => dispatch(updatePost(post)),
     getWaffleWinner: (id) => dispatch(getWaffleWinner(id)),
+    getPost: (id) => dispatch(getPost(id)),
+    readPosts: () => dispatch(readPosts()),
   };
 };
 

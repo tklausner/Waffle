@@ -25,7 +25,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import globalStyles from "../../styles";
 
 import { connect } from "react-redux";
-import { deletePost, readPosts, updatePost } from "../../api/post";
+import { deletePost, readPosts, updatePost, getPost } from "../../api/post";
 import { updateUser, getTempUser } from "../../api/user";
 
 import { NavigationContext } from "@react-navigation/native";
@@ -56,6 +56,7 @@ class Post extends PureComponent {
       comments: [],
       tempUser: null,
       waffleType: "Main",
+      waffles_remaining: 0,
     };
   }
   async componentDidMount() {
@@ -63,6 +64,7 @@ class Post extends PureComponent {
     if (this._isMounted) {
       this.setState({
         saved: this.getSavedState(),
+        waffles_remaining: this.props.post.waffles_remaining,
       });
       await this.fetchPostUser();
     }
@@ -76,6 +78,11 @@ class Post extends PureComponent {
     if (this.state.waffleType !== waffleState.waffleType) {
       this.setState({
         waffleType: waffleState.waffleType,
+      });
+    }
+    if (this.state.waffles_remaining !== waffleState.waffles_remaining) {
+      this.setState({
+        waffles_remaining: waffleState.waffles_remaining,
       });
     }
   }
@@ -207,10 +214,10 @@ class Post extends PureComponent {
           </Left>
           <TouchableOpacity
             style={styles.barRightTouchable}
-            onPress={() => {
+            onPress={async () => {
+              await this.props.getPost(post._id);
               navigation.navigate("Waffle", {
                 tempUser: tempUser,
-                post: post,
               });
             }}
           >
@@ -218,9 +225,7 @@ class Post extends PureComponent {
               <View style={styles.wafflesRemainingView}>
                 <MaterialIcons name="pie-chart" style={styles.barRightIcon} />
                 <Text style={styles.barRightText}>
-                  {this.state.waffleType === "Main"
-                    ? post.main_spots
-                    : post.mini_spots}
+                  {`${this.state.waffles_remaining}/ ${post.main_spots}`}
                 </Text>
               </View>
               <View style={styles.wafflesRemainingView}>
@@ -263,6 +268,7 @@ const mapDispatchToProps = (dispatch) => {
     deletePost: (id) => dispatch(deletePost(id)),
     readPosts: () => dispatch(readPosts()),
     getTempUser: (id) => dispatch(getTempUser(id)),
+    getPost: (id) => dispatch(getPost(id)),
   };
 };
 
