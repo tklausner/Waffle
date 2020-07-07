@@ -27,6 +27,10 @@ export const UPDATE_POST_PENDING = "UPDATE_POST_PENDING";
 export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
 export const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
 
+export const FETCH_WAFFLE_WINNER_PENDING = "FETCH_WAFFLE_WINNER_PENDING";
+export const FETCH_WAFFLE_WINNER_SUCCESS = "FETCH_WAFFLE_WINNER_SUCCESS";
+export const FETCH_WAFFLE_WINNER_FAILURE = "FETCH_WAFFLE_WINNER_FAILURE";
+
 // action creators
 
 export function fetchPostsPending() {
@@ -111,4 +115,17 @@ export function updatePostSuccess(post) {
 export function updatePostFailure(error) {
   console.log("[POST] Update Failed, ERROR: ", error);
   return { type: UPDATE_POST_FAILURE, error: error };
+}
+
+export function fetchWaffleWinnerPending() {
+  return { type: FETCH_WAFFLE_WINNER_PENDING };
+}
+
+export function fetchWaffleWinnerSuccess(winner) {
+  return { type: FETCH_WAFFLE_WINNER_SUCCESS, payload: winner };
+}
+
+export function fetchWaffleWinnerFailure(error) {
+  console.log("[POST] Fetch Waffle Winner Failed, ERROR: ", error);
+  return { type: FETCH_WAFFLE_WINNER_FAILURE, error: error };
 }

@@ -184,7 +184,7 @@ class ProfileScreen extends Component {
           </CardItem>
         </Card>
         {!this.state.isRendering ? (
-          <ProfileFeed posts={this.state.feed} route={"Profile_Product"} />
+          <ProfileFeed posts={this.state.feed} />
         ) : (
           <Text>You have no posts</Text>
         )}

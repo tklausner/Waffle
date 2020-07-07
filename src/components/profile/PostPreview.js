@@ -6,12 +6,12 @@ import CachedImage from "../images/CachedImage";
 
 const dim = Dimensions.get("window").width / 2.5;
 
-export function PostPreview({ post, route }) {
+export function PostPreview({ post }) {
   const navigation = useNavigation();
   return post ? (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate(route, {
+        navigation.navigate("Product", {
           post: post,
         });
       }}

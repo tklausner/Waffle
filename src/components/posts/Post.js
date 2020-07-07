@@ -91,34 +91,6 @@ class Post extends PureComponent {
     }
   }
 
-  navigateComments() {
-    const navigation = this.context;
-    const { post } = this.props;
-    const { type } = this.props;
-    if (type && this._isMounted) {
-      switch (type) {
-        case "Home":
-        case "Home_Product":
-          navigation.navigate("Home_Comments", {
-            post_id: post._id,
-          });
-          return;
-        case "Explore_Product":
-          navigation.navigate("Explore_Comments", {
-            post_id: post._id,
-          });
-          return;
-        case "Profile_Product":
-          navigation.navigate("Profile_Comments", {
-            post_id: post._id,
-          });
-          return;
-        default:
-          return;
-      }
-    }
-  }
-
   addToSaved() {
     if (this._isMounted) {
       let saved = this.props.user.saved.slice();
@@ -236,7 +208,10 @@ class Post extends PureComponent {
           <TouchableOpacity
             style={styles.barRightTouchable}
             onPress={() => {
-              navigation.navigate("Waffle", { tempUser: tempUser, post: post });
+              navigation.navigate("Waffle", {
+                tempUser: tempUser,
+                post: post,
+              });
             }}
           >
             <Right style={[styles.barRight, styles.barStyle]}>
@@ -270,7 +245,9 @@ class Post extends PureComponent {
           button
           style={styles.viewMore}
           onPress={() => {
-            this.navigateComments();
+            navigation.navigate("Comments", {
+              post_id: post._id,
+            });
           }}
         >
           <Text style={styles.viewMore}>View comments</Text>

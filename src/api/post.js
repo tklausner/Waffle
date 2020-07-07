@@ -18,6 +18,9 @@ import {
   updatePostPending,
   updatePostSuccess,
   updatePostFailure,
+  fetchWaffleWinnerPending,
+  fetchWaffleWinnerSuccess,
+  fetchWaffleWinnerFailure,
 } from "../store/actions/postActions";
 
 // root url
@@ -83,6 +86,20 @@ export const readPostsByCategory = (category) => {
   };
 };
 
+// GET WAFFLE WINNER
+export const getWaffleWinner = (id) => {
+  return (dispatch) => {
+    dispatch(fetchWaffleWinnerPending());
+    return axios
+      .get(root + "api/posts/waffle/" + id)
+      .then(({ data }) => {
+        dispatch(fetchWaffleWinnerSuccess(data));
+      })
+      .catch((error) => {
+        dispatch(fetchWaffleWinnerFailure(error));
+      });
+  };
+};
 // GET POSTS BY USER (posts[user_id])
 export const readPostsByUser = (user_id) => {
   return (dispatch) => {
