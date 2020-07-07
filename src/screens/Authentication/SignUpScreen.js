@@ -44,15 +44,16 @@ class SignUpScreen extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        (res) => {
+        async (res) => {
+          const fcmToken = await requestUserPermission();
           const newUser = {
             fb_id: res.user.uid,
             username: this.state.username,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
+            token: fcmToken,
           };
           this.props.newUser(newUser);
-          requestUserPermission();
         },
         (error) => {
           Alert.alert(error.message);
@@ -140,6 +141,7 @@ class SignUpScreen extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     newUser: (user) => dispatch(newUser(user)),
+    updateUser: (user) => dispatch(updateUser(user)),
   };
 };
 

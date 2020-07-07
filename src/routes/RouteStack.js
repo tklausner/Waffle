@@ -6,6 +6,7 @@ import {
   NavigationContainer,
   createAppContainer,
 } from "@react-navigation/native";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "../screens/Home/HomeScreen";
@@ -28,6 +29,8 @@ import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
 
 import { Drawer } from "../screens/Profile/Drawer";
+
+import messaging from "@react-native-firebase/messaging";
 
 // helper function for  getting associated header
 function GetHeader(route) {
