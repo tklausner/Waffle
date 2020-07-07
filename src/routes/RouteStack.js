@@ -9,6 +9,7 @@ import {
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+
 import HomeScreen from "../screens/Home/HomeScreen";
 import ExploreScreen from "../screens/Explore/ExploreScreen";
 import SellScreen from "../screens/Sell/SellScreen";
@@ -16,7 +17,7 @@ import ProfileScreen from "../screens/Profile/ProfileScreen";
 import UserProfileScreen from "../screens/Profile/UserProfileScreen";
 import MessagingPreviewScreen from "../screens/Messaging/MessagingPreviewScreen";
 import MessagingScreen from "../screens/Messaging/MessagingScreen";
-import WaffleScreen from "../screens/Waffle/WaffleScreen";
+import WaffleScreenNew from "../screens/Waffle/WaffleScreenNew";
 import ProductScreen from "../screens/Waffle/ProductScreen";
 import CommentScreen from "../screens/Home/CommentScreen";
 
@@ -40,12 +41,10 @@ function GetHeader(route) {
       break;
     case "Waffle":
     case "Messaging":
-    case "Explore_Comments":
-    case "Profile_Comments":
-    case "Home_Comments":
-    case "Profile_Product":
-    case "Explore_Product":
-    case "Home_Product":
+    case "Comments":
+    case "Product":
+      return <MessagesHeader />;
+      break;
     case "UserProfile":
       return <MessagesHeader />;
       break;
@@ -90,11 +89,11 @@ function HomeStackScreen() {
       initialRouteName="Home"
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Waffle" component={WaffleScreen} />
-      <HomeStack.Screen name="Home_Comments" component={CommentScreen} />
+      <HomeStack.Screen name="Waffle" component={WaffleScreenNew} />
+      <HomeStack.Screen name="Product" component={ProductScreen} />
+      <HomeStack.Screen name="Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
-      <HomeStack.Screen name="Home_Product" component={ProductScreen} />
     </HomeStack.Navigator>
   );
 }
@@ -103,11 +102,14 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   return (
-    <ExploreStack.Navigator headerMode="none">
+    <ExploreStack.Navigator
+      headerMode="float"
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name),
+      })}
+    >
       <ExploreStack.Screen name="Explore" component={ExploreScreen} />
       <ExploreStack.Screen name="Search" component={ExploreScreen} />
-      <ExploreStack.Screen name="Explore_Product" component={ProductScreen} />
-      <ExploreStack.Screen name="Explore_Comments" component={CommentScreen} />
     </ExploreStack.Navigator>
   );
 }
@@ -133,16 +135,13 @@ const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
-      name="Profile"
       headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name),
+        header: () => GetHeader("Profile"),
       })}
       initialRouteName="Profile"
     >
       <ProfileStack.Screen name="Profile" component={Drawer} />
-      <ProfileStack.Screen name="Profile_Product" component={ProductScreen} />
-      <ProfileStack.Screen name="Profile_Comments" component={CommentScreen} />
     </ProfileStack.Navigator>
   );
 }
