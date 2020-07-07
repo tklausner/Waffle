@@ -96,6 +96,9 @@ class WaffleScreen extends Component {
         tempData[post.wafflers[j]["spot_number"]]["title"] =
           post.wafflers[j].username;
       }
+      this.setState({
+        data: tempData,
+      });
     }
   }
 
