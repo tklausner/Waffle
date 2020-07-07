@@ -25,7 +25,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as firebase from "firebase";
 import { connect } from "react-redux";
 import { newUser } from "../../api/user";
-import pushnot from "../../notifications/pushNotifications"
+import { requestUserPermission } from "../../utils/index";
 
 class SignUpScreen extends Component {
   constructor(props) {
@@ -44,12 +44,14 @@ class SignUpScreen extends Component {
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        (res) => {
+        async (res) => {
+          const fcmToken = await requestUserPermission();
           const newUser = {
             fb_id: res.user.uid,
             username: this.state.username,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
+            token: fcmToken,
           };
           this.props.newUser(newUser);
         },
@@ -57,7 +59,6 @@ class SignUpScreen extends Component {
           Alert.alert(error.message);
         }
       );
-    pushnot.registerForPushNotificationsAsync()
   };
 
   render() {
@@ -140,6 +141,7 @@ class SignUpScreen extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     newUser: (user) => dispatch(newUser(user)),
+    updateUser: (user) => dispatch(updateUser(user)),
   };
 };
 

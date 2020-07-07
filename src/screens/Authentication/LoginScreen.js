@@ -24,6 +24,7 @@ import stylesPage from "../../styles";
 import * as firebase from "firebase";
 import { useNavigation } from "@react-navigation/native";
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
+import { requestUserPermission } from "../../utils/index";
 
 import { connect } from "react-redux";
 
@@ -49,6 +50,7 @@ class LoginScreen extends Component {
             loading: true,
           });
           this.props.getUserFB(res.user.uid);
+          requestUserPermission();
         },
         (error) => {
           Alert.alert(error.message);

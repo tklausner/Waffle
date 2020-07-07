@@ -2,6 +2,8 @@ import { Platform } from "react-native";
 import * as firebase from "firebase";
 import { FileSystem } from "react-native-unimodules";
 
+import messaging from "@react-native-firebase/messaging";
+
 import ApiKeys from "../constants/ApiKeys";
 
 if (!firebase.apps.length) {
@@ -42,4 +44,17 @@ export const uploadImageToFireBase = async (res) => {
       console.log("ERROR UPLOADING IMAGE", err);
       return false;
     });
+};
+
+export const requestUserPermission = async () => {
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  if (enabled) {
+    console.log("Authorization status:", authStatus);
+    const fcmToken = await messaging().getToken();
+    return fcmToken;
+  }
 };
