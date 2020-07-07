@@ -9,7 +9,6 @@ import {
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-
 import HomeScreen from "../screens/Home/HomeScreen";
 import ExploreScreen from "../screens/Explore/ExploreScreen";
 import SellScreen from "../screens/Sell/SellScreen";
@@ -103,7 +102,7 @@ const ExploreStack = createStackNavigator();
 function ExploreStackScreen() {
   return (
     <ExploreStack.Navigator
-      headerMode="float"
+      headerMode="none"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
       })}
