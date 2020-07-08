@@ -46,17 +46,25 @@ import { updateUser } from "../../api/user";
 
 const contextType = NavigationContext;
 
-// Use useRef for mutable variables that we want to persist
-// without triggering a re-render on their change
-
-function Item({ id, title, selected, onSelect }) {
+function Item({ id, title, selected, onSelect, didWin }) {
   return (
     <TouchableOpacity
       onPress={() => onSelect(id)}
-      style={[styles.item, { backgroundColor: selected ? "grey" : "#f0f0f0" }]}
+      style={[
+        styles.item,
+        {
+          backgroundColor: selected
+            ? "grey"
+            : didWin(id)
+            ? "#00B8FA"
+            : "#f0f0f0",
+        },
+      ]}
     >
+      <Text style={styles.id}>{id + 1} </Text>
       <Text style={styles.title}>
-        {id}: {title}
+        {title ? "@" : ""}
+        {title}
       </Text>
     </TouchableOpacity>
   );
@@ -81,6 +89,7 @@ class WaffleScreen extends Component {
       mainPrice: 0,
       spots: 0,
       loading: false,
+      running: false,
     };
   }
 
@@ -90,6 +99,9 @@ class WaffleScreen extends Component {
   }
 
   componentWillUnmount() {
+    this.setState({
+      running: false,
+    });
     this._isMounted = false;
   }
 
@@ -127,7 +139,14 @@ class WaffleScreen extends Component {
   async chooseWinner() {
     const { post } = this.props;
     await this.props.getWaffleWinner(post._id);
-    console.log(post.winner);
+    console.log(this.props.winner);
+  }
+
+  didWin(id) {
+    if (!this.state.running) {
+      return false;
+    }
+    return this.props.winner ? this.props.winner.spot_number == id : false;
   }
 
   onSelect(id) {
@@ -147,18 +166,13 @@ class WaffleScreen extends Component {
     }
   }
 
-  /*winnerSelect() {
-    console.log("second: " + this.state.winnerSelected._value);
-
-    const newSelected = new Map(this.state.winnerSelected._value);
-    const id = this.state.numShuffled % this.props.route.params.post.main_spots;
-
-    console.log("third:" + id);
-
-    this.setState({numShuffled: this.state.numShuffled + 1})
-
-    return newSelected.set(id, !this.state.winnerSelected._value.get(id));
-  }*/
+  run() {
+    console.log("running");
+    this.setState({
+      running: true,
+    });
+    this.chooseWinner();
+  }
 
   async purchase() {
     const { post, user } = this.props;
@@ -195,15 +209,6 @@ class WaffleScreen extends Component {
     });
     this.setState({ mainPrice: 0 });
   }
-
-  /*winnerHighlight() {
-    console.log("first: " + this.state.winnerSelected._value);
-    const val = this.winnerSelect()
-    Animated.timing(this.state.winnerSelected, {
-      toValue: val,
-      duration: 1000,
-    }).start(() => this.winnerHighlight.bind(this));
-  }*/
 
   render() {
     const { post } = this.props;
@@ -285,6 +290,7 @@ class WaffleScreen extends Component {
               title={item.title}
               selected={!!this.state.selected.get(item.id)}
               onSelect={this.onSelect.bind(this)}
+              didWin={this.didWin.bind(this)}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -300,7 +306,9 @@ class WaffleScreen extends Component {
             >
               <Button
                 onPress={
-                  this.state.spots != post.main_spots
+                  post.waffles_remaining == 0
+                    ? this.run.bind(this)
+                    : this.state.spots != post.main_spots
                     ? this.purchase.bind(this)
                     : null
                 }
@@ -322,6 +330,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.user.user,
     post: state.post.post,
+    winner: state.post.winner,
   };
 };
 
@@ -388,16 +397,24 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: "#f9c2ff",
-    padding: 6,
-    height: 30,
+    padding: "2%",
     width: 250,
     alignSelf: "center",
     borderWidth: 2,
     borderColor: globalStyles.wBlue.color,
     marginTop: -2,
+    borderRadius: 7,
+    flexDirection: "row",
   },
   title: {
-    fontSize: 12,
+    fontSize: 18,
+    color: "#333",
+    fontWeight: "400",
+  },
+  id: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: globalStyles.wBlue.color,
   },
   button: {
     width: "100%",
