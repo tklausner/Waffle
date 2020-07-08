@@ -134,7 +134,7 @@ function ProfileStackScreen() {
     <ProfileStack.Navigator
       headerMode="float"
       screenOptions={({ route }) => ({
-        header: () => GetHeader("Profile"),
+        header: () => GetHeader(route.name),
       })}
       initialRouteName="Profile"
     >

@@ -191,8 +191,8 @@ class Post extends PureComponent {
             navigation={navigation}
           />
         </CardItem>
-        <CardItem>
-          <Left style={[styles.barLeft]}>
+        <CardItem style={{ marginTop: "-2%" }}>
+          <Left style={styles.barLeft}>
             <Button
               transparent
               onPress={() => {
@@ -225,7 +225,9 @@ class Post extends PureComponent {
               <View style={styles.wafflesRemainingView}>
                 <MaterialIcons name="pie-chart" style={styles.barRightIcon} />
                 <Text style={styles.barRightText}>
-                  {`${this.state.waffles_remaining}/ ${post.main_spots}`}
+                  {`${post.main_spots - this.state.waffles_remaining}/ ${
+                    post.main_spots
+                  }`}
                 </Text>
               </View>
               <View style={styles.wafflesRemainingView}>
@@ -325,7 +327,6 @@ const styles = StyleSheet.create({
     paddingBottom: "2%",
   },
   waffleButton: {
-    color: "red",
     justifyContent: "space-around",
   },
   profile: {
@@ -336,10 +337,10 @@ const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("window").width,
     flex: 1,
-    marginLeft: "0%",
-    marginTop: "-5%",
+    marginLeft: "-5.5%",
+    marginRight: "-5.5%",
+    marginTop: "-2%",
     resizeMode: "contain",
-    borderRadius: 70,
     marginBottom: "-10%",
   },
   category: {

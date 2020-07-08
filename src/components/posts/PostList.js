@@ -45,9 +45,13 @@ class PostList extends PureComponent {
   }
 
   shouldUpdate() {
-    var currentTime = new Date();
-    var lastUpdate = new Date(this.props.post.updated_at);
-    return currentTime - lastUpdate < 10000;
+    if (this._isMounted && this.props.post) {
+      var currentTime = new Date();
+      var lastUpdate = new Date(this.props.post.updated_at);
+
+      return currentTime - lastUpdate < 10000;
+    }
+    return false;
   }
 
   async onRefresh() {

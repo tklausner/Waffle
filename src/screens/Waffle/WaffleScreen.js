@@ -81,7 +81,6 @@ class WaffleScreen extends Component {
       mainPrice: 0,
       spots: 0,
       loading: false,
-      newWaffle: true,
     };
   }
 
@@ -120,10 +119,7 @@ class WaffleScreen extends Component {
       updatedWaffles.splice(updatedWaffles.length - 1, 0, this.props.post._id);
       await this.props.updateUser({
         _id: this.props.user._id,
-        waffles: this.props.user.waffles,
-      });
-      this.setState({
-        newWaffle: false,
+        waffles: updatedWaffles,
       });
     }
   }
@@ -190,7 +186,7 @@ class WaffleScreen extends Component {
       wafflers: tempWafflers,
       waffles_remaining: post.waffles_remaining - purchased_spots,
     });
-    if (this.state.newWaffle) {
+    if (user.waffles.find((id) => id == post._id) == null) {
       this.addWaffleToUser();
     }
     this.setState({ selected: new Map() });
@@ -259,7 +255,7 @@ class WaffleScreen extends Component {
                   <View style={styles.textView}>
                     <MaterialIcons name="pie-chart" style={{ fontSize: 40 }} />
                     <View style={styles.fractionView}>
-                      <Text>{post.waffles_remaining}</Text>
+                      <Text>{post.main_spots - post.waffles_remaining}</Text>
                       <Text style={styles.underscore}>
                         {post.main_spots.toString().length <= 2 ? "__" : "____"}
                       </Text>
