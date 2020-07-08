@@ -24,7 +24,6 @@ import { DefaultHeader } from "../components/headers/DefaultHeader";
 import { HomeHeader } from "../components/headers/HomeHeader";
 import { MessagesHeader } from "../components/headers/MessagesHeader";
 import { ProfileHeader } from "../components/headers/ProfileHeader";
-import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
 

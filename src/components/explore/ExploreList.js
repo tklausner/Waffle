@@ -4,7 +4,7 @@ import { Container, Text, Header, Item, Icon, Input } from "native-base";
 import { FlatList, StyleSheet, RefreshControl, Image } from "react-native";
 import { LoadingScreen } from "../loading/LoadingScreen";
 
-import WaffleIcon from "../../../assets/images/OnlineLogo.png";
+import WaffleIcon from "../../../assets/images/icon-128.png";
 
 import { connect } from "react-redux";
 import { readPostsByCategory } from "../../api/post";

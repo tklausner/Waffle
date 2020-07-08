@@ -7,7 +7,7 @@ export function LoadingScreen() {
     <Container style={styles.loadingScreen}>
       <Image
         style={{ width: 150, resizeMode: "contain" }}
-        source={require("../../../assets/images/OnlineLogo.png")}
+        source={require("../../../assets/images/icon-256.png")}
       />
       <ActivityIndicator />
     </Container>

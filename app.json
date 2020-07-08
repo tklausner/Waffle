@@ -1,28 +1,4 @@
 {
-  "expo": {
-    "name": "Waffle",
-    "slug": "Waffle",
-    "privacy": "public",
-    "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/OnlineLogo.png",
-    "splash": {
-      "image": "./assets/images/OnlineLogo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "Waffle"
-    },
-    "android": {
-      "package": "Waffle"
-    },
-    "entryPoint": "node_modules/expo/AppEntry.js"
-  }
+  "name": "Waffle",
+  "displayName": "Waffle"
 }

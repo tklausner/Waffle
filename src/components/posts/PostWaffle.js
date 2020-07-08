@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Button, Text, Container } from "native-base";
 import { connect } from "react-redux";
-import WaffleIcon from "../../../assets/images/OnlineLogo.png";
+import WaffleIcon from "../../../assets/images/icon-128.png";
 import Swipeout from "react-native-swipeout";
 import { Swipeable } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
