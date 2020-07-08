@@ -12,7 +12,7 @@ import ApiKeys from "./src/constants/ApiKeys";
 import { loadCache } from "./src/utils/index";
 import thunk from "redux-thunk";
 
-import { LoadingScreen } from "./src/components/loading/LoadingScreen";
+import SplashScreen from "react-native-splash-screen";
 // store containing redux state
 const store = createStore(rootReducer, applyMiddleware(thunk));
 loadCache();
@@ -31,17 +31,15 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    SplashScreen.hide();
     this.setState({ isReady: true });
   }
 
   render() {
-    if (!this.state.isReady) {
-      return <LoadingScreen />;
-    }
-    return (
+    return this.state.isReady ? (
       <Provider store={store}>
         <AuthNavigator />
       </Provider>
-    );
+    ) : null;
   }
 }

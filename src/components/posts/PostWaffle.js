@@ -86,6 +86,17 @@ class PostWaffle extends Component {
     );
   }
 
+  async addWaffleToUser() {
+    if (this._isMounted) {
+      let updatedWaffles = this.props.user.waffles.slice();
+      updatedWaffles.splice(updatedWaffles.length - 1, 0, this.props.post._id);
+      await this.props.updateUser({
+        _id: this.props.user._id,
+        waffles: updatedWaffles,
+      });
+    }
+  }
+
   async quickPurchase() {
     const { post } = this.props;
     if (this.state.number_of_spots > 0 && this.state.price > 0) {
@@ -118,6 +129,7 @@ class PostWaffle extends Component {
         wafflers: data,
         waffles_remaining: post.waffles_remaining - this.state.number_of_spots,
       });
+      this.addWaffleToUser();
     }
     this.setState({
       showWaffle: false,

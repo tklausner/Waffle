@@ -200,7 +200,10 @@ class WaffleScreen extends Component {
       wafflers: tempWafflers,
       waffles_remaining: post.waffles_remaining - purchased_spots,
     });
-    if (user.waffles.find((id) => id == post._id) == null) {
+    if (
+      purchased_spots > 0 &&
+      user.waffles.find((id) => id == post._id) == null
+    ) {
       this.addWaffleToUser();
     }
     this.setState({ selected: new Map() });
