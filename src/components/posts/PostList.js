@@ -5,6 +5,7 @@ import { FlatList, StyleSheet, RefreshControl, Text } from "react-native";
 
 import { connect } from "react-redux";
 import { getPost, readPosts } from "../../api/post";
+import { updateUser } from "../../api/user";
 
 import { LoadingScreen } from "../../components/loading/LoadingScreen";
 import { NavigationContext } from "@react-navigation/native";
@@ -25,12 +26,16 @@ class PostList extends PureComponent {
 
   async componentDidMount() {
     const navigation = this.context;
+
     this._unsubscribe = navigation.addListener("focus", async (res) => {
-      this.setState({
-        rerender: true,
-      });
-      this.onRefresh();
+      if (this.shouldUpdate() == true) {
+        this.setState({
+          rerender: true,
+        });
+        this.onRefresh();
+      }
     });
+
     this._isMounted = true;
     await this.props.readPosts();
     this.setState({ posts: this.props.posts.reverse() });
@@ -39,8 +44,13 @@ class PostList extends PureComponent {
     });
   }
 
+  shouldUpdate() {
+    var currentTime = new Date();
+    var lastUpdate = new Date(this.props.post.updated_at);
+    return currentTime - lastUpdate < 10000;
+  }
+
   async onRefresh() {
-    console.log("refresh");
     this.setState({ isRefreshing: true });
     await this.props.readPosts();
     await this.setState({ posts: this.props.posts.reverse() });
@@ -97,6 +107,7 @@ const mapStateToProps = (state) => {
   return {
     post: state.post.post,
     posts: state.post.posts,
+    user: state.user.user,
   };
 };
 
@@ -104,6 +115,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getPost: (post_id) => dispatch(getPost(post_id)),
     readPosts: () => dispatch(readPosts()),
+    updateUser: (id) => dispatch(updateUser(id)),
   };
 };
 

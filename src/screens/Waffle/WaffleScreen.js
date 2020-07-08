@@ -42,6 +42,8 @@ import {
   readPosts,
 } from "../../api/post";
 
+import { updateUser } from "../../api/user";
+
 const contextType = NavigationContext;
 
 // Use useRef for mutable variables that we want to persist
@@ -79,6 +81,7 @@ class WaffleScreen extends Component {
       mainPrice: 0,
       spots: 0,
       loading: false,
+      newWaffle: true,
     };
   }
 
@@ -88,8 +91,6 @@ class WaffleScreen extends Component {
   }
 
   componentWillUnmount() {
-    console.log("unmounting");
-
     this._isMounted = false;
   }
 
@@ -109,6 +110,20 @@ class WaffleScreen extends Component {
       });
       this.setState({
         loading: false,
+      });
+    }
+  }
+
+  async addWaffleToUser() {
+    if (this._isMounted) {
+      let updatedWaffles = this.props.user.waffles.slice();
+      updatedWaffles.splice(updatedWaffles.length - 1, 0, this.props.post._id);
+      await this.props.updateUser({
+        _id: this.props.user._id,
+        waffles: this.props.user.waffles,
+      });
+      this.setState({
+        newWaffle: false,
       });
     }
   }
@@ -150,7 +165,7 @@ class WaffleScreen extends Component {
   }*/
 
   async purchase() {
-    const { post } = this.props;
+    const { post, user } = this.props;
     var tempData = this.state.data.slice();
     var tempWafflers = post.wafflers.slice();
     var purchased_spots = 0;
@@ -158,13 +173,13 @@ class WaffleScreen extends Component {
       if (key[1] == true) {
         tempData[key[0]] = {
           id: key[0],
-          title: this.props.user.username,
+          title: user.username,
         };
         this.setState({ data: tempData });
         tempWafflers.splice(tempWafflers.length - 1, 0, {
           spot_number: key[0],
-          username: this.props.user.username,
-          user_id: this.props.user._id,
+          username: user.username,
+          user_id: user._id,
         });
         purchased_spots += 1;
       }
@@ -175,6 +190,9 @@ class WaffleScreen extends Component {
       wafflers: tempWafflers,
       waffles_remaining: post.waffles_remaining - purchased_spots,
     });
+    if (this.state.newWaffle) {
+      this.addWaffleToUser();
+    }
     this.setState({ selected: new Map() });
     this.setState({
       spots: post.waffles_remaining,
@@ -317,6 +335,7 @@ const mapDispatchToProps = (dispatch) => {
     getWaffleWinner: (id) => dispatch(getWaffleWinner(id)),
     getPost: (id) => dispatch(getPost(id)),
     readPosts: () => dispatch(readPosts()),
+    updateUser: (id) => dispatch(updateUser(id)),
   };
 };
 
