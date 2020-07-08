@@ -31,7 +31,7 @@ class ProfileFeed extends Component {
     }
   };
   _renderItem = ({ item }) => {
-    return <PostPreview post={item} key={item._id} route={this.props.route} />;
+    return <PostPreview post={item} key={item._id} />;
   };
   render() {
     return (

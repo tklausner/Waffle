@@ -116,7 +116,7 @@ class UserProfileScreen extends Component {
           </CardItem>
         </Card>
         {this.state.storeSelected ? (
-          <ProfileFeed posts={user.store} route={"Home_Product"} />
+          <ProfileFeed posts={user.store} />
         ) : !this.state.storeSelected ? (
           <ReviewList
             reviews={user.reviews}

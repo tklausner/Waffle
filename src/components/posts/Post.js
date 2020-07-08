@@ -25,7 +25,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import globalStyles from "../../styles";
 
 import { connect } from "react-redux";
-import { deletePost, readPosts, updatePost } from "../../api/post";
+import { deletePost, readPosts, updatePost, getPost } from "../../api/post";
 import { updateUser, getTempUser } from "../../api/user";
 
 import { NavigationContext } from "@react-navigation/native";
@@ -56,6 +56,7 @@ class Post extends PureComponent {
       comments: [],
       tempUser: null,
       waffleType: "Main",
+      waffles_remaining: 0,
     };
   }
   async componentDidMount() {
@@ -63,6 +64,7 @@ class Post extends PureComponent {
     if (this._isMounted) {
       this.setState({
         saved: this.getSavedState(),
+        waffles_remaining: this.props.post.waffles_remaining,
       });
       await this.fetchPostUser();
     }
@@ -78,6 +80,11 @@ class Post extends PureComponent {
         waffleType: waffleState.waffleType,
       });
     }
+    if (this.state.waffles_remaining !== waffleState.waffles_remaining) {
+      this.setState({
+        waffles_remaining: waffleState.waffles_remaining,
+      });
+    }
   }
 
   async fetchPostUser() {
@@ -88,34 +95,6 @@ class Post extends PureComponent {
         profile: this.props.temp_user.profile,
         tempUser: this.props.temp_user,
       });
-    }
-  }
-
-  navigateComments() {
-    const navigation = this.context;
-    const { post } = this.props;
-    const { type } = this.props;
-    if (type && this._isMounted) {
-      switch (type) {
-        case "Home":
-        case "Home_Product":
-          navigation.navigate("Home_Comments", {
-            post_id: post._id,
-          });
-          return;
-        case "Explore_Product":
-          navigation.navigate("Explore_Comments", {
-            post_id: post._id,
-          });
-          return;
-        case "Profile_Product":
-          navigation.navigate("Profile_Comments", {
-            post_id: post._id,
-          });
-          return;
-        default:
-          return;
-      }
     }
   }
 
@@ -212,8 +191,8 @@ class Post extends PureComponent {
             navigation={navigation}
           />
         </CardItem>
-        <CardItem>
-          <Left style={[styles.barLeft]}>
+        <CardItem style={{ marginTop: "-2%" }}>
+          <Left style={styles.barLeft}>
             <Button
               transparent
               onPress={() => {
@@ -235,17 +214,20 @@ class Post extends PureComponent {
           </Left>
           <TouchableOpacity
             style={styles.barRightTouchable}
-            onPress={() => {
-              navigation.navigate("Waffle", { tempUser: tempUser, post: post });
+            onPress={async () => {
+              await this.props.getPost(post._id);
+              navigation.navigate("Waffle", {
+                tempUser: tempUser,
+              });
             }}
           >
             <Right style={[styles.barRight, styles.barStyle]}>
               <View style={styles.wafflesRemainingView}>
                 <MaterialIcons name="pie-chart" style={styles.barRightIcon} />
                 <Text style={styles.barRightText}>
-                  {this.state.waffleType === "Main"
-                    ? post.main_spots
-                    : post.mini_spots}
+                  {`${post.main_spots - this.state.waffles_remaining}/ ${
+                    post.main_spots
+                  }`}
                 </Text>
               </View>
               <View style={styles.wafflesRemainingView}>
@@ -270,7 +252,9 @@ class Post extends PureComponent {
           button
           style={styles.viewMore}
           onPress={() => {
-            this.navigateComments();
+            navigation.navigate("Comments", {
+              post_id: post._id,
+            });
           }}
         >
           <Text style={styles.viewMore}>View comments</Text>
@@ -286,6 +270,7 @@ const mapDispatchToProps = (dispatch) => {
     deletePost: (id) => dispatch(deletePost(id)),
     readPosts: () => dispatch(readPosts()),
     getTempUser: (id) => dispatch(getTempUser(id)),
+    getPost: (id) => dispatch(getPost(id)),
   };
 };
 
@@ -342,7 +327,6 @@ const styles = StyleSheet.create({
     paddingBottom: "2%",
   },
   waffleButton: {
-    color: "red",
     justifyContent: "space-around",
   },
   profile: {
@@ -353,10 +337,10 @@ const styles = StyleSheet.create({
   image: {
     height: Dimensions.get("window").width,
     flex: 1,
-    marginLeft: "0%",
-    marginTop: "-5%",
+    marginLeft: "-5.5%",
+    marginRight: "-5.5%",
+    marginTop: "-2%",
     resizeMode: "contain",
-    borderRadius: 70,
     marginBottom: "-10%",
   },
   category: {
