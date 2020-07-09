@@ -96,7 +96,7 @@ export default class CachedImage extends Component {
           console.log("[ERROR 3]", err);
           this.setState({
             uri: Asset.fromModule(
-              require("../../../assets/images/OnlineLogo.png")
+              require("../../../assets/images/CameraRollLight.png")
             ).uri,
           });
           this.setState({ loading: false });

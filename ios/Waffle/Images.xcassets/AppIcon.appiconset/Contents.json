@@ -6,6 +6,7 @@
       "size" : "20x20"
     },
     {
+      "filename" : "Icon-60.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
@@ -26,18 +27,19 @@
       "size" : "40x40"
     },
     {
+      "filename" : "Icon-121.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "Logo120c.png",
+      "filename" : "Icon-120.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "Logo180c.png",
+      "filename" : "AppIcon-180.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
