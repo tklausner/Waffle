@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { View, Image } from "react-native";
 import { storageRef } from "../../utils";
-import * as FileSystem from "expo-file-system";
-import { Asset } from "expo-asset";
+import { Asset, FileSystem } from "react-native-unimodules";
 
 export default class CachedImage extends Component {
   _isMounted = false;
@@ -97,7 +96,7 @@ export default class CachedImage extends Component {
           console.log("[ERROR 3]", err);
           this.setState({
             uri: Asset.fromModule(
-              require("../../../assets/images/OnlineLogo.png")
+              require("../../../assets/images/CameraRollLight.png")
             ).uri,
           });
           this.setState({ loading: false });

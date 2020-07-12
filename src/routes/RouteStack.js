@@ -6,7 +6,8 @@ import {
   NavigationContainer,
   createAppContainer,
 } from "@react-navigation/native";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "../screens/Home/HomeScreen";
 import ExploreScreen from "../screens/Explore/ExploreScreen";
@@ -23,11 +24,12 @@ import { DefaultHeader } from "../components/headers/DefaultHeader";
 import { HomeHeader } from "../components/headers/HomeHeader";
 import { MessagesHeader } from "../components/headers/MessagesHeader";
 import { ProfileHeader } from "../components/headers/ProfileHeader";
-import { ExploreHeader } from "../components/headers/ExploreHeader";
 import { SearchHeader } from "../components/headers/SearchHeader";
 import { SellImageHeader } from "../components/headers/SellImageHeader";
 
 import { Drawer } from "../screens/Profile/Drawer";
+
+import messaging from "@react-native-firebase/messaging";
 
 // helper function for  getting associated header
 function GetHeader(route) {
@@ -37,12 +39,8 @@ function GetHeader(route) {
       break;
     case "Waffle":
     case "Messaging":
-    case "Explore_Comments":
-    case "Profile_Comments":
-    case "Home_Comments":
-    case "Profile_Product":
-    case "Explore_Product":
-    case "Home_Product":
+    case "Comments":
+    case "Product":
     case "UserProfile":
       return <MessagesHeader />;
       break;
@@ -50,10 +48,8 @@ function GetHeader(route) {
       return <ProfileHeader />;
       break;
     case "Explore":
-      return <ExploreHeader />;
-      break;
     case "Search":
-      return <SearchHeader />;
+      return null;
       break;
     case "Sell":
       return <SellImageHeader />;
@@ -88,10 +84,10 @@ function HomeStackScreen() {
     >
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Waffle" component={WaffleScreen} />
-      <HomeStack.Screen name="Home_Comments" component={CommentScreen} />
+      <HomeStack.Screen name="Product" component={ProductScreen} />
+      <HomeStack.Screen name="Comments" component={CommentScreen} />
       <HomeStack.Screen name="Messaging" component={MessageStackScreen} />
       <HomeStack.Screen name="UserProfile" component={UserProfileScreen} />
-      <HomeStack.Screen name="Home_Product" component={ProductScreen} />
     </HomeStack.Navigator>
   );
 }
@@ -100,11 +96,16 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   return (
-    <ExploreStack.Navigator headerMode="none">
+    <ExploreStack.Navigator
+      headerMode="float"
+      screenOptions={({ route }) => ({
+        header: () => GetHeader(route.name),
+      })}
+    >
       <ExploreStack.Screen name="Explore" component={ExploreScreen} />
       <ExploreStack.Screen name="Search" component={ExploreScreen} />
-      <ExploreStack.Screen name="Explore_Product" component={ProductScreen} />
-      <ExploreStack.Screen name="Explore_Comments" component={CommentScreen} />
+      <ExploreStack.Screen name="Product" component={ProductScreen} />
+      <ExploreStack.Screen name="Comments" component={CommentScreen} />
     </ExploreStack.Navigator>
   );
 }
@@ -130,7 +131,6 @@ const ProfileStack = createStackNavigator();
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator
-      name="Profile"
       headerMode="float"
       screenOptions={({ route }) => ({
         header: () => GetHeader(route.name),
@@ -138,8 +138,8 @@ function ProfileStackScreen() {
       initialRouteName="Profile"
     >
       <ProfileStack.Screen name="Profile" component={Drawer} />
-      <ProfileStack.Screen name="Profile_Product" component={ProductScreen} />
-      <ProfileStack.Screen name="Profile_Comments" component={CommentScreen} />
+      <ProfileStack.Screen name="Product" component={ProductScreen} />
+      <ProfileStack.Screen name="Comments" component={CommentScreen} />
     </ProfileStack.Navigator>
   );
 }

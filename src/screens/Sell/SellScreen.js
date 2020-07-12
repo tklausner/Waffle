@@ -11,9 +11,8 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import { Asset } from "expo-asset";
-import { Ionicons } from "@expo/vector-icons";
+import { Asset } from "react-native-unimodules";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import globalStyles from "../../styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -26,6 +25,8 @@ import { connect } from "react-redux";
 
 import { NavigationContext } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+
+import ImagePicker from "react-native-image-picker";
 
 const contextType = NavigationContext;
 
@@ -54,43 +55,33 @@ class SellScreen extends Component {
     };
   };
 
+  onImagePick = async (res) => {
+    if (res.error) {
+      console.log("[ERROR]", res.error);
+    } else if (res.didCancel) {
+      console.log("User cancelled image picker");
+    } else {
+      console.log(res.uri);
+      this.setState({
+        image: res.uri,
+      });
+    }
+  };
+
   pickImage = async () => {
     Keyboard.dismiss();
-    const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-    if (status !== "granted") {
-      alert("Sorry, we need camera permissions to make this work!");
-    } else {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      console.log(result);
-
-      if (!result.cancelled) {
-        this.setState({ image: result.uri });
-      }
-    }
+    await ImagePicker.launchImageLibrary(
+      { mediaType: "photo", allowsEditing: true, quality: 1 },
+      (callback = this.onImagePick)
+    );
   };
 
   takePicture = async () => {
     Keyboard.dismiss();
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      alert("Sorry, we need camera permissions to make this work!");
-    } else {
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        this.setState({ image: result.uri });
-      }
-    }
+    await ImagePicker.launchCamera(
+      { mediaType: "photo", allowsEditing: true, quality: 1 },
+      (callback = this.onImagePick)
+    );
   };
 
   waffleUpload = async () => {
@@ -280,8 +271,15 @@ class SellScreen extends Component {
         </Button>
       </KeyboardAwareScrollView>
     ) : (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'white' }}>
-        <Spinner color='grey' />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <Spinner color="grey" />
       </View>
     );
   }

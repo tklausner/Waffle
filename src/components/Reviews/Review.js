@@ -12,7 +12,7 @@ import {
   List,
   ListItem,
 } from "native-base";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import globalStyles from "../../styles";
 import { connect } from "react-redux";
 import { getTempUser } from "../../api/user";

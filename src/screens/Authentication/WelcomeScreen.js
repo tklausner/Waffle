@@ -13,7 +13,7 @@ export default class WelcomeScreen extends Component {
         <View style={styles.container}>
           <Image
             style={styles.logo}
-            source={require("../../../assets/images/OnlineLogo.png")}
+            source={require("../../../assets/images/icon-256.png")}
           />
           <Text style={styles.welcomeText}>Welcome to Waffle</Text>
           <Text style={styles.smallText}>
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    width: "60%",
     resizeMode: "contain",
     marginBottom: 20,
   },

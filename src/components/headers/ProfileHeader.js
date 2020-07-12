@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Header, Left, Body, Right, Title, Button } from "native-base";
 import { StyleSheet } from "react-native";
 import globalStyles from "../../styles";
-import { MaterialIcons } from "@expo/vector-icons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import * as firebase from "firebase";
 import { useDispatch } from "react-redux";
 import { logout } from "../../api/user";

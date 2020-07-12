@@ -8,7 +8,7 @@ export function EmptyScreen({ content }) {
       <Text style={styles.text}>{content}</Text>
       <Image
         style={{ width: 150, resizeMode: "contain" }}
-        source={require("../../../assets/images/OnlineLogo.png")}
+        source={require("../../../assets/images/icon-256.png")}
       />
     </View>
   );

@@ -5,26 +5,7 @@ import {
 } from "../actions/messageActions";
 
 const initialState = {
-  messages: [
-    {
-      id: "1",
-      username: "tklauklau",
-      profile: require("../../../assets/images/teddy.png"),
-      content: "blah blah blah",
-    },
-    {
-      id: "2",
-      username: "mimi>gaby",
-      profile: require("../../../assets/images/ethan.jpeg"),
-      content: "Too cool for miami chicks",
-    },
-    {
-      id: "3",
-      username: "RoorRus",
-      profile: require("../../../assets/images/kyle.jpg"),
-      content: "GOD shining his light",
-    },
-  ],
+  messages: [],
   pending: false,
   error: null,
 };
