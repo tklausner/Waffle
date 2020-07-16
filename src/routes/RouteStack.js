@@ -92,24 +92,6 @@ function HomeStackScreen() {
   );
 }
 
-const ExploreStack = createStackNavigator();
-
-function ExploreStackScreen() {
-  return (
-    <ExploreStack.Navigator
-      headerMode="float"
-      screenOptions={({ route }) => ({
-        header: () => GetHeader(route.name),
-      })}
-    >
-      <ExploreStack.Screen name="Explore" component={ExploreScreen} />
-      <ExploreStack.Screen name="Search" component={ExploreScreen} />
-      <ExploreStack.Screen name="Product" component={ProductScreen} />
-      <ExploreStack.Screen name="Comments" component={CommentScreen} />
-    </ExploreStack.Navigator>
-  );
-}
-
 const SellStack = createStackNavigator();
 
 function SellStackScreen() {
@@ -182,7 +164,6 @@ export default function RouteStack() {
         }}
       >
         <BottomTab.Screen name="Home" component={HomeStackScreen} />
-        <BottomTab.Screen name="Explore" component={ExploreStackScreen} />
         <BottomTab.Screen name="Sell" component={SellStackScreen} />
         <BottomTab.Screen name="Profile" component={ProfileStackScreen} />
       </BottomTab.Navigator>

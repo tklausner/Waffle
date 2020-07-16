@@ -22,6 +22,7 @@ import {
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import ProgressBar from "react-native-progress/Bar";
 import globalStyles from "../../styles";
 
 import { connect } from "react-redux";
@@ -103,9 +104,18 @@ class Post extends PureComponent {
     const { post } = this.props;
     if (post) {
       return (
-        (115 * (post.main_spots - this.state.waffles_remaining)) /
-        post.main_spots
+        115 *
+          ((post.main_spots - this.state.waffles_remaining) / post.main_spots) +
+        20
       );
+    }
+    return 0;
+  }
+
+  getProgress() {
+    const { post } = this.props;
+    if (post) {
+      return (post.main_spots - this.state.waffles_remaining) / post.main_spots;
     }
     return 0;
   }
@@ -210,21 +220,22 @@ class Post extends PureComponent {
         <CardItem>
           <CachedImage image={post.image} style={styles.image}></CachedImage>
         </CardItem>
-        <CardItem>
+        <CardItem
+          style={{
+            backgroundColor: "rgba(255,255,255,.95)",
+          }}
+        >
           <PostWaffle
             handleState={this.passProps.bind(this)}
             post={post}
             navigation={navigation}
           />
-          <View style={styles.wafflesRemainingView}>
+          <View style={styles.waffleValueView}>
             <MaterialIcons
               name="monetization-on"
-              style={{
-                fontSize: 25,
-                marginTop: "5%",
-              }}
+              style={styles.waffleValueIcon}
             />
-            <Text style={styles.barRightText}>{post.value}</Text>
+            <Text style={styles.waffleValueText}>{post.value}</Text>
           </View>
         </CardItem>
         <CardItem style={{ marginTop: "-2%" }}>
@@ -273,15 +284,22 @@ class Post extends PureComponent {
               <View style={styles.wafflesRemainingView}>
                 <MaterialIcons name="pie-chart" style={styles.spotsLeft} />
                 <View style={styles.progressBar}>
-                  {this.getWaffleProgress() > 10 ? (
+                  {this.getWaffleProgress() > 20 ? (
                     <View
                       style={[
-                        { width: this.getWaffleProgress() },
+                        {
+                          width: this.getWaffleProgress(),
+                        },
                         styles.progressBarOverlay,
                       ]}
-                    ></View>
+                    >
+                      <Text style={styles.progressText}>
+                        {post.main_spots - this.state.waffles_remaining}
+                      </Text>
+                    </View>
                   ) : null}
                 </View>
+                <ProgressBar progress={0.9} />
               </View>
             </Right>
           </TouchableOpacity>
@@ -334,6 +352,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: "5%",
   },
+  waffleValueView: {
+    flex: 0,
+    flexDirection: "row",
+    position: "absolute",
+    right: "5%",
+  },
+  waffleValueText: {
+    paddingLeft: "1%",
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#999",
+  },
+  waffleValueIcon: {
+    fontSize: 25,
+    marginTop: "6%",
+    color: globalStyles.wBlue.color,
+    borderColor: globalStyles.wBlue.color,
+    borderRadius: 15,
+  },
   barStyle: {
     borderWidth: 3,
     borderColor: "#00B8FA",
@@ -371,6 +408,12 @@ const styles = StyleSheet.create({
     backgroundColor: globalStyles.wBlue.color,
     borderRadius: 20,
   },
+  progressText: {
+    fontWeight: "600",
+    color: "#000",
+    marginLeft: "10%",
+    textAlign: "center",
+  },
   spotsLeft: {
     fontSize: 25,
     color: "#999",
@@ -400,7 +443,7 @@ const styles = StyleSheet.create({
     marginRight: "-5.5%",
     marginTop: "-2%",
     resizeMode: "contain",
-    marginBottom: "-10%",
+    marginBottom: "-20%",
   },
   category: {
     fontWeight: "bold",
