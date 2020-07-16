@@ -50,6 +50,7 @@ class Post extends PureComponent {
     super(props);
     this.state = {
       saved: false,
+      liked: false,
       username: "",
       profile: "",
       comment: "",
@@ -96,6 +97,40 @@ class Post extends PureComponent {
         tempUser: this.props.temp_user,
       });
     }
+  }
+
+  getWaffleProgress() {
+    const { post } = this.props;
+    if (post) {
+      return (
+        115 *
+          ((post.main_spots - this.state.waffles_remaining) / post.main_spots) +
+        20
+      );
+    }
+    return 0;
+  }
+
+  getProgress() {
+    const { post } = this.props;
+    if (post) {
+      return (post.main_spots - this.state.waffles_remaining) / post.main_spots;
+    }
+    return 0;
+  }
+
+  addToLiked() {
+    if (this._isMounted)
+      this.setState({
+        liked: true,
+      });
+  }
+
+  removeFromLiked() {
+    if (this._isMounted)
+      this.setState({
+        liked: false,
+      });
   }
 
   addToSaved() {
@@ -184,15 +219,41 @@ class Post extends PureComponent {
         <CardItem>
           <CachedImage image={post.image} style={styles.image}></CachedImage>
         </CardItem>
-        <CardItem>
+        <CardItem
+          style={{
+            backgroundColor: "rgba(255,255,255,.95)",
+          }}
+        >
           <PostWaffle
             handleState={this.passProps.bind(this)}
             post={post}
             navigation={navigation}
           />
+          <View style={styles.waffleValueView}>
+            <MaterialIcons
+              name="monetization-on"
+              style={styles.waffleValueIcon}
+            />
+            <Text style={styles.waffleValueText}>{post.value}</Text>
+          </View>
         </CardItem>
         <CardItem style={{ marginTop: "-2%" }}>
           <Left style={styles.barLeft}>
+            <Button
+              transparent
+              onPress={() => {
+                if (this.state.liked) {
+                  this.removeFromLiked();
+                } else {
+                  this.addToLiked();
+                }
+              }}
+            >
+              <MaterialIcons
+                name={this.state.liked ? "favorite" : "favorite-border"}
+                style={{ fontSize: 32 }}
+              />
+            </Button>
             <Button
               transparent
               onPress={() => {
@@ -208,9 +269,6 @@ class Post extends PureComponent {
                 style={{ fontSize: 32 }}
               />
             </Button>
-            <Button transparent>
-              <MaterialIcons name="send" style={{ fontSize: 32 }} />
-            </Button>
           </Left>
           <TouchableOpacity
             style={styles.barRightTouchable}
@@ -221,25 +279,25 @@ class Post extends PureComponent {
               });
             }}
           >
-            <Right style={[styles.barRight, styles.barStyle]}>
+            <Right style={styles.barRight}>
               <View style={styles.wafflesRemainingView}>
-                <MaterialIcons name="pie-chart" style={styles.barRightIcon} />
-                <Text style={styles.barRightText}>
-                  {`${post.main_spots - this.state.waffles_remaining}/ ${
-                    post.main_spots
-                  }`}
-                </Text>
-              </View>
-              <View style={styles.wafflesRemainingView}>
-                <MaterialIcons
-                  name="monetization-on"
-                  style={styles.barRightIcon}
-                />
-                <Text style={styles.barRightText}>
-                  {this.state.waffleType === "Main"
-                    ? post.main_price
-                    : post.mini_price}
-                </Text>
+                <MaterialIcons name="pie-chart" style={styles.spotsLeft} />
+                <View style={styles.progressBar}>
+                  {this.getWaffleProgress() > 20 ? (
+                    <View
+                      style={[
+                        {
+                          width: this.getWaffleProgress(),
+                        },
+                        styles.progressBarOverlay,
+                      ]}
+                    >
+                      <Text style={styles.progressText}>
+                        {post.main_spots - this.state.waffles_remaining}
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
               </View>
             </Right>
           </TouchableOpacity>
@@ -290,8 +348,26 @@ const styles = StyleSheet.create({
   wafflesRemainingView: {
     flex: 0,
     flexDirection: "row",
-    paddingRight: 15,
-    paddingLeft: 15,
+    paddingLeft: "5%",
+  },
+  waffleValueView: {
+    flex: 0,
+    flexDirection: "row",
+    position: "absolute",
+    right: "5%",
+  },
+  waffleValueText: {
+    paddingLeft: "1%",
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#999",
+  },
+  waffleValueIcon: {
+    fontSize: 25,
+    marginTop: "6%",
+    color: globalStyles.wBlue.color,
+    borderColor: globalStyles.wBlue.color,
+    borderRadius: 15,
   },
   barStyle: {
     borderWidth: 3,
@@ -311,13 +387,37 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   barRightText: {
-    paddingLeft: "5%",
+    paddingLeft: "1%",
     fontSize: 25,
     fontWeight: "600",
   },
-  barRightIcon: {
+  progressBar: {
+    borderWidth: 3,
+    borderColor: "#999",
+    width: 135,
+    height: 30,
+    borderRadius: 20,
+    marginLeft: "5%",
+  },
+  progressBarOverlay: {
+    borderWidth: 1,
+    borderColor: "#999",
+    height: 25,
+    backgroundColor: globalStyles.wBlue.color,
+    borderRadius: 20,
+  },
+  progressText: {
+    fontWeight: "600",
+    color: "#000",
+    marginLeft: "10%",
+    textAlign: "center",
+  },
+  spotsLeft: {
     fontSize: 25,
-    marginTop: "5%",
+    color: "#999",
+    borderColor: globalStyles.wBlue.color,
+    borderRadius: 15,
+    borderWidth: 3,
   },
   viewMore: {
     fontSize: 15,
@@ -341,7 +441,7 @@ const styles = StyleSheet.create({
     marginRight: "-5.5%",
     marginTop: "-2%",
     resizeMode: "contain",
-    marginBottom: "-10%",
+    marginBottom: "-20%",
   },
   category: {
     fontWeight: "bold",

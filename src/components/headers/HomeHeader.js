@@ -12,12 +12,12 @@ export function HomeHeader() {
     <Header>
       <Left></Left>
       <Body>
-        <Title style={[styles.header, globalStyles.wBlue]}>Waffle</Title>
+        <Title style={[styles.header, globalStyles.wBlue]}>waffle</Title>
       </Body>
       <Right>
         <Button transparent onPress={() => navigation.navigate("Messaging")}>
           <MaterialIcons
-            name="mail"
+            name="sort"
             style={[styles.header, globalStyles.wYellow]}
           />
         </Button>
@@ -30,6 +30,7 @@ module.export = HomeHeader;
 const styles = StyleSheet.create({
   header: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: 34,
+    fontWeight: "700",
   },
 });
