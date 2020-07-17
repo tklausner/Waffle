@@ -24,6 +24,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import ProgressBar from "react-native-progress/Bar";
+
 import globalStyles from "../../styles";
 import WaffleIcon from "../../../assets/images/icon-128.png";
 
@@ -35,6 +36,10 @@ import { NavigationContext } from "@react-navigation/native";
 
 import CachedImage from "../images/CachedImage";
 import AddComment from "./AddComment";
+
+import CardFlip from "react-native-card-flip";
+
+import Waffle from "../waffles/Waffle";
 
 const _renderItem = ({ item }) => {
   return (
@@ -206,18 +211,29 @@ class Post extends PureComponent {
 
   async addWaffleToUser() {
     if (this._isMounted) {
-      let updatedWaffles = this.props.user.waffles.slice();
-      if (updatedWaffles.indexOf(this.props.post._id) < 0) {
-        updatedWaffles.splice(
-          updatedWaffles.length - 1,
-          0,
-          this.props.post._id
-        );
-        await this.props.updateUser({
-          _id: this.props.user._id,
-          waffles: updatedWaffles,
+      const { user, post } = this.props;
+      let updatedWaffles = user.waffles.slice();
+      let index = updatedWaffles.findIndex((i) => i.post_id === post._id);
+      if (index < 0) {
+        updatedWaffles.splice(updatedWaffles.length - 1, 0, {
+          post_id: post._id,
+          spots: this.state.number_of_spots,
+        });
+      } else {
+        let waffle = updatedWaffles[index];
+        updatedWaffles.splice(index, 1, {
+          post_id: post._id,
+          spots: waffle.spots + this.state.number_of_spots,
         });
       }
+      await this.props.updateUser({
+        _id: user._id,
+        waffles: updatedWaffles,
+      });
+
+      this.setState({
+        number_of_spots: 0,
+      });
     }
   }
 
@@ -283,9 +299,29 @@ class Post extends PureComponent {
         <CardItem>
           <Text style={styles.category}>#{post.category}</Text>
         </CardItem>
-        <CardItem>
-          <CachedImage image={post.image} style={styles.image}></CachedImage>
-        </CardItem>
+
+        <CardFlip
+          style={{
+            height: Dimensions.get("window").width,
+          }}
+          ref={(card) => (this.card = card)}
+        >
+          <TouchableOpacity
+            style={styles.image}
+            onPress={() => this.card.flip()}
+          >
+            <CachedImage image={post.image} style={styles.image}></CachedImage>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              height: Dimensions.get("window").width,
+            }}
+            onPress={() => this.card.flip()}
+          >
+            <Waffle tempUser={tempUser} post={post} />
+          </TouchableOpacity>
+        </CardFlip>
+
         <CardItem
           style={{
             backgroundColor: "rgba(255,255,255,.95)",
