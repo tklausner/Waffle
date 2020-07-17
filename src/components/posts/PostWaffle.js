@@ -14,10 +14,8 @@ import Swipeout from "react-native-swipeout";
 import { Swipeable } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { updatePost, getPost } from "../../api/post";
-
-const LeftAction = () => {
-  return <View style={styles.swiped}></View>;
-};
+import { updateUser } from "../../api/user";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 class PostWaffle extends Component {
   _isMounted = false;
@@ -30,6 +28,29 @@ class PostWaffle extends Component {
       showWaffle: false,
       waffles_remaining: 0,
     };
+  }
+
+  number_button() {
+    return (
+      <Button
+        transparent
+        style={styles.pickerNumber}
+        onPress={() => {
+          this.quickPurchase();
+        }}
+      >
+        <Text
+          style={{
+            color: "#00B8FA",
+            fontSize: 28,
+            fontWeight: "600",
+            marginLeft: "-5%",
+          }}
+        >
+          {this.state.number_of_spots}
+        </Text>
+      </Button>
+    );
   }
 
   picker_number() {
@@ -58,34 +79,6 @@ class PostWaffle extends Component {
     );
   }
 
-  main_mini() {
-    return (
-      <Button
-        rounded
-        style={
-          this.state.waffleType === "Main"
-            ? [styles.waffleStyle, styles.miniSelected]
-            : [styles.waffleStyle, styles.mainSelected]
-        }
-        onPress={() => {
-          if (this._isMounted)
-            this.setState({
-              waffleType: this.state.waffleType === "Main" ? "Mini" : "Main",
-            });
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 24,
-            color: this.state.waffleType === "Main" ? "#00B8FA" : "#DDD",
-          }}
-        >
-          {this.state.waffleType}
-        </Text>
-      </Button>
-    );
-  }
-
   async addWaffleToUser() {
     if (this._isMounted) {
       let updatedWaffles = this.props.user.waffles.slice();
@@ -99,7 +92,11 @@ class PostWaffle extends Component {
 
   async quickPurchase() {
     const { post } = this.props;
-    if (this.state.number_of_spots > 0 && this.state.price > 0) {
+    if (
+      this.state.number_of_spots > 0 &&
+      this.state.price > 0 &&
+      this.state.number_of_spots <= post.waffles_remaining
+    ) {
       let data = post.wafflers.slice();
       for (let i = 0, j = 0, k = 0; j < this.state.number_of_spots; i++) {
         if (post.wafflers[k]) {
@@ -168,19 +165,42 @@ class PostWaffle extends Component {
         >
           <Image style={styles.waffleButton} source={WaffleIcon}></Image>
         </Button>
+
         {this.state.showWaffle ? (
           <View style={styles.container}>
-            {this.picker_number()}
-            <Swipeable
-              renderLeftActions={LeftAction}
-              onSwipeableLeftOpen={this.quickPurchase.bind(this)}
-              friction={1.5}
-              style={styles.priceContainer}
-            >
-              <View style={styles.priceContainer}>
-                <Text style={styles.price}>${this.state.price}</Text>
-              </View>
-            </Swipeable>
+            {this.number_button()}
+            <View style={{ flexDirection: "row", marginLeft: "1%" }}>
+              <Button
+                transparent
+                style={styles.changeSpot}
+                onPress={() => {
+                  this.setState({
+                    number_of_spots: this.state.number_of_spots - 1,
+                    price: this.state.price - 1,
+                  });
+                }}
+              >
+                <MaterialIcons
+                  name="remove-circle-outline"
+                  style={styles.changeSpotText}
+                />
+              </Button>
+              <Button
+                transparent
+                style={styles.changeSpot}
+                onPress={() => {
+                  this.setState({
+                    number_of_spots: this.state.number_of_spots + 1,
+                    price: this.state.price + 1,
+                  });
+                }}
+              >
+                <MaterialIcons
+                  name="add-circle-outline"
+                  style={styles.changeSpotText}
+                />
+              </Button>
+            </View>
           </View>
         ) : null}
       </View>
@@ -195,16 +215,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderLeftWidth: 0.4,
     borderRightWidth: 0.4,
-  },
-  mainSelected: {
-    backgroundColor: "#00B8FA",
-    marginRight: "5%",
-    borderColor: "#DDD",
-  },
-  miniSelected: {
-    backgroundColor: "#FFF",
-    borderColor: "#00B8FA",
-    marginRight: "5%",
+    backgroundColor: "#fff",
   },
   waffleButton: {
     width: "100%",
@@ -221,37 +232,30 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
   },
+  changeSpot: {
+    borderColor: "#00B8FA",
+    textAlign: "center",
+    width: 48,
+    height: 48,
+    marginRight: "-5%",
+    backgroundColor: "transparent",
+    borderRadius: 45,
+    borderColor: "#00B8FA",
+  },
+  changeSpotText: {
+    fontSize: 40,
+    color: "#00B8FA",
+    paddingLeft: "6%",
+  },
   pickerNumber: {
     borderColor: "#00B8FA",
-    width: 60,
-    height: 45,
-    fontSize: 32,
+    borderWidth: 3,
+    borderRadius: 45,
+    width: 48,
+    height: 48,
     textAlign: "center",
     color: "#00B8FA",
     marginRight: "5%",
-  },
-  priceContainer: {
-    width: "100%",
-    marginTop: "0%",
-    paddingLeft: "5%",
-    paddingRight: "50%",
-    borderColor: "#EACD2E",
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    borderWidth: 1,
-  },
-  price: {
-    fontSize: 32,
-    color: "#222",
-    opacity: 0.8,
-    textAlign: "left",
-  },
-  swiped: {
-    backgroundColor: "#EACD2E",
-    width: "100%",
-    borderColor: "#FFF",
-    borderRadius: 10,
-    borderWidth: 2,
   },
 });
 
@@ -265,6 +269,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updatePost: (post) => dispatch(updatePost(post)),
     getPost: (id) => dispatch(getPost(id)),
+    updateUser: (id) => dispatch(updateUser(id)),
   };
 };
 
